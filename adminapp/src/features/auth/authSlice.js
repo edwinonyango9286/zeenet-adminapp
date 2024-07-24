@@ -158,9 +158,6 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = false;
         state.message = action.error;
-        if (state.isError === true) {
-          toast.error(action?.payload?.response?.data?.message);
-        }
       })
       .addCase(getYearlyStatistics.pending, (state) => {
         state.isLoading = true;
@@ -177,9 +174,6 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = false;
         state.message = action.error;
-        if (state.isError === true) {
-          toast.error(action?.payload?.response?.data?.message);
-        }
       })
       .addCase(UpdateAnOrder.pending, (state) => {
         state.isLoading = true;

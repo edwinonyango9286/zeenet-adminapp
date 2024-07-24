@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../features/auth/authSlice";
+import { login, resetState } from "../features/auth/authSlice";
 
 const Loginschema = Yup.object().shape({
   email: Yup.string().email("Not a valid email").required("Email required"),
@@ -22,6 +22,7 @@ const Login = () => {
     },
     validationSchema: Loginschema,
     onSubmit: (values) => {
+      dispatch(resetState());
       dispatch(login(values));
     },
   });
