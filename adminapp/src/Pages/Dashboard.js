@@ -188,7 +188,10 @@ const Dashboard = () => {
             <div>
               <p className="desc">Total Income</p>
               <h6 className="mb-0 sub-title">
-                Ksh {yearlyDataState && yearlyDataState[0]?.amount}
+                Ksh{" "}
+                {new Intl.NumberFormat("en-US", {
+                  maximumFractionDigits: 0,
+                }).format(yearlyDataState && yearlyDataState[0]?.amount)}
               </h6>
             </div>
             <div className="d-flex flex-column align-items-end">
@@ -203,7 +206,10 @@ const Dashboard = () => {
             <div>
               <p className="desc">Total Sales</p>
               <h6 className="mb-0 sub-title">
-                Products {yearlyDataState && yearlyDataState[0]?.count}
+                Products sold{" "}
+                {new Intl.NumberFormat("en-US", {
+                  maximumFractionDigits: 0,
+                }).format(yearlyDataState && yearlyDataState[0]?.count)}
               </h6>
             </div>
             <div className="d-flex flex-column align-items-end">
@@ -218,7 +224,10 @@ const Dashboard = () => {
             <div>
               <p className="desc">Total Expesence</p>
               <h6 className="mb-0 sub-title">
-                ksh {yearlyDataState && yearlyDataState[0]?.amount}
+                Ksh{" "}
+                {new Intl.NumberFormat("en-US", {
+                  maximumFractionDigits: 0,
+                }).format(yearlyDataState && yearlyDataState[0]?.amount)}
               </h6>
             </div>
             <div className="d-flex flex-column align-items-end">

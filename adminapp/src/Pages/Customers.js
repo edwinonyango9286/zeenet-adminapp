@@ -11,6 +11,16 @@ const columns = [
   {
     title: "Name",
     dataIndex: "name",
+    render: (text, record) => {
+      const [firstName, lastName] = text.split(" ");
+      return (
+        <span>
+          <span className="text-capitalize">{firstName}</span>{" "}
+          <span className="text-capitalize">{lastName}</span>
+        </span>
+      );
+    },
+
     sorter: (a, b) => a.name.length - b.name.length,
   },
   {
@@ -39,7 +49,7 @@ const Customers = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(resetState())
+    dispatch(resetState());
     dispatch(getUsers(config3));
   }, []);
   const customerState = useSelector((state) => state?.customer?.customers);
@@ -47,7 +57,7 @@ const Customers = () => {
   for (let i = 0; i < customerState.length; i++) {
     if (customerState[i]?.role !== "admin") {
       data1.push({
-        key: i+1,
+        key: i,
         name: customerState[i]?.firstname + " " + customerState[i]?.lastname,
         email: customerState[i]?.email,
         mobile: customerState[i]?.mobile,
