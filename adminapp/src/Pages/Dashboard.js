@@ -183,7 +183,7 @@ const Dashboard = () => {
     <>
       <div className="container">
         <h5 className="mb-2 title">Dashboard</h5>
-        <div className="d-flex justify-content-between align-items-center gap-2 flex-warp">
+        <div className="d-flex justify-content-between align-items-center gap-4 flex-wrap">
           <div className="d-flex justify-content-between align-items-end flex-grow-1 bg-white p-4 rounded-2">
             <div>
               <p className="desc">Total Income</p>
