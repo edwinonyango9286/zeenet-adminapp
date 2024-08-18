@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { Table } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Table, Spin, Alert } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { getUsers, resetState } from "../features/customers/customerSlice";
 
@@ -12,10 +13,10 @@ const columns = [
     title: "Name",
     dataIndex: "name",
     render: (text, record) => {
-      const [firstName, lastName] = text.split(" ");
+      const [firstName, lastName] = text?.split(" ");
       return (
         <span>
-          <span className="text-capitalize">{firstName}</span>{" "}
+          <span className="text-capitalize">{firstName}</span>
           <span className="text-capitalize">{lastName}</span>
         </span>
       );
@@ -34,41 +35,43 @@ const columns = [
 ];
 
 const Customers = () => {
-  const getTokenFromLocalStorge = localStorage.getItem("user")
-    ? JSON.parse(localStorage.getItem("user"))
-    : null;
-
-  const config3 = {
-    headers: {
-      Authorization: `Bearer ${
-        getTokenFromLocalStorge !== null ? getTokenFromLocalStorge.token : ""
-      }`,
-      Accept: "application/json",
-    },
-  };
-
   const dispatch = useDispatch();
+  const { customers, isLoading, isError, message } = useSelector(
+    (state) => state.customer
+  );
   useEffect(() => {
     dispatch(resetState());
-    dispatch(getUsers(config3));
-  }, []);
-  const customerState = useSelector((state) => state?.customer?.customers);
-  const data1 = [];
-  for (let i = 0; i < customerState.length; i++) {
-    if (customerState[i]?.role !== "admin") {
-      data1.push({
-        key: i,
-        name: customerState[i]?.firstname + " " + customerState[i]?.lastname,
-        email: customerState[i]?.email,
-        mobile: customerState[i]?.mobile,
-      });
-    }
-  }
+    dispatch(getUsers());
+  }, [dispatch]);
+
+  const data1 = customers
+    ?.filter((customer) => customer?.role !== "admin")
+    .map((customer, index) => ({
+      key: index + 1,
+      name: `${customer?.firstname} ${customer?.lastname}`,
+      email: customer?.email,
+      mobile: customer?.mobile,
+    }));
 
   return (
     <div className="container">
       <h5 className="mb-2 title">Customers</h5>
-      <div>{<Table columns={columns} dataSource={data1} />}</div>
+
+      {isLoading ? (
+        <div className="text-center">
+          <Spin
+            size="large"
+            indicator={
+              <LoadingOutlined style={{ fontSize: 40, fontWeight: 700 }} />
+            }
+          />
+          <p className="">Loading customers...</p>
+        </div>
+      ) : isError ? (
+        <Alert message="Error" description={message} type="error" showIcon />
+      ) : (
+        <Table columns={columns} dataSource={data1} />
+      )}
     </div>
   );
 };

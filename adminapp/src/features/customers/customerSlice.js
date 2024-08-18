@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import customerService from "./customerService";
 import { toast } from "react-toastify";
 
-
 export const getUsers = createAsyncThunk(
   "customer/get-customers",
   async (thunkAPI) => {
@@ -25,7 +24,7 @@ const initialState = {
 };
 
 export const customerSlice = createSlice({
-  name: "users",
+  name: "customers",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -44,9 +43,9 @@ export const customerSlice = createSlice({
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
-          if (state.isError === true) {
-            toast.error(action?.payload?.response?.data?.message);
-          }
+        if (state.isError === true) {
+          toast.error(action?.payload?.response?.data?.message);
+        }
       })
       .addCase(resetState, () => initialState);
   },

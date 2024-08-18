@@ -206,7 +206,7 @@ const MainLayout = () => {
               aria-expanded="false"
             >
               <p className=" mb-0 text-capitalize">
-                {user?.firstname} {user?.lastname}
+              {user?.firstname} {user?.lastname}
               </p>
               <p className="mb-0">{user?.email}</p>
             </div>

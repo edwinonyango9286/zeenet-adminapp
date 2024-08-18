@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import Dropzone from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate,Link } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   createBlog,
@@ -116,7 +116,7 @@ const AddBlog = () => {
         <div className="d-flex justify-content-between align-items-center ">
           <h5 className="mb-2 title">{blogId ? "Update" : "Add"} Blog</h5>
           <button
-            className=" btn btn-success border-0 rounded-2 my-3 text-white"
+            className=" btn btn-primary border-0 rounded-2 my-3 text-white"
             type="button"
           >
             <Link
@@ -218,7 +218,8 @@ const AddBlog = () => {
 
             <button
               type="submit"
-              className="btn btn-success border-0 rounded-3 mt-3 my-2"
+              className="btn btn-primary border-0 rounded-3 mt-3"
+              style={{ width: 140 }}
             >
               {blogId ? "Update" : "Add"} Blog
             </button>

@@ -82,7 +82,7 @@ const AddBlogCategory = () => {
             {blogCategoryId? "Edit" : "Add"} Blog Category
           </h5>{" "}
           <button
-            className=" btn btn-success border-0 rounded-2 my-3 text-white"
+            className=" btn btn-primary border-0 rounded-2 my-3 text-white"
             type="button"
           >
             <Link
@@ -115,7 +115,7 @@ const AddBlogCategory = () => {
 
             <button
               type="submit"
-              className="btn btn-success border-0 mt-3 rounded-3 my-2 "
+              className="btn btn-primary border-0 mt-3 rounded-3 my-2 "
             >
               {blogCategoryId ? "Edit" : "Add"} Blog Category
             </button>

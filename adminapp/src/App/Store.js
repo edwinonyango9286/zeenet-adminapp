@@ -3,7 +3,7 @@ import authReducer from "../features/auth/authSlice";
 import customerReducer from "../features/customers/customerSlice";
 import productReducer from "../features/product/productSlice";
 import brandReducer from "../features/brands/brandSlice";
-import categoryReducer from "../features/category/categorySlice";
+import productCategoryReducer from "../features/category/categorySlice";
 import blogReducer from "../features/blogs/blogSlice";
 import blogCategoryReducer from "../features/blogcategory/blogCategorySlice";
 import enquiryReducer from "../features/enquiry/enquirySlice"
@@ -17,9 +17,9 @@ export const store = configureStore({
     customer: customerReducer,
     product: productReducer,
     brand: brandReducer,
-    pCategory: categoryReducer,
+    productCategory: productCategoryReducer,
     blog:blogReducer,
-    bCategory:blogCategoryReducer,
+    blogCategory:blogCategoryReducer,
     enquiry:enquiryReducer,
     upload:uploadReducer,
     coupon:couponReducer,

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Table } from "antd";
+import { Table, Spin, Alert } from "antd";
 import { useDispatch, useSelector } from "react-redux";
+import { LoadingOutlined } from "@ant-design/icons";
+
 import {
   deleteABrand,
   getBrands,
@@ -38,35 +40,32 @@ const BrandList = () => {
     setOpen(false);
   };
   const dispatch = useDispatch();
+  const { brands, isLoading, isError, message } = useSelector(
+    (state) => state.brand
+  );
+
   useEffect(() => {
     dispatch(resetState());
     dispatch(getBrands());
-  }, []);
+  }, [dispatch]);
 
-  
-  const brandState = useSelector((state) => state?.brand?.brands);
-
-  const data1 = [];
-  for (let i = 0; i < brandState.length; i++) {
-    data1.push({
-      key: i + 1,
-      name: brandState[i].title,
-      action: (
-        <>
-          <Link to={`/admin/brand/${brandState[i]?._id}`} className="fs-5">
-            <FiEdit/>
-          </Link>
-          
-          <button
-            className="ms-3 fs-5 text-danger bg-transparent border-0"
-            onClick={() => showModal(brandState[i]?._id)}
-          >
-            <AiFillDelete />
-          </button>
-        </>
-      ),
-    });
-  }
+  const data1 = brands?.map((brand, index) => ({
+    key: index + 1,
+    name: brand?.title,
+    action: (
+      <>
+        <Link to={`/admin/brand/${brand?._id}`} className="fs-5">
+          <FiEdit />
+        </Link>
+        <button
+          className="ms-3 fs-5 text-danger bg-transparent border-0"
+          onClick={() => showModal(brand?._id)}
+        >
+          <AiFillDelete />
+        </button>
+      </>
+    ),
+  }));
 
   const deleteBrand = async (e) => {
     await dispatch(deleteABrand(e));
@@ -80,7 +79,7 @@ const BrandList = () => {
         <div className="d-flex justify-content-between align-items-center ">
           <h5 className="mb-2 title">Product Brands</h5>
           <button
-            className=" btn btn-success border-0 rounded-2 my-3 text-white"
+            className=" btn btn-primary border-0 rounded-2 my-3 text-white"
             type="button"
           >
             <Link
@@ -90,13 +89,27 @@ const BrandList = () => {
                 textDecoration: "none",
               }}
             >
-              {" "}
               Add New Brand.
             </Link>
           </button>
         </div>
 
-        <div>{<Table columns={columns} dataSource={data1} />}</div>
+        {isLoading ? (
+          <div className="text-center">
+            <Spin
+              size="large"
+              indicator={
+                <LoadingOutlined style={{ fontSize: 40, fontWeight: 700 }} />
+              }
+            />
+            <p className="">Loading brands...</p>
+          </div>
+        ) : isError ? (
+          <Alert message="Error" description={message} type="error" showIcon />
+        ) : (
+          <Table columns={columns} dataSource={data1} />
+        )}
+
         <CustomModal
           open={open}
           hideModal={hideModal}

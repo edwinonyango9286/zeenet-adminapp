@@ -87,7 +87,7 @@ const AddCoupon = () => {
         <div className="d-flex justify-content-between align-items-center ">
           <h5 className="mb-4 title">{couponId ? "Edit" : "Add"} Coupon</h5>
           <button
-            className=" btn btn-success border-0 rounded-2 my-3 text-white"
+            className=" btn btn-primary border-0 rounded-2 my-3 text-white"
             type="button"
           >
             <Link
@@ -148,7 +148,7 @@ const AddCoupon = () => {
           <div className="error">
             {formik.touched.discount && formik.errors.discount}
           </div>
-          <button className="btn btn-success border-0 rounded-3 my-5">
+          <button className="btn btn-primary border-0 rounded-3 mt-3" style={{width: 140}}>
             {couponId ? "Edit" : "Add"} Coupon
           </button>
         </form>

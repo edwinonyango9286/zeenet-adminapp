@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Table } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Table, Spin, Alert } from "antd";
 import { AiFillDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -59,68 +60,86 @@ const ProductList = () => {
   };
 
   const dispatch = useDispatch();
+  const { products, isLoading, isError, message } = useSelector(
+    (state) => state.product
+  );
+
   useEffect(() => {
     dispatch(resetState());
     dispatch(getProducts());
   }, []);
 
-  const productState = useSelector((state) => state?.product?.products);
-  const data1 = [];
-  for (let i = 0; i < productState?.length; i++) {
-    data1.push({
-      key: i + 1,
-      title: productState[i]?.title,
-      brand: productState[i]?.brand,
-      category: productState[i]?.category,
-      screensize: `${productState[i]?.screensize}"`,
-      price: `Ksh    ${new Intl.NumberFormat("en-US", {
-                    maximumFractionDigits: 0,
-                  }).format(productState[i]?.price)}`,
-      action: (
-        <>
-          <Link to={`/admin/product/${productState[i]?._id}`} className="fs-5">
-            <FiEdit />
-          </Link>
+  const data1 = products?.map(
+    (product, index) =>
+      ({
+        key: index + 1,
+        title: product?.title,
+        brand: product?.brand,
+        category: product?.category,
+        screensize: `${product?.screensize}"`,
+        price: `Ksh ${new Intl.NumberFormat("en-US", {
+          maximumFractionDigits: 0,
+        }).format(product?.price)}`,
+        action: (
+          <>
+            <Link to={`/admin/product/${product?._id}`} className="fs-5">
+              <FiEdit />
+            </Link>
+            <button
+              className="ms-2 fs-5 text-danger border-0 bg-transparent"
+              onClick={() => showModal(product._id)}
+            >
+              <AiFillDelete />
+            </button>
+          </>
+        ),
+      } || [])
+  );
 
-          <button
-            className="ms-2 fs-5  text-danger border-0 bg-transparent"
-            onClick={() => showModal(productState[i]?._id)}
-          >
-            <AiFillDelete />
-          </button>
-        </>
-      ),
-    });
-  }
-
-  const deleteProduct = async (e) => {
-    await dispatch(deleteAProduct(e));
+  const deleteProduct = async (id) => {
+    await dispatch(deleteAProduct(id));
     setOpen(false);
     dispatch(getProducts());
   };
+
   return (
     <>
       <div>
-        <div className="d-flex justify-content-between align-items-center ">
+        <div className="d-flex justify-content-between align-items-center">
           <h5 className="title mb-2">Products</h5>
           <button
-            className=" btn btn-success border-0 rounded-2 mb-2 text-white"
+            className="btn btn-primary border-0 rounded-2 mb-2 text-white"
             type="button"
           >
-            <Link to={"/admin/product"} className="text-white" style={{
-              textDecoration: "none",
-              
-            }}> Add New Product.</Link>
+            <Link
+              to="/admin/product"
+              className="text-white"
+              style={{ textDecoration: "none" }}
+            >
+              Add New Product
+            </Link>
           </button>
         </div>
 
-        <div>{<Table columns={columns} dataSource={data1} />}</div>
+        {isLoading ? (
+          <div className="text-center">
+            <Spin
+              size="large"
+              indicator={
+                <LoadingOutlined style={{ fontSize: 40, fontWeight: 700 }} />
+              }
+            />
+            <p className="">Loading products...</p>
+          </div>
+        ) : isError ? (
+          <Alert message="Error" description={message} type="error" showIcon />
+        ) : (
+          <Table columns={columns} dataSource={data1} />
+        )}
         <CustomModal
           open={open}
           hideModal={hideModal}
-          perfomAction={() => {
-            deleteProduct(productId);
-          }}
+          perfomAction={() => deleteProduct(productId)}
           title="Are you sure you want to delete this product?"
         />
       </div>

@@ -80,7 +80,7 @@ const AddBrand = () => {
         <div className="d-flex justify-content-between align-items-center ">
           <h5 className="mb-4 title">{brandId ? "Edit" : "Add"} Brand</h5>
           <button
-            className=" btn btn-success border-0 rounded-2 my-3 text-white"
+            className=" btn btn-primary border-0 rounded-2 my-3 text-white"
             type="button"
           >
             <Link
@@ -112,7 +112,7 @@ const AddBrand = () => {
             </div>
             <button
               type="submit"
-              className="btn btn-success border-0 mt-3 rounded-3 "
+              className="btn btn-primary border-0 mt-3 rounded-3 "
             >
               {brandId ? "Edit" : "Add"} Brand
             </button>

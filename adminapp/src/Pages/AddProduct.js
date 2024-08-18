@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import CustomInput from "../Components/CustomInput"
-import {Link} from "react-router-dom"
+import CustomInput from "../Components/CustomInput";
+import { Link } from "react-router-dom";
 import ReactQuill from "react-quill";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getABrand, getBrands } from "../features/brands/brandSlice";
 import {
   getACategory,
-  getCategories,
+  getProductCategories,
 } from "../features/category/categorySlice";
 import Dropzone from "react-dropzone";
 import { delImg, uploadImg } from "../features/upload/uploadSlice";
@@ -39,11 +39,13 @@ const AddProduct = () => {
   const productId = location.pathname.split("/")[3];
   useEffect(() => {
     dispatch(getBrands());
-    dispatch(getCategories());
+    dispatch(getProductCategories());
   }, []);
 
   const brandState = useSelector((state) => state?.brand?.brands);
-  const categoryState = useSelector((state) => state?.pCategory?.categories);
+  const categoryState = useSelector(
+    (state) => state?.productCategory?.categories
+  );
   const imgState = useSelector((state) => state?.upload?.images);
   const newProduct = useSelector((state) => state?.product);
 
@@ -141,7 +143,7 @@ const AddProduct = () => {
         <div className="d-flex justify-content-between align-items-center ">
           <h5 className="mb-2 title">{productId ? "Update" : "Add"} Product</h5>
           <button
-            className=" btn btn-success border-0 rounded-2 my-3 text-white"
+            className=" btn btn-primary border-0 rounded-2 my-3 text-white"
             type="button"
           >
             <Link
@@ -322,7 +324,10 @@ const AddProduct = () => {
 
           <button
             type="submit"
-            className="btn btn-success border-0 rounded-3 my-5"
+            className="btn btn-primary border-0 rounded-3 mt-3 border-0 focus:outline-none focus:ring-0"
+            style={{
+              width: 140,
+            }}
           >
             {productId ? "Update" : "Add"} Product
           </button>

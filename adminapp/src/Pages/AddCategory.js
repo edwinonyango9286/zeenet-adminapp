@@ -21,7 +21,7 @@ const AddCategory = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const categoryId = location.pathname.split("/")[3];
-  const newCategory = useSelector((state) => state.pCategory);
+  const newCategory = useSelector((state) => state.productCategory);
   const {
     isSuccess,
     isError,
@@ -81,7 +81,7 @@ const AddCategory = () => {
             {categoryId  ? "Edit" : "Add"} Category
           </h5>{" "}
           <button
-            className=" btn btn-success border-0 rounded-2 my-3 text-white"
+            className=" btn btn-primary border-0 rounded-2 my-3 text-white"
             type="button"
           >
             <Link
@@ -114,7 +114,7 @@ const AddCategory = () => {
 
             <button
               type="submit"
-              className="btn btn-success border-0 rounded-3 mt-3 "
+              className="btn btn-primary border-0 rounded-3 mt-3 "
             >
               {categoryId ? "Edit" : "Add"} Category
             </button>

@@ -81,7 +81,7 @@ const BlogCategoryList = () => {
         <div className="d-flex justify-content-between align-items-center ">
           <h5 className="mb-2 title title">Blog Category</h5>
           <button
-            className=" btn btn-success border-0 rounded-2 my-3 text-white"
+            className=" btn btn-primary border-0 rounded-2 my-3 text-white"
             type="button"
           >
             <Link

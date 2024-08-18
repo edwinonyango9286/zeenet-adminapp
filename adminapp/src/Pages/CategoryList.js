@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { AiFillDelete } from "react-icons/ai";
 import {
   deleteACategory,
-  getCategories,
+  getProductCategories,
   resetState,
 } from "../features/category/categorySlice";
 import CustomModal from "../Components/CustomModal";
@@ -42,10 +42,12 @@ const CategoryList = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(resetState());
-    dispatch(getCategories());
+    dispatch(getProductCategories());
   }, []);
 
-  const categoryState = useSelector((state) => state.pCategory.categories);
+  const categoryState = useSelector(
+    (state) => state.productCategory.categories
+  );
   const data1 = [];
   for (let i = 0; i < categoryState.length; i++) {
     data1.push({
@@ -67,7 +69,7 @@ const CategoryList = () => {
   const deleteCategory = async (e) => {
     await dispatch(deleteACategory(e));
     setOpen(false);
-    dispatch(getCategories());
+    dispatch(getProductCategories());
   };
 
   return (
@@ -76,7 +78,7 @@ const CategoryList = () => {
         <div className="d-flex justify-content-between align-items-center ">
           <h5 className="mb-2 title"> Product Categories</h5>
           <button
-            className=" btn btn-success border-0 rounded-2 my-3 text-white"
+            className=" btn btn-primary border-0 rounded-2 my-3 text-white"
             type="button"
           >
             <Link

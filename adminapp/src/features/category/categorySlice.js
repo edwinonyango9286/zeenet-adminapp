@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import categoryService from "./categoryService";
 import { toast } from "react-toastify";
 
-export const getCategories = createAsyncThunk(
+export const getProductCategories = createAsyncThunk(
   "pCategory/get-categories",
   async (thunkAPI) => {
     try {
@@ -72,17 +72,17 @@ export const categorySlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getCategories.pending, (state) => {
+      .addCase(getProductCategories.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getCategories.fulfilled, (state, action) => {
+      .addCase(getProductCategories.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
         state.categories = action.payload;
       })
 
-      .addCase(getCategories.rejected, (state, action) => {
+      .addCase(getProductCategories.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
