@@ -62,7 +62,7 @@ export const deleteABlogCat = createAsyncThunk(
 export const resetState = createAction("Reset_all");
 
 const initialState = {
-  bCategories: [],
+  blogCategories: [],
   isError: false,
   isLoading: false,
   isSuccess: false,
@@ -70,7 +70,7 @@ const initialState = {
 };
 
 export const blogCategorySlice = createSlice({
-  name: "bCategories",
+  name: "blogCategories",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -82,7 +82,7 @@ export const blogCategorySlice = createSlice({
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.bCategories = action.payload;
+        state.blogCategories = action.payload;
       })
       .addCase(getBlogCategory.rejected, (state, action) => {
         state.isLoading = false;

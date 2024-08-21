@@ -166,6 +166,7 @@ const MainLayout = () => {
           ]}
         />
       </Sider>
+
       <Layout>
         <Header
           className="d-flex justify-content-between ps-1 pe-5"
@@ -185,7 +186,7 @@ const MainLayout = () => {
           <div className="d-flex gap-4 align-items-center">
             <div className="position-relative">
               <MdNotificationsNone className="fs-4" />
-              <span className="badge bg-warning rounded-circle p-1 position-absolute">
+              <span className="badge bg-primary rounded-circle p-1 position-absolute">
                 2
               </span>
             </div>
@@ -206,7 +207,7 @@ const MainLayout = () => {
               aria-expanded="false"
             >
               <p className=" mb-0 text-capitalize">
-              {user?.firstname} {user?.lastname}
+                {user?.firstname} {user?.lastname}
               </p>
               <p className="mb-0">{user?.email}</p>
             </div>

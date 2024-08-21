@@ -41,7 +41,7 @@ const BrandList = () => {
   };
   const dispatch = useDispatch();
   const { brands, isLoading, isError, message } = useSelector(
-    (state) => state.brand
+    (state) => state?.brand
   );
 
   useEffect(() => {

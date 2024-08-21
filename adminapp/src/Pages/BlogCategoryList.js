@@ -43,7 +43,9 @@ const BlogCategoryList = () => {
     dispatch(resetState());
     dispatch(getBlogCategory());
   }, []);
-  const blogCategoryState = useSelector((state) => state.bCategory.bCategories);
+  const blogCategoryState = useSelector(
+    (state) => state.blogCategory.blogCategories
+  );
   const data1 = [];
   for (let i = 0; i < blogCategoryState.length; i++) {
     data1.push({

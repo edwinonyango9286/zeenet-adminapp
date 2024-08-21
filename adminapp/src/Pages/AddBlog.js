@@ -31,7 +31,7 @@ const AddBlog = () => {
   useEffect(() => {
     dispatch(getBlogCategory());
   }, []);
-  const blogCatState = useSelector((state) => state?.bCategory?.bCategories);
+  const blogCatState = useSelector((state) => state?.blogCategory?.blogCategories);
   const imgState = useSelector((state) => state?.upload?.images);
   const newBlog = useSelector((state) => state?.blog);
 

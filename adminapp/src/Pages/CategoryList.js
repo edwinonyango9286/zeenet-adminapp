@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Table } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Table, Spin, Alert } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { AiFillDelete } from "react-icons/ai";
@@ -40,31 +41,29 @@ const CategoryList = () => {
   };
 
   const dispatch = useDispatch();
+  const { categories, isError, isLoading, isSuccess, message } = useSelector(
+    (state) => state?.productCategory
+  );
+
   useEffect(() => {
     dispatch(resetState());
     dispatch(getProductCategories());
-  }, []);
+  }, [dispatch]);
 
-  const categoryState = useSelector(
-    (state) => state.productCategory.categories
-  );
-  const data1 = [];
-  for (let i = 0; i < categoryState.length; i++) {
-    data1.push({
-      key: i + 1,
-      name: categoryState[i].title,
-      action: (
-        <>
-          <Link to={`/admin/category/${categoryState[i]._id}`} className="fs-5">
-            <FiEdit />
-          </Link>
-          <button className=" ms-2 fs-5  text-danger bg-transparent border-0">
-            <AiFillDelete onClick={() => showModal(categoryState[i]._id)} />
-          </button>
-        </>
-      ),
-    });
-  }
+  const data1 = categories?.map((category, index) => ({
+    key: index + 1,
+    name: category?.title,
+    action: (
+      <>
+        <Link to={`/admin/category/${category?._id}`} className="fs-5">
+          <FiEdit />
+        </Link>
+        <button className=" ms-2 fs-5  text-danger bg-transparent border-0">
+          <AiFillDelete onClick={() => showModal(category?._id)} />
+        </button>
+      </>
+    ),
+  }));
 
   const deleteCategory = async (e) => {
     await dispatch(deleteACategory(e));
@@ -93,7 +92,22 @@ const CategoryList = () => {
             </Link>
           </button>
         </div>
-        <div>{<Table columns={columns} dataSource={data1} />}</div>
+
+        {isLoading ? (
+          <div className="text-center">
+            <Spin
+              size="large"
+              indicator={
+                <LoadingOutlined style={{ fontSize: 40, fontWeight: 700 }} />
+              }
+            />
+            <p className="">Loading brands...</p>
+          </div>
+        ) : isError ? (
+          <Alert message="Error" description={message} type="error" showIcon />
+        ) : (
+          <Table columns={columns} dataSource={data1} />
+        )}
         <CustomModal
           open={open}
           hideModal={hideModal}

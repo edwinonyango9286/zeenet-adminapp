@@ -66,10 +66,9 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
-     dispatch(resetState())
-     dispatch(getOrders(config3));
-   }, []);
-
+    dispatch(resetState());
+    dispatch(getOrders(config3));
+  }, []);
 
   useEffect(() => {
     let monthNames = [
@@ -125,7 +124,7 @@ const Dashboard = () => {
     xField: "type",
     yField: "income",
     color: ({ type }) => {
-      return "#ffd333";
+      return "#0d6efd";
     },
     label: {
       position: "top",
@@ -155,7 +154,7 @@ const Dashboard = () => {
     xField: "type",
     yField: "sales",
     color: ({ type }) => {
-      return "#ffd333";
+      return "#0d6efd";
     },
     label: {
       position: "top",
@@ -191,7 +190,11 @@ const Dashboard = () => {
                 Ksh{" "}
                 {new Intl.NumberFormat("en-US", {
                   maximumFractionDigits: 0,
-                }).format(yearlyDataState && yearlyDataState[0]?.amount)}
+                }).format(
+                  yearlyDataState && yearlyDataState[0]?.amount
+                    ? yearlyDataState && yearlyDataState[0]?.amount
+                    : 0
+                )}
               </h6>
             </div>
             <div className="d-flex flex-column align-items-end">
@@ -209,7 +212,11 @@ const Dashboard = () => {
                 Products sold{" "}
                 {new Intl.NumberFormat("en-US", {
                   maximumFractionDigits: 0,
-                }).format(yearlyDataState && yearlyDataState[0]?.count)}
+                }).format(
+                  yearlyDataState && yearlyDataState[0]?.count
+                    ? yearlyDataState && yearlyDataState[0]?.count
+                    : 0
+                )}
               </h6>
             </div>
             <div className="d-flex flex-column align-items-end">
@@ -227,7 +234,11 @@ const Dashboard = () => {
                 Ksh{" "}
                 {new Intl.NumberFormat("en-US", {
                   maximumFractionDigits: 0,
-                }).format(yearlyDataState && yearlyDataState[0]?.amount)}
+                }).format(
+                  yearlyDataState && yearlyDataState[0]?.amount
+                    ? yearlyDataState && yearlyDataState[0]?.amount
+                    : 0
+                )}
               </h6>
             </div>
             <div className="d-flex flex-column align-items-end">
