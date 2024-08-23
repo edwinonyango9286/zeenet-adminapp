@@ -120,9 +120,6 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = false;
         state.message = action.error;
-        if (state.isError === true) {
-          toast.error(action?.payload?.response?.data?.message);
-        }
       })
       .addCase(getAsingleOrder.pending, (state) => {
         state.isLoading = true;

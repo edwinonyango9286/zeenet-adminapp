@@ -151,6 +151,9 @@ const AddProduct = () => {
               className="text-white"
               style={{
                 textDecoration: "none",
+                border: "none",
+                outline: "none",
+                boxShadow: "none",
               }}
             >
               {" "}
