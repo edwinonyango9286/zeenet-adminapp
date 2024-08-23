@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import authService from "./authService";
-import { toast } from "react-toastify";
 
 const getUserFromLocalStorge = localStorage.getItem("user")
   ? JSON.parse(localStorage.getItem("user"))
@@ -100,10 +99,7 @@ export const authSlice = createSlice({
         state.isError = true;
         state.isSuccess = false;
         state.isLoading = false;
-        state.message = action.error;
-        if (state.isError === true) {
-          toast.error(action?.payload?.response?.data?.message);
-        }
+        state.message = action.payload.response.data.message;
       })
       .addCase(getOrders.pending, (state) => {
         state.isLoading = true;
@@ -136,9 +132,6 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = false;
         state.message = action.error;
-        if (state.isError === true) {
-          toast.error(action?.payload?.response?.data?.message);
-        }
       })
       .addCase(getMonthWiseOrders.pending, (state) => {
         state.isLoading = true;
@@ -187,9 +180,6 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = false;
         state.message = action.error;
-        if (state.isError === true) {
-          toast.error(action?.payload?.response?.data?.message);
-        }
       })
       .addCase(resetState, () => initialState);
   },
