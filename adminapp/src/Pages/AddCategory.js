@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import CustomInput from "../Components/CustomInput";
 import { toast } from "react-toastify";
-import { useLocation, useNavigate ,Link} from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
@@ -64,7 +64,7 @@ const AddCategory = () => {
         const data = { id: categoryId, categoryData: values };
         dispatch(updateACategory(data));
         dispatch(resetState());
-      } else { 
+      } else {
         dispatch(createCategory(values));
         formik.resetForm();
         setTimeout(() => {
@@ -77,18 +77,20 @@ const AddCategory = () => {
     <>
       <div>
         <div className="d-flex justify-content-between align-items-center ">
-          <h5 className="mb-2 title">
-            {categoryId  ? "Edit" : "Add"} Category
-          </h5>{" "}
+          <h5 className="mb-2 title">{categoryId ? "Edit" : "Add"} Category</h5>{" "}
           <button
             className=" btn btn-primary border-0 rounded-2 my-3 text-white"
             type="button"
+            style={{ border: "none", outline: "none", boxShadow: "none" }}
           >
             <Link
               to={"/admin/category-list"}
               className="text-white"
               style={{
                 textDecoration: "none",
+                border: "none",
+                outline: "none",
+                boxShadow: "none",
               }}
             >
               {" "}
@@ -115,8 +117,13 @@ const AddCategory = () => {
             <button
               type="submit"
               className="btn btn-primary border-0 rounded-3 mt-3 "
+              style={{ border: "none", outline: "none", boxShadow: "none" }}
             >
-              {categoryId ? "Edit" : "Add"} Category
+              {isLoading
+                ? "Creating..."
+                : categoryId
+                ? "Edit Category"
+                : "Add Category"}
             </button>
           </form>
         </div>

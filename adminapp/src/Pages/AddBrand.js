@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import CustomInput from "../Components/CustomInput";
 import { toast } from "react-toastify";
-import { useLocation, useNavigate , Link} from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
@@ -73,7 +73,6 @@ const AddBrand = () => {
     },
   });
 
-  
   return (
     <>
       <div>
@@ -82,6 +81,7 @@ const AddBrand = () => {
           <button
             className=" btn btn-primary border-0 rounded-2 my-3 text-white"
             type="button"
+            style={{ border: "none", outline: "none", boxShadow: "none" }}
           >
             <Link
               to={"/admin/brand-list"}
@@ -112,9 +112,10 @@ const AddBrand = () => {
             </div>
             <button
               type="submit"
-              className="btn btn-primary border-0 mt-3 rounded-3 "
+              className="btn btn-primary border-0 mt-3 rounded-3"
+              style={{ border: "none", outline: "none", boxShadow: "none" }}
             >
-              {brandId ? "Edit" : "Add"} Brand
+              {isLoading ? "Creating..." : brandId ? "Edit Brand" : "Add Brand"}
             </button>
           </form>
         </div>

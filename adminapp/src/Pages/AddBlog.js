@@ -31,9 +31,11 @@ const AddBlog = () => {
   useEffect(() => {
     dispatch(getBlogCategory());
   }, []);
-  const blogCatState = useSelector((state) => state?.blogCategory?.blogCategories);
-  const imgState = useSelector((state) => state?.upload?.images);
-  const newBlog = useSelector((state) => state?.blog);
+  const blogCatState = useSelector(
+    (state) => state.blogCategory?.blogCategories
+  );
+  const imgState = useSelector((state) => state.upload?.images);
+  const newBlog = useSelector((state) => state.blog);
 
   const {
     isSuccess,
@@ -118,6 +120,11 @@ const AddBlog = () => {
           <button
             className=" btn btn-primary border-0 rounded-2 my-3 text-white"
             type="button"
+            style={{
+              border: "none",
+              outline: "none",
+              boxShadow: "none",
+            }}
           >
             <Link
               to={"/admin/blog-list"}
@@ -203,7 +210,13 @@ const AddBlog = () => {
                       type="button"
                       onClick={() => dispatch(delImg(i.public_id))}
                       className="btn-close position-absolute"
-                      style={{ top: "10px", right: "10px" }}
+                      style={{
+                        top: "10px",
+                        right: "10px",
+                        border: "none",
+                        outline: "none",
+                        boxShadow: "none",
+                      }}
                     ></button>
                     <img
                       src={i.url}
@@ -219,9 +232,14 @@ const AddBlog = () => {
             <button
               type="submit"
               className="btn btn-primary border-0 rounded-3 mt-3"
-              style={{ width: 140 }}
+              style={{
+                width: 140,
+                border: "none",
+                outline: "none",
+                boxShadow: "none",
+              }}
             >
-              {blogId ? "Update" : "Add"} Blog
+              {isLoading ? "Creating..." : blogId ? "Update Blog" : "Add blog"}
             </button>
           </form>
         </div>

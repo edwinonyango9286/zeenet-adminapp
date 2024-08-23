@@ -41,25 +41,26 @@ const BrandList = () => {
   };
   const dispatch = useDispatch();
   const { brands, isLoading, isError, message } = useSelector(
-    (state) => state?.brand
+    (state) => state.brand ?? {}
   );
 
   useEffect(() => {
     dispatch(resetState());
     dispatch(getBrands());
-  }, [dispatch]);
+  }, [dispatch, getBrands, resetState]);
 
   const data1 = brands?.map((brand, index) => ({
     key: index + 1,
-    name: brand?.title,
+    name: brand.title,
     action: (
       <>
-        <Link to={`/admin/brand/${brand?._id}`} className="fs-5">
+        <Link to={`/admin/brand/${brand._id}`} className="fs-5">
           <FiEdit />
         </Link>
         <button
           className="ms-3 fs-5 text-danger bg-transparent border-0"
-          onClick={() => showModal(brand?._id)}
+          onClick={() => showModal(brand._id)}
+          style={{ border: "none", outline: "none", boxShadow: "none" }}
         >
           <AiFillDelete />
         </button>
@@ -87,6 +88,9 @@ const BrandList = () => {
               className="text-white"
               style={{
                 textDecoration: "none",
+                border: "none",
+                outline: "none",
+                boxShadow: "none",
               }}
             >
               Add New Brand.

@@ -42,24 +42,24 @@ const CategoryList = () => {
 
   const dispatch = useDispatch();
   const { categories, isError, isLoading, isSuccess, message } = useSelector(
-    (state) => state?.productCategory
+    (state) => state.productCategory ?? {}
   );
 
   useEffect(() => {
     dispatch(resetState());
     dispatch(getProductCategories());
-  }, [dispatch]);
+  }, [dispatch, getProductCategories, resetState]);
 
   const data1 = categories?.map((category, index) => ({
     key: index + 1,
-    name: category?.title,
+    name: category.title,
     action: (
       <>
-        <Link to={`/admin/category/${category?._id}`} className="fs-5">
+        <Link to={`/admin/category/${category._id}`} className="fs-5">
           <FiEdit />
         </Link>
         <button className=" ms-2 fs-5  text-danger bg-transparent border-0">
-          <AiFillDelete onClick={() => showModal(category?._id)} />
+          <AiFillDelete onClick={() => showModal(category._id)} />
         </button>
       </>
     ),
@@ -85,6 +85,9 @@ const CategoryList = () => {
               className="text-white"
               style={{
                 textDecoration: "none",
+                border: "none",
+                outline: "none",
+                boxShadow: "none",
               }}
             >
               {" "}
@@ -101,7 +104,7 @@ const CategoryList = () => {
                 <LoadingOutlined style={{ fontSize: 40, fontWeight: 700 }} />
               }
             />
-            <p className="">Loading brands...</p>
+            <p className="">Loading Categories...</p>
           </div>
         ) : isError ? (
           <Alert message="Error" description={message} type="error" showIcon />

@@ -40,7 +40,7 @@ const AddProduct = () => {
   useEffect(() => {
     dispatch(getBrands());
     dispatch(getProductCategories());
-  }, []);
+  }, [dispatch]);
 
   const brandState = useSelector((state) => state?.brand?.brands);
   const categoryState = useSelector(
@@ -327,9 +327,16 @@ const AddProduct = () => {
             className="btn btn-primary border-0 rounded-3 mt-3 border-0 focus:outline-none focus:ring-0"
             style={{
               width: 140,
+              border: "none",
+              outline: "none",
+              boxShadow: "none",
             }}
           >
-            {productId ? "Update" : "Add"} Product
+            {isLoading
+              ? "Creating..."
+              : productId
+              ? "Update Product"
+              : "Add Product"}
           </button>
         </form>
       </div>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Table } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Table, Spin, Alert } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteAEnquiry,
@@ -54,55 +55,52 @@ const Enquiries = () => {
   useEffect(() => {
     dispatch(resetState());
     dispatch(getEnquiries());
-  }, []);
+  }, [dispatch, resetState, getEnquiries]);
 
-  const enquiryState = useSelector((state) => state?.enquiry?.enquiries);
+  const { enquiries, isError, isLoading, isSuccess, message } = useSelector(
+    (state) => state.enquiry ?? {}
+  );
 
-  const data1 = [];
-  for (let i = 0; i < enquiryState?.length; i++) {
-    data1.push({
-      key: i + 1,
-      name: enquiryState[i]?.name,
-      email: enquiryState[i]?.email,
-      mobile: enquiryState[i]?.mobile,
-      status: (
-        <>
-          <select
-            name=""
-            defaultValue={
-              enquiryState[i]?.status ? enquiryState[i]?.status : "Submitted"
-            }
-            className="form-control form-select shadow-none outline-none"
-            id=""
-            onChange={(e) =>
-              setEnquiryStatus(e.target.value, enquiryState[i]?._id)
-            }
-          >
-            <option value="Submitted">Submitted</option>
-            <option value="Contacted">Contacted</option>
-            <option value="In Progress">In Progress</option>
-            <option value="Resolved">Resolved</option>
-          </select>
-        </>
-      ),
-      action: (
-        <>
-          <Link
-            to={`/admin/enquiries/${enquiryState[i]?._id}`}
-            className="fs-5 ms-2 text-danger "
-          >
-            <FaRegEye />
-          </Link>
-          <button
-            className="ms-2 fs-5 text-danger bg-transparent border-0"
-            onClick={() => showModal(enquiryState[i]?._id)}
-          >
-            <AiFillDelete />
-          </button>
-        </>
-      ),
-    });
-  }
+  const data1 = enquiries.map((enquiry, index) => ({
+    key: index + 1,
+    name: enquiry.name,
+    email: enquiry.email,
+    mobile: enquiry.mobile,
+    status: (
+      <>
+        <select
+          name=""
+          defaultValue={enquiry.status ? enquiry.status : "Submitted"}
+          className="form-control form-select shadow-none outline-none"
+          id=""
+          onChange={(e) => setEnquiryStatus(e.target.value, enquiry._id)}
+        >
+          <option value="Submitted">Submitted</option>
+          <option value="Contacted">Contacted</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Resolved">Resolved</option>
+        </select>
+      </>
+    ),
+    action: (
+      <>
+        <Link
+          to={`/admin/enquiries/${enquiry._id}`}
+          className="fs-5 ms-2 text-danger "
+        >
+          <FaRegEye />
+        </Link>
+        <button
+          className="ms-2 fs-5 text-danger bg-transparent border-0"
+          onClick={() => showModal(enquiry._id)}
+          style={{ border: "none", outline: "none", boxShadow: "none" }}
+        >
+          <AiFillDelete />
+        </button>
+      </>
+    ),
+  } || []));
+
   const setEnquiryStatus = (e, i) => {
     const data = { id: i, enquiryData: e };
     dispatch(updateAEnquiry(data));
@@ -118,9 +116,21 @@ const Enquiries = () => {
     <>
       <div className="container">
         <h5 className="mb-2 title">Enquiries</h5>
-        <div>
+        {isLoading ? (
+          <div className="text-center">
+            <Spin
+              size="large"
+              indicator={
+                <LoadingOutlined style={{ fontSize: 40, fontWeight: 700 }} />
+              }
+            />
+            <p className="">Loading Enquiries...</p>
+          </div>
+        ) : isError ? (
+          <Alert message="Error" description={message} type="error" showIcon />
+        ) : (
           <Table columns={columns} dataSource={data1} />
-        </div>
+        )}
         <CustomModal
           open={open}
           hideModal={hideModal}

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Table } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Table, Spin, Alert } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteABlogCat,
@@ -27,7 +28,6 @@ const columns = [
   },
 ];
 
-
 const BlogCategoryList = () => {
   const [open, setOpen] = useState(false);
   const [blogCatId, setBlogCatId] = useState("");
@@ -42,41 +42,40 @@ const BlogCategoryList = () => {
   useEffect(() => {
     dispatch(resetState());
     dispatch(getBlogCategory());
-  }, []);
-  const blogCategoryState = useSelector(
-    (state) => state.blogCategory.blogCategories
+  }, [dispatch, resetState, getBlogCategory]);
+
+  const { blogCategories, isError, isLoading, isSuccess, message } =
+    useSelector((state) => state.blogCategory ?? {});
+
+  const data1 = blogCategories.map(
+    (blogCategory, index) =>
+      ({
+        key: index + 1,
+        name: blogCategory.title,
+        action: (
+          <>
+            <Link
+              to={`/admin/blog-category/${blogCategory._id}`}
+              className="fs-5"
+            >
+              <FiEdit />
+            </Link>
+            <button
+              onClick={() => showModal(blogCategory._id)}
+              className="ms-2 text-danger bg-transparent border-0 fs-5"
+              style={{}}
+            >
+              <AiFillDelete />
+            </button>
+          </>
+        ),
+      } || [])
   );
-  const data1 = [];
-  for (let i = 0; i < blogCategoryState.length; i++) {
-    data1.push({
-      key: i + 1,
-      name: blogCategoryState[i].title,
-      action: (
-        <>
-          <Link
-            to={`/admin/blog-category/${blogCategoryState[i]._id}`}
-            className="fs-5"
-          >
-            <FiEdit />
-          </Link>
-          <button
-            onClick={() => showModal(blogCategoryState[i]._id)}
-            className="ms-2 text-danger bg-transparent border-0 fs-5"
-          >
-            <AiFillDelete />
-          </button>
-        </>
-      ),
-    });
-  }
-
   const deleteBlogcategory = async (e) => {
-   await  dispatch(deleteABlogCat(e));
+    await dispatch(deleteABlogCat(e));
     setOpen(false);
-      dispatch(getBlogCategory());
+    dispatch(getBlogCategory());
   };
-  
-
   return (
     <>
       <div>
@@ -93,14 +92,25 @@ const BlogCategoryList = () => {
                 textDecoration: "none",
               }}
             >
-              {" "}
               Add New Blog Category.
             </Link>
           </button>
         </div>
-        <div>
+        {isLoading ? (
+          <div className="text-center">
+            <Spin
+              size="large"
+              indicator={
+                <LoadingOutlined style={{ fontSize: 40, fontWeight: 700 }} />
+              }
+            />
+            <p className="">Loading Blog Categories...</p>
+          </div>
+        ) : isError ? (
+          <Alert message="Error" description={message} type="error" showIcon />
+        ) : (
           <Table columns={columns} dataSource={data1} />
-        </div>
+        )}
         <CustomModal
           open={open}
           hideModal={hideModal}

@@ -61,28 +61,28 @@ const ProductList = () => {
 
   const dispatch = useDispatch();
   const { products, isLoading, isError, message } = useSelector(
-    (state) => state.product
+    (state) => state.product ?? {}
   );
 
   useEffect(() => {
     dispatch(resetState());
     dispatch(getProducts());
-  }, []);
+  }, [dispatch, getProducts, resetState]);
 
-  const data1 = products?.map(
+  const data1 = products.map(
     (product, index) =>
       ({
         key: index + 1,
-        title: product?.title,
-        brand: product?.brand,
-        category: product?.category,
-        screensize: `${product?.screensize}"`,
+        title: product.title,
+        brand: product.brand,
+        category: product.category,
+        screensize: `${product.screensize}"`,
         price: `Ksh ${new Intl.NumberFormat("en-US", {
           maximumFractionDigits: 0,
-        }).format(product?.price)}`,
+        }).format(product.price)}`,
         action: (
           <>
-            <Link to={`/admin/product/${product?._id}`} className="fs-5">
+            <Link to={`/admin/product/${product._id}`} className="fs-5">
               <FiEdit />
             </Link>
             <button
@@ -114,7 +114,12 @@ const ProductList = () => {
             <Link
               to="/admin/product"
               className="text-white"
-              style={{ textDecoration: "none" }}
+              style={{
+                textDecoration: "none",
+                border: "none",
+                outline: "none",
+                boxShadow: "none",
+              }}
             >
               Add New Product
             </Link>

@@ -89,7 +89,7 @@ const Login = () => {
                   type="submit"
                   className="button signup text-white w-100 "
                 >
-                  Login
+                  {isLoading ? "Loading..." : "Login"}
                 </button>
               </div>
               <div className="mt-3 text-end">

@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { useLocation, useNavigate,Link } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import {
   createBlogCategory,
   getABlogCat,
@@ -21,7 +21,7 @@ const AddBlogCategory = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const blogCategoryId = location.pathname.split("/")[3];
-  const newBlogCategory = useSelector((state) => state.bCategory);
+  const newBlogCategory = useSelector((state) => state.blogCategory);
   const {
     isSuccess,
     isError,
@@ -38,7 +38,6 @@ const AddBlogCategory = () => {
       dispatch(resetState());
     }
   }, [blogCategoryId]);
-
 
   useEffect(() => {
     if (isSuccess && createdBlogCategory) {
@@ -79,11 +78,12 @@ const AddBlogCategory = () => {
       <div>
         <div className="d-flex justify-content-between align-items-center ">
           <h5 className="mb-2 title">
-            {blogCategoryId? "Edit" : "Add"} Blog Category
+            {blogCategoryId ? "Edit" : "Add"} Blog Category
           </h5>{" "}
           <button
             className=" btn btn-primary border-0 rounded-2 my-3 text-white"
             type="button"
+            style={{ border: "none", outline: "none", boxShadow: "none" }}
           >
             <Link
               to={"/admin/blog-category-list"}
@@ -116,8 +116,13 @@ const AddBlogCategory = () => {
             <button
               type="submit"
               className="btn btn-primary border-0 mt-3 rounded-3 my-2 "
+              style={{ border: "none", outline: "none", boxShadow: "none" }}
             >
-              {blogCategoryId ? "Edit" : "Add"} Blog Category
+              {isLoading
+                ? "Loading..."
+                : blogCategoryId
+                ? "Edit Blog category"
+                : "Add Blog Category"}
             </button>
           </form>
         </div>

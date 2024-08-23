@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Table } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Table, Spin, Alert } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteABlog, getBlogs, resetState } from "../features/blogs/blogSlice";
 import { Link } from "react-router-dom";
@@ -41,31 +42,33 @@ const BlogList = () => {
   useEffect(() => {
     dispatch(resetState());
     dispatch(getBlogs());
-  }, []);
+  }, [dispatch, getBlogs, resetState]);
 
-  const blogState = useSelector((state) => state.blog.blogs);
+  const { blogs, isError, isLoading, isSuccess, message } = useSelector(
+    (state) => state.blog ?? {}
+  );
 
-  const data1 = [];
-  for (let i = 0; i < blogState.length; i++) {
-    data1.push({
-      key: i + 1,
-      name: blogState[i].title,
-      category: blogState[i].category,
-      action: (
-        <>
-          <Link to={`/admin/blog/${blogState[i]._id}`} className="fs-5">
-            <FiEdit />
-          </Link>
-          <button
-            className="ms-2 fs-5 text-danger bg-transparent border-0"
-            onClick={() => showModal(blogState[i]._id)}
-          >
-            <AiFillDelete />
-          </button>
-        </>
-      ),
-    });
-  }
+  const data1 = blogs.map(
+    (blog, index) =>
+      ({
+        key: index + 1,
+        name: blog.title,
+        category: blog.category,
+        action: (
+          <>
+            <Link to={`/admin/blog/${blog._id}`} className="fs-5">
+              <FiEdit />
+            </Link>
+            <button
+              className="ms-2 fs-5 text-danger bg-transparent border-0"
+              onClick={() => showModal(blog._id)}
+            >
+              <AiFillDelete />
+            </button>
+          </>
+        ),
+      } || [])
+  );
 
   const deleteBlog = async (e) => {
     await dispatch(deleteABlog(e));
@@ -75,7 +78,7 @@ const BlogList = () => {
   return (
     <>
       <div>
-        <div className="d-flex justify-content-between align-items-center ">
+        <div className="d-flex justify-content-between align-items-center">
           <h5 className="mb-2 title">Blog List</h5>
           <button
             className=" btn btn-primary border-0 rounded-2 my-3 text-white"
@@ -86,16 +89,30 @@ const BlogList = () => {
               className="text-white"
               style={{
                 textDecoration: "none",
+                border: "none",
+                outline: "none",
+                boxShadow: "none",
               }}
             >
-              {" "}
               Add New Blog.
             </Link>
           </button>
         </div>
-        <div>
+        {isLoading ? (
+          <div className="text-center">
+            <Spin
+              size="large"
+              indicator={
+                <LoadingOutlined style={{ fontSize: 40, fontWeight: 700 }} />
+              }
+            />
+            <p className="">Loading products...</p>
+          </div>
+        ) : isError ? (
+          <Alert message="Error" description={message} type="error" showIcon />
+        ) : (
           <Table columns={columns} dataSource={data1} />
-        </div>
+        )}
         <CustomModal
           open={open}
           hideModal={hideModal}

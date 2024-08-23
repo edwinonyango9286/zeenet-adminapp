@@ -47,7 +47,10 @@ const ViewEnquiry = () => {
           onClick={goBack}
           className="bg-transparent border-0 fs-6 mb-0 d-flex align-items-center gap-1 "
         >
-          <IoMdArrowBack className="fs-5" />
+          <IoMdArrowBack
+            className="fs-5"
+            style={{ border: "none", outline: "none", boxShadow: "none" }}
+          />
           Go Back
         </button>
       </div>

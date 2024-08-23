@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Table } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Table, Spin, Alert } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { AiFillDelete } from "react-icons/ai";
@@ -51,36 +52,37 @@ const CouponList = () => {
   useEffect(() => {
     dispatch(resetState());
     dispatch(getCoupons());
-  }, []);
+  }, [dispatch, getCoupons, resetState]);
 
-  const couponState = useSelector((state) => state.coupon.coupons);
-  const data1 = [];
-  for (let i = 0; i < couponState.length; i++) {
-    data1.push({
-      key: i + 1,
-      name: couponState[i].name,
-      expiry: new Date(couponState[i].expiry).toLocaleString(),
-      discount: couponState[i].discount,
+  const { coupons, isError, isLoading, isSuccess, message } = useSelector(
+    (state) => state.coupon ?? {}
+  );
+  const data1 = coupons.map(
+    (coupon, index) =>
+      ({
+        key: index + 1,
+        name: coupon.name,
+        expiry: new Date(coupon.expiry).toLocaleString(),
+        discount: coupon.discount,
 
-      action: (
-        <>
-          <Link to={`/admin/coupon/${couponState[i]._id}`} className="fs-5">
-            <FiEdit />
-          </Link>
-          <button
-            onClick={() => showModal(couponState[i]._id)}
-            className="ms-2 text-danger bg-transparent border-0 fs-5"
-          >
-            <AiFillDelete />
-          </button>
-        </>
-      ),
-    });
-  }
+        action: (
+          <>
+            <Link to={`/admin/coupon/${coupon._id}`} className="fs-5">
+              <FiEdit />
+            </Link>
+            <button
+              onClick={() => showModal(coupon._id)}
+              className="ms-2 text-danger bg-transparent border-0 fs-5"
+            >
+              <AiFillDelete />
+            </button>
+          </>
+        ),
+      } || [])
+  );
 
   const deleteCoupon = async (e) => {
     await dispatch(deleteACoupon(e));
-
     setOpen(false);
     dispatch(getCoupons());
   };
@@ -99,6 +101,9 @@ const CouponList = () => {
               className="text-white"
               style={{
                 textDecoration: "none",
+                border: "none",
+                outline: "none",
+                boxShadow: "none",
               }}
             >
               {" "}
@@ -106,7 +111,22 @@ const CouponList = () => {
             </Link>
           </button>
         </div>
-        <div>{<Table columns={columns} dataSource={data1} />}</div>
+
+        {isLoading ? (
+          <div className="text-center">
+            <Spin
+              size="large"
+              indicator={
+                <LoadingOutlined style={{ fontSize: 40, fontWeight: 700 }} />
+              }
+            />
+            <p className="">Loading coupons...</p>
+          </div>
+        ) : isError ? (
+          <Alert message="Error" description={message} type="error" showIcon />
+        ) : (
+          <Table columns={columns} dataSource={data1} />
+        )}
         <CustomModal
           open={open}
           hideModal={hideModal}

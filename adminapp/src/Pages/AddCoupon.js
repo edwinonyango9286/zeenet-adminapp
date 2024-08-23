@@ -89,6 +89,7 @@ const AddCoupon = () => {
           <button
             className=" btn btn-primary border-0 rounded-2 my-3 text-white"
             type="button"
+            style={{ border: "none", outline: "none", boxShadow: "none" }}
           >
             <Link
               to={"/admin/coupon-list"}
@@ -148,8 +149,20 @@ const AddCoupon = () => {
           <div className="error">
             {formik.touched.discount && formik.errors.discount}
           </div>
-          <button className="btn btn-primary border-0 rounded-3 mt-3" style={{width: 140}}>
-            {couponId ? "Edit" : "Add"} Coupon
+          <button
+            className="btn btn-primary border-0 rounded-3 mt-3"
+            style={{
+              width: 140,
+              border: "none",
+              outline: "none",
+              boxShadow: "none",
+            }}
+          >
+            {isLoading
+              ? "Creating..."
+              : couponId
+              ? "Edit Coupon"
+              : "Add Coupon"}
           </button>
         </form>
       </div>
