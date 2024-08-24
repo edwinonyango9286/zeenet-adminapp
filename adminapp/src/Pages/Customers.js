@@ -13,7 +13,7 @@ const columns = [
     title: "Name",
     dataIndex: "name",
     render: (text, record) => {
-      const [firstName, lastName] = text?.split(" ");
+      const [firstName, lastName] = text?.split("  ");
       return (
         <span>
           <span className="text-capitalize">{firstName}</span>
@@ -42,7 +42,7 @@ const Customers = () => {
   useEffect(() => {
     dispatch(resetState());
     dispatch(getUsers());
-  }, [dispatch]);
+  }, [dispatch, resetState, getUsers]);
 
   const data1 = customers
     ?.filter((customer) => customer?.role !== "admin")

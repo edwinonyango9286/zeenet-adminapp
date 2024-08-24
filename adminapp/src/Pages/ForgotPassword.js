@@ -23,7 +23,7 @@ const ForgotPassword = () => {
               type="submit"
               style={{ border: "none", outline: "none", boxShadow: "none" }}
             >
-              Send Link
+              Send link
             </button>
           </form>
         </div>

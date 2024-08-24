@@ -90,8 +90,9 @@ const Login = () => {
                 <button
                   type="submit"
                   className="button signup text-white w-100 "
+                  disabled={isLoading}
                 >
-                  {isLoading ? "Loading..." : "Login"}
+                  {isLoading ? "Logging in..." : "Login"}
                 </button>
               </div>
               <div className="mt-3 text-end">

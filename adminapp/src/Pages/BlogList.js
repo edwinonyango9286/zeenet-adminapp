@@ -83,15 +83,13 @@ const BlogList = () => {
           <button
             className=" btn btn-primary border-0 rounded-2 my-3 text-white"
             type="button"
+            style={{ border: "none", outline: "none", boxShadow: "none" }}
           >
             <Link
               to={"/admin/blog"}
               className="text-white"
               style={{
                 textDecoration: "none",
-                border: "none",
-                outline: "none",
-                boxShadow: "none",
               }}
             >
               Add New Blog.
