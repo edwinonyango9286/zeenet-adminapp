@@ -35,7 +35,7 @@ const columns = [
     dataIndex: "action",
   },
 ];
-const Orders = () => {
+const Orders = React.memo(() => {
   const dispatch = useDispatch();
   const { orders, isError, isLoading, isSuccess, message } = useSelector(
     (state) => state?.auth?.orders
@@ -96,6 +96,6 @@ const Orders = () => {
       </div>
     </>
   );
-};
+});
 
 export default Orders;

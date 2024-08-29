@@ -4,10 +4,8 @@ import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import {getBrands } from "../features/brands/brandSlice";
-import {
-  getProductCategories,
-} from "../features/category/categorySlice";
+import { getBrands } from "../features/brands/brandSlice";
+import { getProductCategories } from "../features/category/categorySlice";
 import Dropzone from "react-dropzone";
 import { delImg, uploadImg } from "../features/upload/uploadSlice";
 import {
@@ -36,7 +34,6 @@ const AddProduct = React.memo(() => {
   const navigate = useNavigate();
   const location = useLocation();
   const productId = location.pathname.split("/")[3];
-  const [img, setImg] = useState([]);
 
   useEffect(() => {
     dispatch(getBrands());
@@ -70,14 +67,15 @@ const AddProduct = React.memo(() => {
   useEffect(() => {
     if (productId) {
       dispatch(getAProduct(productId));
+      img.push(productImages);
     } else {
       dispatch(resetState());
     }
-  }, [productId, dispatch]);
+  }, [dispatch, productId]);
 
   useEffect(() => {
     dispatch(resetState());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (isSuccess && createdProduct) {
@@ -93,8 +91,16 @@ const AddProduct = React.memo(() => {
     }
   }, [isSuccess, isError, isLoading, createdProduct, navigate, updatedProduct]);
 
+  const img = [];
+  imgState.forEach((i) => {
+    img.push({
+      public_id: i.public_id,
+      url: i.url,
+    });
+  });
+
   useEffect(() => {
-    setImg(imgState.map((i) => ({ public_id: i.public_id, url: i.url })));
+    formik.values.images = img;
   }, [imgState]);
 
   const formik = useFormik({
@@ -115,8 +121,8 @@ const AddProduct = React.memo(() => {
     onSubmit: (values) => {
       if (productId) {
         const data = { id: productId, productData: values };
-        dispatch(updateAProduct(data));
         dispatch(resetState());
+        dispatch(updateAProduct(data));
       } else {
         dispatch(createProduct(values));
         formik.resetForm();
@@ -185,6 +191,7 @@ const AddProduct = React.memo(() => {
           <div className="error">
             {formik.touched.description && formik.errors.description}
           </div>
+          
           <CustomInput
             type="number"
             label="Enter product price."
@@ -285,7 +292,7 @@ const AddProduct = React.memo(() => {
             {formik.touched.quantity && formik.errors.quantity}
           </div>
 
-          <div className="bg-white text-center boder-1 p-5">
+          <div className="bg-white text-center boder-1 p-4">
             <Dropzone
               onDrop={(acceptedFiles) => dispatch(uploadImg(acceptedFiles))}
             >

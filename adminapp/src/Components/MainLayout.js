@@ -12,7 +12,6 @@ import { ImBlogger2 } from "react-icons/im";
 import { LiaBlogSolid } from "react-icons/lia";
 import { BiSolidMessageEdit } from "react-icons/bi";
 import { Outlet } from "react-router-dom";
-import userImage from "../Images/user.jpg";
 import { MdNotificationsNone } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -195,7 +194,7 @@ const MainLayout = React.memo(() => {
               <img
                 width={34}
                 height={34}
-                src={userImage}
+                src={user.avatar}
                 alt="userimage"
                 className="rounded-circle"
               ></img>
@@ -207,9 +206,9 @@ const MainLayout = React.memo(() => {
               aria-expanded="false"
             >
               <p className=" mb-0 text-capitalize">
-                {user?.firstname} {user?.lastname}
+                {user.firstname} {user.lastname}
               </p>
-              <p className="mb-0">{user?.email}</p>
+              <p className="mb-0">{user.email}</p>
             </div>
             <div
               className="dropdown-menu"

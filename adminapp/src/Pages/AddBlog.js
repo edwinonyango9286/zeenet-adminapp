@@ -14,8 +14,8 @@ import {
   updateABlog,
 } from "../features/blogs/blogSlice";
 import { delImg, uploadImg } from "../features/upload/uploadSlice";
-import ReactQuill from "react-quill";
 import { getBlogCategory } from "../features/blogcategory/blogCategorySlice";
+import CustomTextarea from "../Components/CustomTextarea";
 
 const schema = Yup.object().shape({
   title: Yup.string().required("Blog Name is required"),
@@ -23,7 +23,7 @@ const schema = Yup.object().shape({
   category: Yup.string().required("Category is required"),
 });
 
-const AddBlog = () => {
+const AddBlog = React.memo(() => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -34,9 +34,9 @@ const AddBlog = () => {
   }, [dispatch]);
 
   const blogCatState = useSelector(
-    (state) => state.blogCategory?.blogCategories
+    (state) => state.blogCategory.blogCategories
   );
-  const imgState = useSelector((state) => state.upload?.images);
+  const imgState = useSelector((state) => state.upload.images);
   const newBlog = useSelector((state) => state.blog);
 
   const {
@@ -68,6 +68,7 @@ const AddBlog = () => {
   useEffect(() => {
     if (isSuccess && createdBlog) {
       toast.success("Blog added successfully.");
+      navigate("/admin/blog-list");
     }
     if (isSuccess && updatedBlog) {
       toast.success("Blog updated successfully.");
@@ -76,7 +77,7 @@ const AddBlog = () => {
     if (isError) {
       toast.error("Something went wrong. Please try again.");
     }
-  }, [isSuccess, isError, isLoading]);
+  }, [isSuccess, isError, isLoading, navigate, createBlog, updatedBlog]);
 
   const img = [];
   imgState.forEach((i) => {
@@ -88,7 +89,7 @@ const AddBlog = () => {
 
   useEffect(() => {
     formik.values.images = img;
-  }, [img]);
+  }, [imgState]);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -175,11 +176,15 @@ const AddBlog = () => {
             <div className="error">
               {formik.touched.category && formik.errors.category}
             </div>
-            <div>
-              <ReactQuill
-                theme="snow"
+
+            <div className="form-floating mt-2">
+              <CustomTextarea
+                type="text"
+                label="Enter blog description."
                 name="description"
+                id="description"
                 onChange={formik.handleChange("description")}
+                onBlur={formik.handleChange("description")}
                 value={formik.values.description}
               />
             </div>
@@ -187,7 +192,7 @@ const AddBlog = () => {
               {formik.touched.description && formik.errors.description}
             </div>
 
-            <div className="bg-white text-center boder-1 p-5  ">
+            <div className="bg-white text-center boder-1 p-4  ">
               <Dropzone
                 onDrop={(acceptedFiles) => dispatch(uploadImg(acceptedFiles))}
               >
@@ -248,6 +253,6 @@ const AddBlog = () => {
       </div>
     </>
   );
-};
+});
 
 export default AddBlog;

@@ -11,7 +11,7 @@ const Loginschema = Yup.object().shape({
   password: Yup.string().required("Password required"),
 });
 
-const Login = () => {
+const Login = React.memo(() => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -109,5 +109,5 @@ const Login = () => {
       </div>
     </>
   );
-};
+});
 export default Login;

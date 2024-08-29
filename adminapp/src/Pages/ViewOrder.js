@@ -27,7 +27,7 @@ const columns = [
   },
 ];
 
-const ViewOrder = () => {
+const ViewOrder = React.memo(() => {
   const location = useLocation();
   const orderId = location.pathname.split("/")[3];
   const dispatch = useDispatch();
@@ -56,6 +56,6 @@ const ViewOrder = () => {
       </div>
     </>
   );
-};
+});
 
 export default ViewOrder;

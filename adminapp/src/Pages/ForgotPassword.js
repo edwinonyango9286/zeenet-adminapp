@@ -1,7 +1,7 @@
 import React from "react";
 import CustomInput from "../Components/CustomInput";
 
-const ForgotPassword = () => {
+const ForgotPassword = React.memo(() => {
   return (
     <>
       <div
@@ -30,6 +30,6 @@ const ForgotPassword = () => {
       </div>
     </>
   );
-};
+});
 
 export default ForgotPassword;

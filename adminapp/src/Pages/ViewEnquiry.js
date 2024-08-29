@@ -8,7 +8,7 @@ import {
 } from "../features/enquiry/enquirySlice";
 import { IoMdArrowBack } from "react-icons/io";
 
-const ViewEnquiry = () => {
+const ViewEnquiry = React.memo(() => {
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -99,6 +99,6 @@ const ViewEnquiry = () => {
       </div>
     </div>
   );
-};
+});
 
 export default ViewEnquiry;

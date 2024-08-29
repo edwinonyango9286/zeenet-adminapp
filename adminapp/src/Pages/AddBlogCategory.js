@@ -16,7 +16,7 @@ const schema = Yup.object().shape({
   title: Yup.string().required("Blog Category Name is required"),
 });
 
-const AddBlogCategory = () => {
+const AddBlogCategory = React.memo(() => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -129,6 +129,6 @@ const AddBlogCategory = () => {
       </div>
     </>
   );
-};
+});
 
 export default AddBlogCategory;
