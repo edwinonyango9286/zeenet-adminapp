@@ -1,13 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import CustomInput from "../Components/CustomInput";
 import { Link } from "react-router-dom";
-import ReactQuill from "react-quill";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { getABrand, getBrands } from "../features/brands/brandSlice";
+import {getBrands } from "../features/brands/brandSlice";
 import {
-  getACategory,
   getProductCategories,
 } from "../features/category/categorySlice";
 import Dropzone from "react-dropzone";
@@ -20,6 +18,7 @@ import {
 } from "../features/product/productSlice";
 import { toast } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
+import CustomTextarea from "../Components/CustomTextarea";
 
 const schema = Yup.object().shape({
   title: Yup.string().required("Add product name."),
@@ -32,22 +31,24 @@ const schema = Yup.object().shape({
   screensize: Yup.number().required("Add product screen size."),
 });
 
-const AddProduct = () => {
+const AddProduct = React.memo(() => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const productId = location.pathname.split("/")[3];
+  const [img, setImg] = useState([]);
+
   useEffect(() => {
     dispatch(getBrands());
     dispatch(getProductCategories());
   }, [dispatch]);
 
-  const brandState = useSelector((state) => state?.brand?.brands);
+  const brandState = useSelector((state) => state.brand.brands);
   const categoryState = useSelector(
-    (state) => state?.productCategory?.categories
+    (state) => state.productCategory.categories
   );
-  const imgState = useSelector((state) => state?.upload?.images);
-  const newProduct = useSelector((state) => state?.product);
+  const imgState = useSelector((state) => state.upload.images);
+  const newProduct = useSelector((state) => state.product);
 
   const {
     isSuccess,
@@ -69,16 +70,13 @@ const AddProduct = () => {
   useEffect(() => {
     if (productId) {
       dispatch(getAProduct(productId));
-      img.push(productImages);
     } else {
       dispatch(resetState());
     }
-  }, [productId]);
+  }, [productId, dispatch]);
 
   useEffect(() => {
     dispatch(resetState());
-    dispatch(getACategory());
-    dispatch(getABrand());
   }, []);
 
   useEffect(() => {
@@ -93,19 +91,11 @@ const AddProduct = () => {
     if (isError) {
       toast.error("Something went wrong. Please try again later.");
     }
-  }, [isSuccess, isError, isLoading]);
-
-  const img = [];
-  imgState.forEach((i) => {
-    img.push({
-      public_id: i.public_id,
-      url: i.url,
-    });
-  });
+  }, [isSuccess, isError, isLoading, createdProduct, navigate, updatedProduct]);
 
   useEffect(() => {
-    formik.values.images = img;
-  }, [img]);
+    setImg(imgState.map((i) => ({ public_id: i.public_id, url: i.url })));
+  }, [imgState]);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -179,13 +169,19 @@ const AddProduct = () => {
           <div className="error">
             {formik.touched.title && formik.errors.title}
           </div>
-          <div>
-            <ReactQuill
-              theme="snow"
+
+          <div className="form-floating mt-2">
+            <CustomTextarea
+              type="text"
+              name="description"
+              label="Enter product description."
+              id="description"
               onChange={formik.handleChange("description")}
+              onBlur={formik.handleBlur("description")}
               value={formik.values.description}
             />
           </div>
+
           <div className="error">
             {formik.touched.description && formik.errors.description}
           </div>
@@ -347,6 +343,6 @@ const AddProduct = () => {
       </div>
     </>
   );
-};
+});
 
 export default AddProduct;

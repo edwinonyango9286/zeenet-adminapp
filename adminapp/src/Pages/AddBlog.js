@@ -28,9 +28,11 @@ const AddBlog = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const blogId = location.pathname.split("/")[3];
+
   useEffect(() => {
     dispatch(getBlogCategory());
-  }, []);
+  }, [dispatch]);
+
   const blogCatState = useSelector(
     (state) => state.blogCategory?.blogCategories
   );
@@ -56,12 +58,12 @@ const AddBlog = () => {
     } else {
       dispatch(resetState());
     }
-  }, [blogId]);
+  }, [dispatch, blogId]);
 
   useEffect(() => {
     dispatch(resetState());
     dispatch(getBlogCategory());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (isSuccess && createdBlog) {

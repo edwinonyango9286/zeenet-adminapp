@@ -47,7 +47,7 @@ const BrandList = () => {
   useEffect(() => {
     dispatch(resetState());
     dispatch(getBrands());
-  }, [dispatch, getBrands, resetState]);
+  }, [dispatch]);
 
   const data1 = brands?.map((brand, index) => ({
     key: index + 1,

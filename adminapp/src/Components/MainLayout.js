@@ -25,7 +25,7 @@ import { useSelector } from "react-redux";
 
 const { Header, Sider, Content } = Layout;
 
-const MainLayout = () => {
+const MainLayout = React.memo(() => {
   const user = useSelector((state) => state?.auth?.user);
   const [collapsed, setCollapsed] = useState(false);
   const {
@@ -254,6 +254,6 @@ const MainLayout = () => {
       </Layout>
     </Layout>
   );
-};
+});
 
 export default MainLayout;

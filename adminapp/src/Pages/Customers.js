@@ -42,7 +42,7 @@ const Customers = () => {
   useEffect(() => {
     dispatch(resetState());
     dispatch(getUsers());
-  }, [dispatch, resetState, getUsers]);
+  }, [dispatch]);
 
   const data1 = customers
     ?.filter((customer) => customer?.role !== "admin")

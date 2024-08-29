@@ -48,7 +48,7 @@ const CategoryList = () => {
   useEffect(() => {
     dispatch(resetState());
     dispatch(getProductCategories());
-  }, [dispatch, getProductCategories, resetState]);
+  }, [dispatch]);
 
   const data1 = categories?.map((category, index) => ({
     key: index + 1,

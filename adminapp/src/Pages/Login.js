@@ -36,7 +36,7 @@ const Login = () => {
     } else {
       navigate("/");
     }
-  }, [user, isError, isSuccess, isLoading]);
+  }, [user, isError, isSuccess, isLoading, navigate]);
 
   return (
     <>
@@ -100,7 +100,7 @@ const Login = () => {
                   to="/forgot-password"
                   className="text-decoration-none text-dark"
                 >
-                  Forgot Password
+                  Forgot password?
                 </Link>
               </div>
             </form>

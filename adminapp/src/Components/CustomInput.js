@@ -1,6 +1,6 @@
 import React from "react";
 
-const CustomInput = (props) => {
+const CustomInput = React.memo((props) => {
   const {
     type,
     label,
@@ -19,7 +19,7 @@ const CustomInput = (props) => {
       <div className="form-floating mt-2">
         <input
           type={type}
-          className={`form-control border  shadow-none py-2 ${i_class}`}
+          className={`form-control border rounded-md shadow-none ${i_class}`}
           id={i_id}
           max={max}
           min={min}
@@ -32,7 +32,7 @@ const CustomInput = (props) => {
         />
         <label htmlFor={label}>{label}</label>
       </div>
-      </>
+    </>
   );
-};
+});
 export default CustomInput;

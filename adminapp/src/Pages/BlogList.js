@@ -42,7 +42,7 @@ const BlogList = () => {
   useEffect(() => {
     dispatch(resetState());
     dispatch(getBlogs());
-  }, [dispatch, getBlogs, resetState]);
+  }, [dispatch]);
 
   const { blogs, isError, isLoading, isSuccess, message } = useSelector(
     (state) => state.blog ?? {}
