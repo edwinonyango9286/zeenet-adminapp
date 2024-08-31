@@ -23,9 +23,7 @@
   font-size: 14px;
   font-family: Roboto !important;
 }
-.quill {
-  background-color: white;
-}
+
 .form-control {
   box-shadow: none;
   border-radius: var(--color-212529);
@@ -44,6 +42,66 @@
   font-size: 12px;
   font-family: Roboto !important;
   color: var(--color-828599);
+}
+
+.gap-10 {
+  gap: 0.625rem;
+}
+
+.gap-15 {
+  gap: 0.9375rem;
+}
+
+.gap-20 {
+  gap: 1.25rem;
+}
+
+.gap-25 {
+  gap: 1.5625rem;
+}
+
+.gap-30 {
+  gap: 1.875rem;
+}
+
+.gap-35 {
+  gap: 2.1875rem;
+}
+
+.gap-40 {
+  gap: 2.5rem;
+}
+
+.gap-45 {
+  gap: 2.8125rem;
+}
+
+.gap-50 {
+  gap: 3.125rem;
+}
+
+.gap-55 {
+  gap: 3.4375rem;
+}
+
+.gap-60 {
+  gap: 3.75rem;
+}
+
+.gap-65 {
+  gap: 4.0625rem;
+}
+
+.gap-70 {
+  gap: 4.375rem;
+}
+
+.gap-75 {
+  gap: 4.6875rem;
+}
+
+.gap-80 {
+  gap: 5rem;
 }
 
 

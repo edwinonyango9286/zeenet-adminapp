@@ -4,8 +4,8 @@ const CustomInput = React.memo((props) => {
   const {
     type,
     label,
-    i_id,
-    i_class,
+    id,
+    className,
     name,
     val,
     onChng,
@@ -16,11 +16,11 @@ const CustomInput = React.memo((props) => {
   } = props;
   return (
     <>
-      <div className="form-floating mt-2">
+      <div className="form-floating mt-4">
         <input
           type={type}
-          className={`form-control border rounded-md shadow-none ${i_class}`}
-          id={i_id}
+          className={`form-control border shadow-none ${className}`}
+          id={id}
           max={max}
           min={min}
           step={step}

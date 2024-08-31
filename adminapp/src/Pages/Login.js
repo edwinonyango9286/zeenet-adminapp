@@ -7,8 +7,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { login, resetState } from "../features/auth/authSlice";
 
 const Loginschema = Yup.object().shape({
-  email: Yup.string().email("Not a valid email").required("Email required"),
-  password: Yup.string().required("Password required"),
+  email: Yup.string().email().required(),
+  password: Yup.string()
+    .min(8)
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+      "Password must have a mix of upper and lowercase letters, atleast one number and a special character,"
+    )
+    .required(),
 });
 
 const Login = React.memo(() => {
@@ -38,17 +44,25 @@ const Login = React.memo(() => {
     }
   }, [user, isError, isSuccess, isLoading, navigate]);
 
+  useEffect(() => {
+    if (isError) {
+      dispatch(resetState);
+    }
+  }, [dispatch]);
   return (
     <>
       <div
-        className="py-2"
+        className=""
         style={{
           background: "#232f3e",
           minHeight: "100vh",
         }}
       >
-        <div className="col-12 d-flex align-items-center justify-content-center">
-          <div className="my-4 w-full w-md-30 bg-white rounded-2 p-4">
+        <div className="col-12 d-flex items-center justify-content-center">
+          <div
+            className="my-4 w-full bg-white rounded p-4"
+            style={{ width: "360px", height: "auto", borderRadius: "10px" }}
+          >
             <h5 className="text-center title">Login</h5>
             <p className="text-center">Login to your account to continue.</p>
             <div className="error text-center">
