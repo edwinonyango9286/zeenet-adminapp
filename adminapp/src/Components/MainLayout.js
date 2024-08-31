@@ -194,7 +194,7 @@ const MainLayout = React.memo(() => {
               <img
                 width={34}
                 height={34}
-                src={user.avatar}
+                src={user?.avatar}
                 alt="userimage"
                 className="rounded-circle"
               ></img>
@@ -206,9 +206,9 @@ const MainLayout = React.memo(() => {
               aria-expanded="false"
             >
               <p className=" mb-0 text-capitalize">
-                {user.firstname} {user.lastname}
+                {user?.firstname} {user?.lastname}
               </p>
-              <p className="mb-0">{user.email}</p>
+              <p className="mb-0">{user?.email}</p>
             </div>
             <div
               className="dropdown-menu"
