@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import bCategoryService from "./blogCategoryService";
 import { toast } from "react-toastify";
 
-
 export const getBlogCategory = createAsyncThunk(
   "bCategory/get-blog-categories",
   async (thunkAPI) => {
@@ -14,7 +13,6 @@ export const getBlogCategory = createAsyncThunk(
   }
 );
 
-
 export const createBlogCategory = createAsyncThunk(
   "bCategory/create-blog-cat",
   async (blogCatData, thunkAPI) => {
@@ -25,7 +23,6 @@ export const createBlogCategory = createAsyncThunk(
     }
   }
 );
-
 
 export const getABlogCat = createAsyncThunk(
   "bCategory/get-blog-cat",
@@ -88,10 +85,7 @@ export const blogCategorySlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.error;
-          if (state.isError === true) {
-            toast.error(action?.payload?.response?.data?.message);
-          }
+        state.message = action.payload.response.data.message;
       })
       .addCase(createBlogCategory.pending, (state) => {
         state.isLoading = true;
@@ -106,10 +100,7 @@ export const blogCategorySlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.error;
-          if (state.isError === true) {
-            toast.error(action?.payload?.response?.data?.message);
-          }
+        state.message = action.payload.response.data.message;
       })
       .addCase(getABlogCat.pending, (state) => {
         state.isLoading = true;
@@ -124,10 +115,7 @@ export const blogCategorySlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.error;
-          if (state.isError === true) {
-            toast.error(action?.payload?.response?.data?.message);
-          }
+        state.message = action.payload.response.data.message;
       })
       .addCase(updateABLogCat.pending, (state) => {
         state.isLoading = true;
@@ -142,10 +130,7 @@ export const blogCategorySlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.error;
-          if (state.isError === true) {
-            toast.error(action?.payload?.response?.data?.message);
-          }
+        state.message = action.payload.response.data.message;
       })
       .addCase(deleteABlogCat.pending, (state) => {
         state.isLoading = true;
@@ -160,12 +145,9 @@ export const blogCategorySlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.error;
-          if (state.isError === true) {
-            toast.error(action?.payload?.response?.data?.message);
-          }
+        state.message = action.payload.response.data.message;
       })
-      .addCase(resetState,() => initialState );
+      .addCase(resetState, () => initialState);
   },
 });
 

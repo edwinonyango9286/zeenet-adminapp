@@ -54,7 +54,6 @@ export const deleteABlog = createAsyncThunk(
   }
 );
 
-
 export const resetState = createAction("Reset_all");
 
 const initialState = {
@@ -84,10 +83,7 @@ export const blogSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.error;
-          if (state.isError === true) {
-            toast.error(action?.payload?.response?.data?.message);
-          }
+        state.message = action.payload.response.data.message;
       })
       .addCase(createBlog.pending, (state) => {
         state.isLoading = true;
@@ -102,10 +98,7 @@ export const blogSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.error;
-          if (state.isError === true) {
-            toast.error(action?.payload?.response?.data?.message);
-          }
+        state.message = action.payload.response.data.message;
       })
       .addCase(getABlog.pending, (state) => {
         state.isLoading = true;
@@ -123,10 +116,7 @@ export const blogSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.error;
-          if (state.isError === true) {
-            toast.error(action?.payload?.response?.data?.message);
-          }
+        state.message = action.payload.response.data.message;
       })
       .addCase(updateABlog.pending, (state) => {
         state.isLoading = true;
@@ -141,10 +131,7 @@ export const blogSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.error;
-          if (state.isError === true) {
-            toast.error(action?.payload?.response?.data?.message);
-          }
+        state.message = action.payload.response.data.message;
       })
       .addCase(deleteABlog.pending, (state) => {
         state.isLoading = true;
@@ -159,10 +146,7 @@ export const blogSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.error;
-          if (state.isError === true) {
-            toast.error(action?.payload?.response?.data?.message);
-          }
+        state.message = action.payload.response.data.message;
       })
 
       .addCase(resetState, () => initialState);

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { Layout, Menu, Button, theme } from "antd";
 import { MdDashboardCustomize } from "react-icons/md";
 import { BsPeople } from "react-icons/bs";
@@ -21,17 +20,17 @@ import { SiMarketo } from "react-icons/si";
 import { GrCatalog } from "react-icons/gr";
 import { IoLogOutOutline } from "react-icons/io5";
 import { useSelector } from "react-redux";
+import { TfiMenu } from "react-icons/tfi";
 
 const { Header, Sider, Content } = Layout;
 
 const MainLayout = React.memo(() => {
-  const user = useSelector((state) => state?.auth?.user);
+  const adminUser = useSelector((state) => state?.auth?.adminUser);
+  const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
-  const navigate = useNavigate();
-  // onContextMenu={(e)=>e.preventDefault()}
   return (
     <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -47,7 +46,7 @@ const MainLayout = React.memo(() => {
           defaultSelectedKeys={["1"]}
           onClick={({ key }) => {
             if (key === "signout") {
-              localStorage.removeItem("user");
+              localStorage.removeItem("adminUser");
               window.location.reload();
             } else {
               navigate(key);
@@ -173,7 +172,7 @@ const MainLayout = React.memo(() => {
         >
           <Button
             type="text"
-            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+            icon={collapsed ? <TfiMenu /> : <TfiMenu />}
             onClick={() => setCollapsed(!collapsed)}
             className="trigger"
             style={{
@@ -194,7 +193,7 @@ const MainLayout = React.memo(() => {
               <img
                 width={34}
                 height={34}
-                src={user?.avatar}
+                src={adminUser?.avatar}
                 alt="userimage"
                 className="rounded-circle"
               ></img>
@@ -206,9 +205,9 @@ const MainLayout = React.memo(() => {
               aria-expanded="false"
             >
               <p className=" mb-0 text-capitalize">
-                {user?.firstname} {user?.lastname}
+                {adminUser?.firstname} {adminUser?.lastname}
               </p>
-              <p className="mb-0">{user?.email}</p>
+              <p className="mb-0">{adminUser?.email}</p>
             </div>
             <div
               className="dropdown-menu"

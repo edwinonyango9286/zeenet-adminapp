@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import productService from "./productService";
-import { toast } from "react-toastify";
 
 export const getProducts = createAsyncThunk(
   "product/get-products",
@@ -87,10 +86,7 @@ export const productSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.error;
-          if (state.isError === true) {
-            toast.error(action?.payload?.response?.data?.message);
-          }
+        state.message = action.payload.response.data.message;
       })
       .addCase(createProduct.pending, (state) => {
         state.isLoading = true;
@@ -105,7 +101,7 @@ export const productSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.error;
+        state.message = action.payload.response.data.message;
       })
       .addCase(deleteAProduct.pending, (state) => {
         state.isLoading = true;
@@ -120,10 +116,7 @@ export const productSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.error;
-          if (state.isError === true) {
-            toast.error(action?.payload?.response?.data?.message);
-          }
+        state.message = action.payload.response.data.message;
       })
       .addCase(getAProduct.pending, (state) => {
         state.isLoading = true;
@@ -140,16 +133,13 @@ export const productSlice = createSlice({
         state.productQuantity = action.payload.quantity;
         state.productImages = action.payload.images;
         state.productTag = action.payload.tags;
-        state.productScreenSize = action.payload.screensize
+        state.productScreenSize = action.payload.screensize;
       })
       .addCase(getAProduct.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.error;
-          if (state.isError === true) {
-            toast.error(action?.payload?.response?.data?.message);
-          }
+        state.message = action.payload.response.data.message;
       })
       .addCase(updateAProduct.pending, (state) => {
         state.isLoading = true;
@@ -164,10 +154,7 @@ export const productSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.error;
-          if (state.isError === true) {
-          toast.error(action?.payload?.response?.data?.message);
-        }
+        state.message = action.payload.response.data.message;
       })
       .addCase(resetState, () => initialState);
   },

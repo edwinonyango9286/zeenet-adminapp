@@ -46,29 +46,14 @@ const Dashboard = React.memo(() => {
   const [dataMonthlySales, setDataMonthlySales] = useState([]);
   const [orderData, setOrderData] = useState([]);
 
-  const getTokenFromLocalStorge = localStorage.getItem("user")
-    ? JSON.parse(localStorage.getItem("user"))
-    : null;
-
-  const config3 = {
-    headers: {
-      Authorization: `Bearer ${
-        getTokenFromLocalStorge !== null ? getTokenFromLocalStorge.token : ""
-      }`,
-      Accept: "application/json",
-    },
-  };
+  useEffect(() => {
+    dispatch(getMonthWiseOrders());
+    dispatch(getYearlyStatistics());
+  }, [dispatch]);
 
   useEffect(() => {
-    dispatch(resetState());
-    dispatch(getMonthWiseOrders(config3));
-    dispatch(getYearlyStatistics(config3));
-  }, []);
-
-  useEffect(() => {
-    dispatch(resetState());
-    dispatch(getOrders(config3));
-  }, []);
+    dispatch(getOrders());
+  }, [dispatch]);
 
   useEffect(() => {
     let monthNames = [

@@ -86,10 +86,7 @@ export const categorySlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.error;
-        if (state.isError === true) {
-          toast.error(action?.payload?.response?.data?.message);
-        }
+        state.message = action.payload.response.data.message;
       })
       .addCase(createCategory.pending, (state) => {
         state.isLoading = true;
@@ -104,10 +101,7 @@ export const categorySlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.error;
-        if (state.isError === true) {
-          toast.error(action?.payload?.response?.data?.message);
-        }
+        state.message = action.payload.response.data.message;
       })
       .addCase(getACategory.pending, (state) => {
         state.isLoading = true;
@@ -122,7 +116,7 @@ export const categorySlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.error;
+        state.message = action.payload.response.data.message;
       })
       .addCase(updateACategory.pending, (state) => {
         state.isLoading = true;
@@ -137,10 +131,7 @@ export const categorySlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.error;
-        if (state.isError === true) {
-          toast.error(action?.payload?.response?.data?.message);
-        }
+        state.message = action.payload.response.data.message;
       })
       .addCase(deleteACategory.pending, (state) => {
         state.isLoading = true;
@@ -155,10 +146,7 @@ export const categorySlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.error;
-        if (state.isError === true) {
-          toast.error(action?.payload?.response?.data?.message);
-        }
+        state.message = action.payload.response.data.message;
       })
       .addCase(resetState, () => initialState);
   },

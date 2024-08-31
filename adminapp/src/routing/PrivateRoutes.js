@@ -1,12 +1,10 @@
-import { Navigate,  } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 export const PrivateRoutes = ({ children }) => {
-  const getUserFromLocalStorage = JSON.parse(localStorage.getItem("user"));
-  return getUserFromLocalStorage?.token !== undefined ? (
+  const adminUser = JSON.parse(localStorage.getItem("adminUser"));
+  return adminUser?.token !== undefined ? (
     children
   ) : (
     <Navigate to={"/"} replace />
   );
 };
-
-

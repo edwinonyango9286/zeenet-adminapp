@@ -59,21 +59,17 @@ export const uploadSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.error;
-        if (state.isError === true) {
-          toast.error(action?.payload?.response?.data?.message);
-        }
+        state.message = action.payload.response.data.message;
       })
       .addCase(delImg.pending, (state) => {
         state.isLoading = true;
-
       })
       .addCase(delImg.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
         state.images = [];
-        if (state.isSuccess === true) {
+        if (state.isSuccess) {
           toast.success("Product image deleted.");
         }
       })
@@ -81,10 +77,7 @@ export const uploadSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.payload;
-        if (state.isError === true) {
-          toast.error(action?.payload?.response?.data?.message);
-        }
+        state.message = action.payload.response.data.message;
       })
       .addCase(resetState, () => initialState);
   },

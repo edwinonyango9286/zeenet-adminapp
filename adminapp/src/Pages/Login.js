@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { login, resetState } from "../features/auth/authSlice";
 
-const Loginschema = Yup.object().shape({
+const LOGIN_SCHEMA = Yup.object().shape({
   email: Yup.string().email().required(),
   password: Yup.string()
     .min(8)
@@ -26,23 +26,24 @@ const Login = React.memo(() => {
       email: "",
       password: "",
     },
-    validationSchema: Loginschema,
+    validationSchema: LOGIN_SCHEMA,
     onSubmit: (values) => {
       dispatch(resetState());
       dispatch(login(values));
     },
   });
 
-  const authState = useSelector((state) => state);
-  const { user, isError, isSuccess, isLoading, message } = authState.auth;
+  const { adminUser, isError, isSuccess, isLoading, message } = useSelector(
+    (state) => state?.auth ?? {}
+  );
 
   useEffect(() => {
-    if (isSuccess) {
+    if (adminUser && isSuccess) {
       navigate("admin");
     } else {
       navigate("/");
     }
-  }, [user, isError, isSuccess, isLoading, navigate]);
+  }, [adminUser, isSuccess, isError, isLoading, message, navigate]);
 
   useEffect(() => {
     if (isError) {
@@ -81,9 +82,7 @@ const Login = React.memo(() => {
                 val={formik.values.email}
               />
               <div className="error">
-                {formik.touched.email && formik.errors.email ? (
-                  <div>{formik.errors.email}</div>
-                ) : null}
+                {formik.touched.email && formik.errors.email}
               </div>
 
               <CustomInput
@@ -96,9 +95,7 @@ const Login = React.memo(() => {
                 val={formik.values.password}
               />
               <div className="error">
-                {formik.touched.password && formik.errors.password ? (
-                  <div>{formik.errors.password}</div>
-                ) : null}
+                {formik.touched.password && formik.errors.password}
               </div>
               <div className="d-flex align-item-center mt-4">
                 <button

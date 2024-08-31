@@ -5,17 +5,13 @@ import { config } from "../../utils/axiosConfig";
 const login = async (userData) => {
   const response = await axios.post(`${base_url}user/admin-login`, userData);
   if (response.data) {
-    localStorage.setItem("user", JSON.stringify(response.data));
+    localStorage.setItem("adminUser", JSON.stringify(response.data));
   }
   return response.data;
 };
 
-const getAllOrders = async (data) => {
-  const response = await axios.get(
-    `${base_url}user/getallorders`,
-    data,
-    config
-  );
+const getAllOrders = async () => {
+  const response = await axios.get(`${base_url}user/getallorders`, config);
   return response.data;
 };
 
@@ -39,17 +35,12 @@ const updateOrderStatus = async (data) => {
 const getMonthlyOrders = async (data) => {
   const response = await axios.get(
     `${base_url}user/getmonthwiseorderincome`,
-    data,
     config
   );
   return response.data;
 };
-const getYearlyData = async (data) => {
-  const response = await axios.get(
-    `${base_url}user/getyearlyorders`,
-    data,
-    config
-  );
+const getYearlyData = async () => {
+  const response = await axios.get(`${base_url}user/getyearlyorders`, config);
   return response.data;
 };
 

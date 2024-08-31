@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import enquiryService from "./enquiryService";
-import { toast } from "react-toastify";
 
 export const getEnquiries = createAsyncThunk(
   "enquiry/get-enquries",
@@ -49,7 +48,7 @@ export const updateAEnquiry = createAsyncThunk(
 export const deleteAEnquiry = createAsyncThunk(
   "enquiry/delete-enquiry",
   async (id, thunkAPI) => {
-    try { 
+    try {
       return await enquiryService.deleteEnquiry(id);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -86,10 +85,7 @@ export const enquirySlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.error;
-          if (state.isError === true) {
-            toast.error(action?.payload?.response?.data?.message);
-          }
+        state.message = action.payload.response.data.message;
       })
       .addCase(createAEnquiry.pending, (state) => {
         state.isLoading = true;
@@ -104,10 +100,7 @@ export const enquirySlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.error;
-          if (state.isError === true) {
-            toast.error(action?.payload?.response?.data?.message);
-          }
+        state.message = action.payload.response.data.message;
       })
       .addCase(updateAEnquiry.pending, (state) => {
         state.isLoading = true;
@@ -122,10 +115,7 @@ export const enquirySlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.error;
-          if (state.isError === true) {
-            toast.error(action?.payload?.response?.data?.message);
-          }
+        state.message = action.payload.response.data.message;
       })
       .addCase(getAEnquiry.pending, (state) => {
         state.isLoading = true;
@@ -137,17 +127,14 @@ export const enquirySlice = createSlice({
         state.enquiryName = action.payload.name;
         state.enquiryEmail = action.payload.email;
         state.enquiryMobile = action.payload.mobile;
-        state.enquiryComment= action.payload.comment;
+        state.enquiryComment = action.payload.comment;
         state.enquiryStatus = action.payload.status;
       })
       .addCase(getAEnquiry.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.error;
-          if (state.isError === true) {
-            toast.error(action?.payload?.response?.data?.message);
-          }
+        state.message = action.payload.response.data.message;
       })
       .addCase(deleteAEnquiry.pending, (state) => {
         state.isLoading = true;
@@ -162,10 +149,7 @@ export const enquirySlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.error;
-          if (state.isError === true) {
-            toast.error(action?.payload?.response?.data?.message);
-          }
+        state.message = action.payload.response.data.message;
       })
       .addCase(resetState, () => initialState);
   },
