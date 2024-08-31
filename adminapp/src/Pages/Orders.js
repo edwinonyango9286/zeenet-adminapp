@@ -2,11 +2,7 @@ import React, { useEffect } from "react";
 import { Table, Spin, Alert } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { LoadingOutlined } from "@ant-design/icons";
-import {
-  getOrders,
-  resetState,
-  UpdateAnOrder,
-} from "../features/auth/authSlice";
+import { getOrders, UpdateAnOrder } from "../features/auth/authSlice";
 import { Link } from "react-router-dom";
 
 const columns = [
@@ -17,6 +13,17 @@ const columns = [
   {
     title: "Name",
     dataIndex: "name",
+    render: (text, record) => {
+      const [firstName, lastName] = text?.split("  ");
+      return (
+        <span>
+          <span className="text-capitalize">{firstName}</span>
+          <span className="text-capitalize">{lastName}</span>
+        </span>
+      );
+    },
+
+    sorter: (a, b) => a.name.length - b.name.length,
   },
   {
     title: "Product",
@@ -41,15 +48,16 @@ const Orders = React.memo(() => {
     (state) => state?.auth?.orders
   );
   useEffect(() => {
-    dispatch(resetState());
     dispatch(getOrders());
   }, [dispatch]);
 
   const data1 = orders?.map((order, index) => ({
     key: index + 1,
-    name: order?.user?.firstname + " " + order?.user?.lastname,
+    name: `${order?.user?.firstname} ${order?.user?.lastname}`,
     product: <Link to={`/admin/order/${order?._id}`}>view Order</Link>,
-    amount: order?.totalPrice,
+    amount: new Intl.NumberFormat("en-KE", {
+      maximumFractionDigits: 0,
+    }).format(order?.totalPrice),
     date: new Date(order?.createdAt).toLocaleString(),
     action: (
       <>

@@ -7,7 +7,6 @@ import {
   getMonthWiseOrders,
   getOrders,
   getYearlyStatistics,
-  resetState,
 } from "../features/auth/authSlice";
 
 const columns = [
@@ -49,9 +48,6 @@ const Dashboard = React.memo(() => {
   useEffect(() => {
     dispatch(getMonthWiseOrders());
     dispatch(getYearlyStatistics());
-  }, [dispatch]);
-
-  useEffect(() => {
     dispatch(getOrders());
   }, [dispatch]);
 
@@ -195,7 +191,7 @@ const Dashboard = React.memo(() => {
               <p className="desc">Total Sales</p>
               <h6 className="mb-0 sub-title">
                 Products sold{" "}
-                {new Intl.NumberFormat("en-US", {
+                {new Intl.NumberFormat("en-KE", {
                   maximumFractionDigits: 0,
                 }).format(
                   yearlyDataState && yearlyDataState[0]?.count
