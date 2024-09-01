@@ -47,30 +47,32 @@ const BlogCategoryList = React.memo(() => {
   const { blogCategories, isError, isLoading, isSuccess, message } =
     useSelector((state) => state.blogCategory ?? {});
 
-  const data1 = blogCategories.map(
-    (blogCategory, index) =>
-      ({
-        key: index + 1,
-        name: blogCategory.title,
-        action: (
-          <>
-            <Link
-              to={`/admin/blog-category/${blogCategory._id}`}
-              className="fs-5"
-            >
-              <FiEdit />
-            </Link>
-            <button
-              onClick={() => showModal(blogCategory._id)}
-              className="ms-2 text-danger bg-transparent border-0 fs-5"
-              style={{}}
-            >
-              <AiFillDelete />
-            </button>
-          </>
-        ),
-      } || [])
-  );
+  const data =
+    blogCategories &&
+    blogCategories.map(
+      (blogCategory, index) =>
+        ({
+          key: index + 1,
+          name: blogCategory.title,
+          action: (
+            <>
+              <Link
+                to={`/admin/blog-category/${blogCategory._id}`}
+                className="fs-5"
+              >
+                <FiEdit />
+              </Link>
+              <button
+                onClick={() => showModal(blogCategory._id)}
+                className="ms-2 text-danger bg-transparent border-0 fs-5"
+                style={{}}
+              >
+                <AiFillDelete />
+              </button>
+            </>
+          ),
+        } || [])
+    );
   const deleteBlogcategory = async (e) => {
     await dispatch(deleteABlogCat(e));
     setOpen(false);
@@ -110,7 +112,7 @@ const BlogCategoryList = React.memo(() => {
         ) : isError ? (
           <Alert message="Error" description={message} type="error" showIcon />
         ) : (
-          <Table columns={columns} dataSource={data1} />
+          <Table columns={columns} dataSource={data} />
         )}
         <CustomModal
           open={open}

@@ -42,42 +42,55 @@ const columns = [
     dataIndex: "action",
   },
 ];
+
 const Orders = React.memo(() => {
   const dispatch = useDispatch();
-  const { orders, isError, isLoading, isSuccess, message } = useSelector(
-    (state) => state?.auth?.orders
+  const { isError, isLoading, isSuccess, message } = useSelector(
+    (state) => state.auth
   );
+  const { orders } = useSelector((state) => state.auth.orders);
   useEffect(() => {
     dispatch(getOrders());
   }, [dispatch]);
 
-  const data1 = orders?.map((order, index) => ({
-    key: index + 1,
-    name: `${order?.user?.firstname} ${order?.user?.lastname}`,
-    product: <Link to={`/admin/order/${order?._id}`}>view Order</Link>,
-    amount: new Intl.NumberFormat("en-KE", {
-      maximumFractionDigits: 0,
-    }).format(order?.totalPrice),
-    date: new Date(order?.createdAt).toLocaleString(),
-    action: (
-      <>
-        <select
-          defaultValue={order?.orderStatus}
-          onChange={(e) => updateOrder(order?._id, e.target.value)}
-          className="form-control form-select"
-          style={{}}
-        >
-          <option value="Ordered" disabled selected>
-            Ordered
-          </option>
-          <option value="Processed">Processed</option>
-          <option value="Shipped">Shipped</option>
-          <option value="Out for delivery">Out for delivery</option>
-          <option value="Delivered">Delivered</option>
-        </select>
-      </>
-    ),
-  }));
+  const formatKES = (amount) => {
+    return new Intl.NumberFormat("en-KE", {
+      style: "currency",
+      currency: "KES",
+      minimumFractionDigits: 0,
+    }).format(amount);
+  };
+
+  const data =
+    orders &&
+    orders.map(
+      (order, index) =>
+        ({
+          key: index + 1,
+          name: `${order.user.firstname} ${order.user.lastname}`,
+          product: <Link to={`/admin/order/${order._id}`}>view Order</Link>,
+          amount: formatKES(order.totalPrice),
+          date: new Date(order.createdAt).toLocaleString(),
+          action: (
+            <>
+              <select
+                defaultValue={order.orderStatus}
+                onChange={(e) => updateOrder(order._id, e.target.value)}
+                className="form-control form-select"
+                style={{}}
+              >
+                <option value="Ordered" disabled>
+                  Ordered
+                </option>
+                <option value="Processed">Processed</option>
+                <option value="Shipped">Shipped</option>
+                <option value="Out for delivery">Out for delivery</option>
+                <option value="Delivered">Delivered</option>
+              </select>
+            </>
+          ),
+        } || [])
+    );
 
   const updateOrder = (a, b) => {
     dispatch(UpdateAnOrder({ id: a, status: b }));
@@ -99,7 +112,7 @@ const Orders = React.memo(() => {
         ) : isError ? (
           <Alert message="Error" description={message} type="error" showIcon />
         ) : (
-          <Table columns={columns} dataSource={data1} />
+          <Table columns={columns} dataSource={data} />
         )}{" "}
       </div>
     </>

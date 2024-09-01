@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { BsArrowDownRight } from "react-icons/bs";
 import { Column } from "@ant-design/plots";
-import { Table } from "antd";
+import { Spin, Table, Alert } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+
 import { useDispatch, useSelector } from "react-redux";
 import {
   getMonthWiseOrders,
@@ -17,6 +19,17 @@ const columns = [
   {
     title: "Name",
     dataIndex: "name",
+    render: (text, record) => {
+      const [firstName, lastName] = text?.split("  ");
+      return (
+        <span>
+          <span className="text-capitalize">{firstName}</span>
+          <span className="text-capitalize">{lastName}</span>
+        </span>
+      );
+    },
+
+    sorter: (a, b) => a.name.length - b.name.length,
   },
   {
     title: "Products",
@@ -38,12 +51,23 @@ const columns = [
 
 const Dashboard = React.memo(() => {
   const dispatch = useDispatch();
-  const monthlyDataState = useSelector((state) => state?.auth?.monthlyData);
-  const yearlyDataState = useSelector((state) => state?.auth?.yearlyData);
-  const ordersState = useSelector((state) => state?.auth?.orders?.orders);
+  const monthlyDataState = useSelector((state) => state.auth.monthlyData);
+  const yearlyDataState = useSelector((state) => state.auth.yearlyData);
+  const { isError, isLoading, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
+  const { orders } = useSelector((state) => state.auth.orders);
   const [dataMonthly, setDataMonthly] = useState([]);
   const [dataMonthlySales, setDataMonthlySales] = useState([]);
   const [orderData, setOrderData] = useState([]);
+
+  const formatKES = (amount) => {
+    return new Intl.NumberFormat("en-KE", {
+      style: "currency",
+      currency: "KES",
+      minimumFractionDigits: 0,
+    }).format(amount);
+  };
 
   useEffect(() => {
     dispatch(getMonthWiseOrders());
@@ -68,37 +92,38 @@ const Dashboard = React.memo(() => {
     ];
     let data = [];
     let mothlyOrderCount = [];
-    for (let index = 0; index < monthlyDataState?.length; index++) {
+    for (let index = 0; index < monthlyDataState.length; index++) {
       const element = monthlyDataState[index];
       data.push({
-        type: monthNames[element?._id?.month],
-        income: element?.amount,
+        type: monthNames[element._id.month],
+        income: element.amount,
       });
-
+      setDataMonthly(data);
       mothlyOrderCount.push({
-        type: monthNames[element?._id?.month],
-        sales: element?.count,
+        type: monthNames[element._id.month],
+        sales: element.count,
       });
     }
-    setDataMonthly(data);
     setDataMonthlySales(mothlyOrderCount);
-
-    const data1 = [];
-    for (let i = 0; i < ordersState?.length; i++) {
-      data1.push({
-        key: i + 1,
-        name:
-          ordersState[i]?.user?.firstname +
-          " " +
-          ordersState[i]?.user?.lastname,
-        product: ordersState[i]?.orderedItems?.length,
-        price: ordersState[i]?.totalPrice,
-        discountedPrice: ordersState[i]?.totalPriceAfterDiscount,
-        status: ordersState[i]?.orderStatus,
-      });
-    }
-    setOrderData(data1);
   }, [monthlyDataState]);
+
+  useEffect(() => {
+    const data =
+      orders &&
+      orders.map(
+        (order, index) =>
+          ({
+            key: index + 1,
+            name: order.user.firstname + " " + order.user.lastname,
+            product: order.orderedItems.length,
+
+            price: formatKES(order.totalPrice),
+            discountedPrice: formatKES(order.totalPriceAfterDiscount),
+            status: order.orderStatus,
+          } || [])
+      );
+    setOrderData(data);
+  }, [orders]);
 
   const config = {
     data: dataMonthly,
@@ -169,11 +194,9 @@ const Dashboard = React.memo(() => {
               <p className="desc">Total Income</p>
               <h6 className="mb-0 sub-title">
                 Ksh{" "}
-                {new Intl.NumberFormat("en-US", {
-                  maximumFractionDigits: 0,
-                }).format(
-                  yearlyDataState && yearlyDataState[0]?.amount
-                    ? yearlyDataState && yearlyDataState[0]?.amount
+                {formatKES(
+                  yearlyDataState && yearlyDataState[0].amount
+                    ? yearlyDataState && yearlyDataState[0].amount
                     : 0
                 )}
               </h6>
@@ -194,8 +217,8 @@ const Dashboard = React.memo(() => {
                 {new Intl.NumberFormat("en-KE", {
                   maximumFractionDigits: 0,
                 }).format(
-                  yearlyDataState && yearlyDataState[0]?.count
-                    ? yearlyDataState && yearlyDataState[0]?.count
+                  yearlyDataState && yearlyDataState[0].count
+                    ? yearlyDataState && yearlyDataState[0].count
                     : 0
                 )}
               </h6>
@@ -213,9 +236,7 @@ const Dashboard = React.memo(() => {
               <p className="desc">Total Expesence</p>
               <h6 className="mb-0 sub-title">
                 Ksh{" "}
-                {new Intl.NumberFormat("en-US", {
-                  maximumFractionDigits: 0,
-                }).format(
+                {formatKES(
                   yearlyDataState && yearlyDataState[0]?.amount
                     ? yearlyDataState && yearlyDataState[0]?.amount
                     : 0
@@ -250,7 +271,28 @@ const Dashboard = React.memo(() => {
         <div className="mt-2">
           <h4 className="mb-2 title">Recent Orders</h4>
           <div>
-            <Table columns={columns} dataSource={orderData} />
+            {isLoading ? (
+              <div className="text-center">
+                <Spin
+                  size="large"
+                  indicator={
+                    <LoadingOutlined
+                      style={{ fontSize: 40, fontWeight: 800 }}
+                    />
+                  }
+                />
+                <p className="">Loading recent orders...</p>
+              </div>
+            ) : isError ? (
+              <Alert
+                message="Error"
+                description={message}
+                type="error"
+                showIcon
+              />
+            ) : (
+              <Table columns={columns} dataSource={orderData} />
+            )}{" "}
           </div>
         </div>
       </div>

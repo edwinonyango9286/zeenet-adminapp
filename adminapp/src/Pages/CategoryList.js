@@ -50,20 +50,25 @@ const CategoryList = React.memo(() => {
     dispatch(getProductCategories());
   }, [dispatch]);
 
-  const data1 = categories?.map((category, index) => ({
-    key: index + 1,
-    name: category.title,
-    action: (
-      <>
-        <Link to={`/admin/category/${category._id}`} className="fs-5">
-          <FiEdit />
-        </Link>
-        <button className=" ms-2 fs-5  text-danger bg-transparent border-0">
-          <AiFillDelete onClick={() => showModal(category._id)} />
-        </button>
-      </>
-    ),
-  }));
+  const data =
+    categories &&
+    categories?.map(
+      (category, index) =>
+        ({
+          key: index + 1,
+          name: category.title,
+          action: (
+            <>
+              <Link to={`/admin/category/${category._id}`} className="fs-5">
+                <FiEdit />
+              </Link>
+              <button className=" ms-2 fs-5  text-danger bg-transparent border-0">
+                <AiFillDelete onClick={() => showModal(category._id)} />
+              </button>
+            </>
+          ),
+        } || [])
+    );
 
   const deleteCategory = async (e) => {
     await dispatch(deleteACategory(e));
@@ -107,7 +112,7 @@ const CategoryList = React.memo(() => {
         ) : isError ? (
           <Alert message="Error" description={message} type="error" showIcon />
         ) : (
-          <Table columns={columns} dataSource={data1} />
+          <Table columns={columns} dataSource={data} />
         )}
         <CustomModal
           open={open}

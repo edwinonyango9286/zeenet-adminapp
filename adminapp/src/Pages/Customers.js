@@ -44,14 +44,19 @@ const Customers = React.memo(() => {
     dispatch(getUsers());
   }, [dispatch]);
 
-  const data1 = customers
-    ?.filter((customer) => customer?.role !== "admin")
-    .map((customer, index) => ({
-      key: index + 1,
-      name: `${customer?.firstname} ${customer?.lastname}`,
-      email: customer?.email,
-      mobile: customer?.mobile,
-    }));
+  const data =
+    customers &&
+    customers
+      ?.filter((customer) => customer.role !== "admin")
+      .map(
+        (customer, index) =>
+          ({
+            key: index + 1,
+            name: `${customer.firstname} ${customer.lastname}`,
+            email: customer.email,
+            mobile: customer.mobile,
+          } || [])
+      );
 
   return (
     <div className="container">
@@ -70,7 +75,7 @@ const Customers = React.memo(() => {
       ) : isError ? (
         <Alert message="Error" description={message} type="error" showIcon />
       ) : (
-        <Table columns={columns} dataSource={data1} />
+        <Table columns={columns} dataSource={data} />
       )}
     </div>
   );

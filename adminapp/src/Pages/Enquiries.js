@@ -61,7 +61,7 @@ const Enquiries = React.memo(() => {
     (state) => state.enquiry ?? {}
   );
 
-  const data1 = enquiries.map((enquiry, index) => ({
+  const data1 = enquiries &&  enquiries.map((enquiry, index) => ({
     key: index + 1,
     name: enquiry.name,
     email: enquiry.email,

@@ -27,6 +27,14 @@ const columns = [
   },
 ];
 
+const formatKES = (amount) => {
+  return new Intl.NumberFormat("en-KE", {
+    style: "currency",
+    currency: "KES",
+    minimumFractionDigits: 0,
+  }).format(amount);
+};
+
 const ViewOrder = React.memo(() => {
   const location = useLocation();
   const orderId = location.pathname.split("/")[3];
@@ -35,24 +43,23 @@ const ViewOrder = React.memo(() => {
     dispatch(getAsingleOrder(orderId));
   }, [dispatch, orderId]);
 
-  const orderState = useSelector((state) => state?.auth?.singleOrder?.order);
-  console.log(orderState);
-
-  const data1 = [];
-  for (let i = 0; i < orderState?.orderedItems?.length; i++) {
-    data1.push({
+  const order = useSelector((state) => state.auth.singleOrder.order);
+  const data = [];
+  for (let i = 0; i < order.orderedItems.length; i++) {
+    data.push({
       key: i + 1,
-      name: orderState?.orderedItems[i]?.product?.title,
-      brand: orderState?.orderedItems[i]?.product.brand,
-      count: orderState?.orderedItems[i]?.quantity,
-      amount: orderState?.orderedItems[i]?.price,
+      name: order.orderedItems[i].product.title,
+      brand: order.orderedItems[i].product.brand,
+      count: order.orderedItems[i].quantity,
+      amount: formatKES(order.orderedItems[i].price),
     });
   }
+
   return (
     <>
       <div>
         <h5 className="mb-2">View Order</h5>
-        <div>{<Table columns={columns} dataSource={data1} />}</div>
+        <div>{<Table columns={columns} dataSource={data} />}</div>
       </div>
     </>
   );

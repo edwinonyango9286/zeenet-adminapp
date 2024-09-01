@@ -55,6 +55,14 @@ const ProductList = React.memo(() => {
     setProductId(e);
   };
 
+  const formatKES = (amount) => {
+    return new Intl.NumberFormat("en-KE", {
+      style: "currency",
+      currency: "KES",
+      minimumFractionDigits: 0,
+    }).format(amount);
+  };
+
   const hideModal = () => {
     setOpen(false);
   };
@@ -69,7 +77,7 @@ const ProductList = React.memo(() => {
     dispatch(getProducts());
   }, [dispatch, getProducts, resetState]);
 
-  const data1 = products.map(
+  const data1 = products &&  products.map(
     (product, index) =>
       ({
         key: index + 1,
@@ -77,9 +85,7 @@ const ProductList = React.memo(() => {
         brand: product.brand,
         category: product.category,
         screensize: `${product.screensize}"`,
-        price: `Ksh ${new Intl.NumberFormat("en-US", {
-          maximumFractionDigits: 0,
-        }).format(product.price)}`,
+        price: `Ksh ${formatKES(product.price)}`,
         action: (
           <>
             <Link to={`/admin/product/${product._id}`} className="fs-5">

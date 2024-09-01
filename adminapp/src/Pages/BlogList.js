@@ -48,27 +48,29 @@ const BlogList = React.memo(() => {
     (state) => state.blog ?? {}
   );
 
-  const data1 = blogs.map(
-    (blog, index) =>
-      ({
-        key: index + 1,
-        name: blog.title,
-        category: blog.category,
-        action: (
-          <>
-            <Link to={`/admin/blog/${blog._id}`} className="fs-5">
-              <FiEdit />
-            </Link>
-            <button
-              className="ms-2 fs-5 text-danger bg-transparent border-0"
-              onClick={() => showModal(blog._id)}
-            >
-              <AiFillDelete />
-            </button>
-          </>
-        ),
-      } || [])
-  );
+  const data =
+    blogs &&
+    blogs.map(
+      (blog, index) =>
+        ({
+          key: index + 1,
+          name: blog.title,
+          category: blog.category,
+          action: (
+            <>
+              <Link to={`/admin/blog/${blog._id}`} className="fs-5">
+                <FiEdit />
+              </Link>
+              <button
+                className="ms-2 fs-5 text-danger bg-transparent border-0"
+                onClick={() => showModal(blog._id)}
+              >
+                <AiFillDelete />
+              </button>
+            </>
+          ),
+        } || [])
+    );
 
   const deleteBlog = async (e) => {
     await dispatch(deleteABlog(e));
@@ -109,7 +111,7 @@ const BlogList = React.memo(() => {
         ) : isError ? (
           <Alert message="Error" description={message} type="error" showIcon />
         ) : (
-          <Table columns={columns} dataSource={data1} />
+          <Table columns={columns} dataSource={data} />
         )}
         <CustomModal
           open={open}

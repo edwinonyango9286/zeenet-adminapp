@@ -49,24 +49,29 @@ const BrandList = React.memo(() => {
     dispatch(getBrands());
   }, [dispatch]);
 
-  const data1 = brands?.map((brand, index) => ({
-    key: index + 1,
-    name: brand.title,
-    action: (
-      <>
-        <Link to={`/admin/brand/${brand._id}`} className="fs-5">
-          <FiEdit />
-        </Link>
-        <button
-          className="ms-3 fs-5 text-danger bg-transparent border-0"
-          onClick={() => showModal(brand._id)}
-          style={{ border: "none", outline: "none", boxShadow: "none" }}
-        >
-          <AiFillDelete />
-        </button>
-      </>
-    ),
-  }));
+  const data =
+    brands &&
+    brands?.map(
+      (brand, index) =>
+        ({
+          key: index + 1,
+          name: brand.title,
+          action: (
+            <>
+              <Link to={`/admin/brand/${brand._id}`} className="fs-5">
+                <FiEdit />
+              </Link>
+              <button
+                className="ms-3 fs-5 text-danger bg-transparent border-0"
+                onClick={() => showModal(brand._id)}
+                style={{ border: "none", outline: "none", boxShadow: "none" }}
+              >
+                <AiFillDelete />
+              </button>
+            </>
+          ),
+        } || [])
+    );
 
   const deleteBrand = async (e) => {
     await dispatch(deleteABrand(e));
@@ -109,7 +114,7 @@ const BrandList = React.memo(() => {
         ) : isError ? (
           <Alert message="Error" description={message} type="error" showIcon />
         ) : (
-          <Table columns={columns} dataSource={data1} />
+          <Table columns={columns} dataSource={data} />
         )}
 
         <CustomModal

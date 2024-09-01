@@ -57,7 +57,7 @@ const CouponList = React.memo(() => {
   const { coupons, isError, isLoading, isSuccess, message } = useSelector(
     (state) => state.coupon ?? {}
   );
-  const data1 = coupons.map(
+  const data =  coupons && coupons.map(
     (coupon, index) =>
       ({
         key: index + 1,
@@ -123,7 +123,7 @@ const CouponList = React.memo(() => {
         ) : isError ? (
           <Alert message="Error" description={message} type="error" showIcon />
         ) : (
-          <Table columns={columns} dataSource={data1} />
+          <Table columns={columns} dataSource={data} />
         )}
         <CustomModal
           open={open}
