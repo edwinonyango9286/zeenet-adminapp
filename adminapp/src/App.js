@@ -38,7 +38,14 @@ function App() {
               </OpenRoutes>
             }
           />
-          <Route path="/reset-password" element={<ResestPassword />} />
+          <Route
+            path="/reset-password/:token"
+            element={
+              <OpenRoutes>
+                <ResestPassword />
+              </OpenRoutes>
+            }
+          />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route
             path="/admin"
