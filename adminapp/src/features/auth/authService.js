@@ -10,6 +10,26 @@ const login = async (userData) => {
   return response.data;
 };
 
+const forgotPasswordToken = async (data) => {
+  const response = await axios.post(
+    `${base_url}user/forgot-password-admin-token`,
+    data
+  );
+  if (response.data) {
+    return response.data;
+  }
+};
+
+const resetAdminPassword = async (data) => {
+  const response = await axios.put(
+    `${base_url}user/reset-password/${data.token}`,
+    { password: data.password }
+  );
+  if (response.data) {
+    return response.data;
+  }
+};
+
 const getAllOrders = async () => {
   const response = await axios.get(`${base_url}user/getallorders`, config);
   return response.data;
@@ -51,6 +71,8 @@ const authService = {
   getMonthlyOrders,
   getYearlyData,
   updateOrderStatus,
+  forgotPasswordToken,
+  resetAdminPassword,
 };
 
 export default authService;

@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import authService from "./authService";
+import { toast } from "react-toastify";
 
 export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
   try {
@@ -8,6 +9,28 @@ export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
     return thunkAPI.rejectWithValue(error);
   }
 });
+
+export const resetPasswordToken = createAsyncThunk(
+  "user/reset-password-token",
+  async (data, thunkAPI) => {
+    try {
+      return await authService.forgotPasswordToken(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const resetPassword = createAsyncThunk(
+  "user/reset-password",
+  async (data, thunkAPI) => {
+    try {
+      return await authService.resetAdminPassword(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 export const getOrders = createAsyncThunk(
   "order/get-orders",
@@ -101,6 +124,40 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.message = action.payload.response.data.message;
       })
+      .addCase(resetPasswordToken.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(resetPasswordToken.fulfilled, (state, action) => {
+        state.isError = false;
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.token = action.payload;
+        toast.success("A password reset token has been sent to your email.");
+      })
+      .addCase(resetPasswordToken.rejected, (state, action) => {
+        state.isError = true;
+        state.isSuccess = false;
+        state.isLoading = false;
+        state.message = action.error;
+        toast.error(action.payload.response.data.message);
+      })
+      .addCase(resetPassword.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(resetPassword.fulfilled, (state, action) => {
+        state.isError = false;
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.newPassword = action.payload;
+        toast.success("Your password has been updated. Proceed to login.");
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
+        state.isError = true;
+        state.isSuccess = false;
+        state.isLoading = false;
+        state.message = action.error;
+      })
+
       .addCase(getOrders.pending, (state) => {
         state.isLoading = true;
       })
