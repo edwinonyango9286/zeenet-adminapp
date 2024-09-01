@@ -92,7 +92,7 @@ const Dashboard = React.memo(() => {
     ];
     let data = [];
     let mothlyOrderCount = [];
-    for (let index = 0; index < monthlyDataState.length; index++) {
+    for (let index = 0; index < monthlyDataState?.length; index++) {
       const element = monthlyDataState[index];
       data.push({
         type: monthNames[element._id.month],
@@ -115,7 +115,7 @@ const Dashboard = React.memo(() => {
           ({
             key: index + 1,
             name: order.user.firstname + " " + order.user.lastname,
-            product: order.orderedItems.length,
+            product: order.orderedItems?.length,
 
             price: formatKES(order.totalPrice),
             discountedPrice: formatKES(order.totalPriceAfterDiscount),
