@@ -24,11 +24,23 @@ import ViewEnquiry from "./Pages/ViewEnquiry";
 import ViewOrder from "./Pages/ViewOrder";
 import { OpenRoutes } from "./routing/OpenRoutes";
 import { PrivateRoutes } from "./routing/PrivateRoutes";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
     <>
       <Router>
+        <ToastContainer
+          position="top-right"
+          autoClose={2500}
+          hideProgressBar={true}
+          newestOnTop={true}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          theme="dark"
+        />
         <Routes>
           <Route
             path="/"

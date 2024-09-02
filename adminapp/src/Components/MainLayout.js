@@ -13,7 +13,7 @@ import { BiSolidMessageEdit } from "react-icons/bi";
 import { Outlet } from "react-router-dom";
 import { MdNotificationsNone } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+// import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { RiCoupon5Fill } from "react-icons/ri";
 import { SiMarketo } from "react-icons/si";
@@ -47,6 +47,7 @@ const MainLayout = React.memo(() => {
           onClick={({ key }) => {
             if (key === "signout") {
               localStorage.removeItem("adminUser");
+              localStorage.removeItem("adminToken");
               window.location.reload();
             } else {
               navigate(key);
@@ -236,9 +237,9 @@ const MainLayout = React.memo(() => {
             background: colorBgContainer,
           }}
         >
-          <ToastContainer
+          {/* <ToastContainer
             position="top-right"
-            autoClose={5000}
+            autoClose={2500}
             hideProgressBar={true}
             newestOnTop={true}
             closeOnClick
@@ -246,7 +247,7 @@ const MainLayout = React.memo(() => {
             pauseOnFocusLoss
             draggable
             theme="dark"
-          />
+          /> */}
           <Outlet />
         </Content>
       </Layout>

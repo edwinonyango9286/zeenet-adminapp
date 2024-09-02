@@ -132,7 +132,9 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.token = action.payload;
-        toast.success("A password reset token has been sent to your email.");
+        toast.success(
+          "A password reset link has been sent to your email. Please check your email to reset your password."
+        );
       })
       .addCase(resetPasswordToken.rejected, (state, action) => {
         state.isError = true;
@@ -149,7 +151,9 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.newPassword = action.payload;
-        toast.success("Your password has been updated. Proceed to login.");
+        toast.success(
+          "Your password has been reset. Please login with your new credentials."
+        );
       })
       .addCase(resetPassword.rejected, (state, action) => {
         state.isError = true;
