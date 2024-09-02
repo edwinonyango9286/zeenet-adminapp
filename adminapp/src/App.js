@@ -24,7 +24,7 @@ import ViewEnquiry from "./Pages/ViewEnquiry";
 import ViewOrder from "./Pages/ViewOrder";
 import { OpenRoutes } from "./routing/OpenRoutes";
 import { PrivateRoutes } from "./routing/PrivateRoutes";
-import { ToastContainer } from "react-toastify";
+import { Bounce, ToastContainer } from "react-toastify";
 
 function App() {
   return (
@@ -32,14 +32,16 @@ function App() {
       <Router>
         <ToastContainer
           position="top-right"
-          autoClose={2500}
+          autoClose={3000}
           hideProgressBar={true}
           newestOnTop={true}
           closeOnClick
           rtl={false}
           pauseOnFocusLoss
           draggable
-          theme="dark"
+          pauseOnHover
+          theme="light"
+          transition={Bounce}
         />
         <Routes>
           <Route
