@@ -1,16 +1,15 @@
-import axios from "axios";
-import { base_url } from "../../utils/baseUrl";
 import { config } from "../../utils/axiosConfig";
+import { newRequest } from "../../utils/newRequest";
 
 const getCategories = async () => {
-  const response = await axios.get(
-    `${base_url}productcategory/getallproductcategories`
+  const response = await newRequest.get(
+    `productcategory/getallproductcategories`
   );
   return response.data;
 };
 const createCategory = async (category) => {
-  const response = await axios.post(
-    `${base_url}productcategory/createproductcategory`,
+  const response = await newRequest.post(
+    `productcategory/createproductcategory`,
     category,
     config
   );
@@ -18,8 +17,8 @@ const createCategory = async (category) => {
 };
 
 const updateCategory = async (category) => {
-  const response = await axios.put(
-    `${base_url}productcategory/updateproductcategory/${category.id}`,
+  const response = await newRequest.put(
+    `productcategory/updateproductcategory/${category.id}`,
     { title: category.categoryData.title },
     config
   );
@@ -27,16 +26,16 @@ const updateCategory = async (category) => {
 };
 
 const getCategory = async (id) => {
-  const response = await axios.get(
-    `${base_url}productcategory/singleproductcategory/${id}`,
+  const response = await newRequest.get(
+    `productcategory/singleproductcategory/${id}`,
     config
   );
   return response.data;
 };
 
 const deleteCategory = async (id) => {
-  const response = await axios.delete(
-    `${base_url}productcategory/deleteproductcategory/${id}`,
+  const response = await newRequest.delete(
+    `productcategory/deleteproductcategory/${id}`,
     config
   );
   return response.data;

@@ -1,55 +1,44 @@
-import axios from "axios";
-import { base_url } from "../../utils/baseUrl";
 import { config } from "../../utils/axiosConfig";
+import { newRequest } from "../../utils/newRequest";
 
-
-  const getBlogCategory = async()=>{
-    const response = await axios.get(`${base_url}blogcategory/getall`)
-    return response.data;
-}
+const getBlogCategory = async () => {
+  const response = await newRequest.get(`blogcategory/getall`);
+  return response.data;
+};
 
 const createBlogCategory = async (blogCat) => {
-  const response = await axios.post(
-    `${base_url}blogcategory/create`,
+  const response = await newRequest.post(
+    `blogcategory/create`,
     blogCat,
     config
   );
   return response.data;
 };
 
-
 const updateBLogCat = async (blogCat) => {
-  const response = await axios.put(
-    `${base_url}blogcategory/update/${blogCat.id}`,
+  const response = await newRequest.put(
+    `blogcategory/update/${blogCat.id}`,
     { title: blogCat.blogCatData.title },
     config
-  );  
+  );
   return response.data;
 };
 
 const getBlogCat = async (id) => {
-  const response = await axios.get(
-    `${base_url}blogcategory/get/${id}`,
-    config
-  );
+  const response = await newRequest.get(`blogcategory/get/${id}`, config);
   return response.data;
 };
 const deleteBLogCat = async (id) => {
-  const response = await axios.delete(
-    `${base_url}blogcategory/delete/${id}`,
-    config
-  );
+  const response = await newRequest.delete(`blogcategory/delete/${id}`, config);
   return response.data;
 };
 
-
-const bCategoryService ={
-    getBlogCategory,
-    createBlogCategory,
-    deleteBLogCat,
-    getBlogCat,
-    updateBLogCat,
+const bCategoryService = {
+  getBlogCategory,
+  createBlogCategory,
+  deleteBLogCat,
+  getBlogCat,
+  updateBLogCat,
 };
-
 
 export default bCategoryService;

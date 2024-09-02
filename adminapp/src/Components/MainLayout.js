@@ -13,8 +13,6 @@ import { BiSolidMessageEdit } from "react-icons/bi";
 import { Outlet } from "react-router-dom";
 import { MdNotificationsNone } from "react-icons/md";
 import { Link } from "react-router-dom";
-// import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { RiCoupon5Fill } from "react-icons/ri";
 import { SiMarketo } from "react-icons/si";
 import { GrCatalog } from "react-icons/gr";
@@ -237,17 +235,6 @@ const MainLayout = React.memo(() => {
             background: colorBgContainer,
           }}
         >
-          {/* <ToastContainer
-            position="top-right"
-            autoClose={2500}
-            hideProgressBar={true}
-            newestOnTop={true}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            theme="dark"
-          /> */}
           <Outlet />
         </Content>
       </Layout>

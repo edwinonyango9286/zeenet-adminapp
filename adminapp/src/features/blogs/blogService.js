@@ -1,20 +1,19 @@
-import axios from "axios";
-import { base_url } from "../../utils/baseUrl";
 import { config } from "../../utils/axiosConfig";
+import { newRequest } from "../../utils/newRequest";
 
 const getBlogs = async () => {
-  const response = await axios.get(`${base_url}blog/getall`);
+  const response = await newRequest.get(`blog/getall`);
   return response.data;
 };
 
 const createBlog = async (blog) => {
-  const response = await axios.post(`${base_url}blog/create`, blog, config);
+  const response = await newRequest.post(`blog/create`, blog, config);
   return response.data;
 };
 
 const updateBlog = async (blog) => {
-  const response = await axios.put(
-    `${base_url}blog/update/${blog.id}`,
+  const response = await newRequest.put(
+    `blog/update/${blog.id}`,
     {
       title: blog.blogData.title,
       description: blog.blogData.description,
@@ -26,14 +25,13 @@ const updateBlog = async (blog) => {
   return response.data;
 };
 
-
 const getBlog = async (id) => {
-  const response = await axios.get(`${base_url}blog/get/${id}`, config);
+  const response = await newRequest.get(`blog/get/${id}`, config);
   return response.data;
 };
 
 const deleteBlog = async (id) => {
-  const response = await axios.delete(`${base_url}blog/delete/${id}`, config);
+  const response = await newRequest.delete(`blog/delete/${id}`, config);
   return response.data;
 };
 

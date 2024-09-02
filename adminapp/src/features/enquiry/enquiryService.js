@@ -1,24 +1,19 @@
-import axios from "axios";
-import { base_url } from "../../utils/baseUrl";
 import { config } from "../../utils/axiosConfig";
+import { newRequest } from "../../utils/newRequest";
 
 const getEnquiries = async () => {
-  const response = await axios.get(`${base_url}enquiry/getall`);
+  const response = await newRequest.get(`enquiry/getall`);
   return response.data;
 };
 
 const createEnquiry = async (enquiry) => {
-  const response = await axios.post(
-    `${base_url}enquiry/create`,
-    enquiry,
-    config
-  );
+  const response = await newRequest.post(`enquiry/create`, enquiry, config);
   return response.data;
 };
 
 const updateEnquiry = async (enq) => {
-  const response = await axios.put(
-    `${base_url}enquiry/update/${enq.id}`,
+  const response = await newRequest.put(
+    `enquiry/update/${enq.id}`,
     { status: enq.enquiryData },
     config
   );
@@ -26,15 +21,12 @@ const updateEnquiry = async (enq) => {
 };
 
 const getEnquiry = async (id) => {
-  const response = await axios.get(`${base_url}enquiry/get/${id}`);
+  const response = await newRequest.get(`enquiry/get/${id}`);
   return response.data;
 };
 
 const deleteEnquiry = async (id) => {
-  const response = await axios.delete(
-    `${base_url}enquiry/delete/${id}`,
-    config
-  );
+  const response = await newRequest.delete(`enquiry/delete/${id}`, config);
   return response.data;
 };
 

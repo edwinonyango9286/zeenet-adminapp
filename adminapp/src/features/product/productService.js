@@ -1,24 +1,19 @@
-import axios from "axios";
-import { base_url } from "../../utils/baseUrl";
 import { config } from "../../utils/axiosConfig";
+import { newRequest } from "../../utils/newRequest";
 
 const getProducts = async () => {
-  const response = await axios.get(`${base_url}products/allproducts`);
+  const response = await newRequest.get(`products/allproducts`);
   return response.data;
 };
 
 const createProduct = async (product) => {
-  const response = await axios.post(
-    `${base_url}products/create`,
-    product,
-    config
-  );
+  const response = await newRequest.post(`products/create`, product, config);
   return response.data;
 };
 
 const updateProduct = async (product) => {
-  const response = await axios.put(
-    `${base_url}products/update/${product.id}`,
+  const response = await newRequest.put(
+    `products/update/${product.id}`,
     {
       title: product.productData.title,
       description: product.productData.description,
@@ -38,18 +33,12 @@ const updateProduct = async (product) => {
 };
 
 const getProduct = async (id) => {
-  const response = await axios.get(
-    `${base_url}products/getaproduct/${id}`,
-    config
-  );
+  const response = await newRequest.get(`products/getaproduct/${id}`, config);
   return response.data;
 };
 
 const deleteProduct = async (id) => {
-  const response = await axios.delete(
-    `${base_url}products/delete/${id}`,
-    config
-  );
+  const response = await newRequest.delete(`products/delete/${id}`, config);
   return response.data;
 };
 

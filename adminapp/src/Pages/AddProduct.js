@@ -191,7 +191,7 @@ const AddProduct = React.memo(() => {
           <div className="error">
             {formik.touched.description && formik.errors.description}
           </div>
-          
+
           <CustomInput
             type="number"
             label="Enter product price."
@@ -254,9 +254,9 @@ const AddProduct = React.memo(() => {
             <option value="" disabled>
               Select Tag
             </option>
-            <option value="featured">Featured</option>
-            <option value="popular">Popular</option>
-            <option value="special">Special</option>
+            <option value="Featured">Featured</option>
+            <option value="Popular">Popular</option>
+            <option value="Special">Special</option>
           </select>
 
           <div className="error">

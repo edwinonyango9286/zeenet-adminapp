@@ -6,10 +6,9 @@ import brandReducer from "../features/brands/brandSlice";
 import productCategoryReducer from "../features/category/categorySlice";
 import blogReducer from "../features/blogs/blogSlice";
 import blogCategoryReducer from "../features/blogcategory/blogCategorySlice";
-import enquiryReducer from "../features/enquiry/enquirySlice"
+import enquiryReducer from "../features/enquiry/enquirySlice";
 import uploadReducer from "../features/upload/uploadSlice";
 import couponReducer from "../features/coupon/couponSlice";
-
 
 export const store = configureStore({
   reducer: {
@@ -18,10 +17,11 @@ export const store = configureStore({
     product: productReducer,
     brand: brandReducer,
     productCategory: productCategoryReducer,
-    blog:blogReducer,
-    blogCategory:blogCategoryReducer,
-    enquiry:enquiryReducer,
-    upload:uploadReducer,
-    coupon:couponReducer,
+    blog: blogReducer,
+    blogCategory: blogCategoryReducer,
+    enquiry: enquiryReducer,
+    upload: uploadReducer,
+    coupon: couponReducer,
   },
+  devTools: process.env.REACT_APP_NODE_ENV !== "production",
 });

@@ -1,9 +1,8 @@
-import axios from "axios";
-import { base_url } from "../../utils/baseUrl";
 import { config } from "../../utils/axiosConfig";
+import { newRequest } from "../../utils/newRequest";
 
 const login = async (userData) => {
-  const response = await axios.post(`${base_url}user/admin-login`, userData);
+  const response = await newRequest.post(`user/admin-login`, userData);
   if (response.data) {
     localStorage.setItem("adminUser", JSON.stringify(response.data));
   }
@@ -11,8 +10,8 @@ const login = async (userData) => {
 };
 
 const forgotPasswordToken = async (data) => {
-  const response = await axios.post(
-    `${base_url}user/forgot-password-admin-token`,
+  const response = await newRequest.post(
+    `user/forgot-password-admin-token`,
     data
   );
   if (response.data) {
@@ -21,46 +20,39 @@ const forgotPasswordToken = async (data) => {
 };
 
 const resetAdminPassword = async (data) => {
-  const response = await axios.put(
-    `${base_url}user/reset-password/${data.token}`,
-    { password: data.password }
-  );
+  const response = await newRequest.put(`user/reset-password/${data.token}`, {
+    password: data.password,
+  });
   if (response.data) {
     return response.data;
   }
 };
 
 const getAllOrders = async () => {
-  const response = await axios.get(`${base_url}user/getallorders`, config);
+  const response = await newRequest.get(`user/getallorders`, config);
   return response.data;
 };
 
 const getOrder = async (id) => {
-  const response = await axios.get(
-    `${base_url}user/getasingleorder/${id}`,
-    config
-  );
+  const response = await newRequest.get(`user/getasingleorder/${id}`, config);
   return response.data;
 };
 
 const updateOrderStatus = async (data) => {
-  const response = await axios.put(
-    `${base_url}user/update-order-status/${data.id}`,
+  const response = await newRequest.put(
+    `user/update-order-status/${data.id}`,
     { status: data.status },
     config
   );
   return response.data;
 };
 
-const getMonthlyOrders = async (data) => {
-  const response = await axios.get(
-    `${base_url}user/getmonthwiseorderincome`,
-    config
-  );
+const getMonthlyOrders = async () => {
+  const response = await newRequest.get(`user/getmonthwiseorderincome`, config);
   return response.data;
 };
 const getYearlyData = async () => {
-  const response = await axios.get(`${base_url}user/getyearlyorders`, config);
+  const response = await newRequest.get(`user/getyearlyorders`, config);
   return response.data;
 };
 

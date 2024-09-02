@@ -45,39 +45,37 @@ export const uploadSlice = createSlice({
     builder
       .addCase(uploadImg.pending, (state) => {
         state.isLoading = true;
+        // toast.promise("Uploading product image.");
       })
       .addCase(uploadImg.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
         state.images = action.payload;
-        if (state.isSuccess === true) {
-          toast.success("Product Image uploaded.");
-        }
+        toast.success("Product Image uploaded.");
       })
       .addCase(uploadImg.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.payload.response.data.message;
+        state.message = action.payload.response?.data?.message;
       })
       .addCase(delImg.pending, (state) => {
         state.isLoading = true;
+        // toast.promise("Deleting product image.");
       })
       .addCase(delImg.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
         state.images = [];
-        if (state.isSuccess) {
-          toast.success("Product image deleted.");
-        }
+        toast.success("Product image deleted.");
       })
       .addCase(delImg.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.payload.response.data.message;
+        state.message = action?.payload?.response?.data?.message;
       })
       .addCase(resetState, () => initialState);
   },
