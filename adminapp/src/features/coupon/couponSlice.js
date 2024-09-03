@@ -85,7 +85,7 @@ export const couponSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.payload.response.data.message;
+        state.message = action.payload.response?.data?.message;
       })
       .addCase(createCoupon.pending, (state) => {
         state.isLoading = true;
@@ -100,7 +100,7 @@ export const couponSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.payload.response.data.message;
+        state.message = action.payload.response?.data?.message;
       })
 
       .addCase(getACoupon.pending, (state) => {
@@ -118,7 +118,7 @@ export const couponSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.payload.response.data.message;
+        state.message = action.payload.response?.data?.message;
       })
       .addCase(updateACoupon.pending, (state) => {
         state.isLoading = true;
@@ -133,7 +133,7 @@ export const couponSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.payload.response.data.message;
+        state.message = action.payload.response?.data?.message;
       })
       .addCase(deleteACoupon.pending, (state) => {
         state.isLoading = true;
@@ -148,7 +148,7 @@ export const couponSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.payload.response.data.message;
+        state.message = action.payload.response?.data?.message;
       })
       .addCase(resetState, () => initialState);
   },

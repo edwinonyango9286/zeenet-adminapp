@@ -85,7 +85,7 @@ export const brandSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.payload.response.data.message;
+        state.message = action.payload.response?.data?.message;
       })
       .addCase(createBrand.pending, (state) => {
         state.isLoading = true;
@@ -100,7 +100,7 @@ export const brandSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.payload.response.data.message;
+        state.message = action.payload.response?.data?.message;
       })
       .addCase(getABrand.pending, (state) => {
         state.isLoading = true;
@@ -115,7 +115,7 @@ export const brandSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.payload.response.data.message;
+        state.message = action.payload.response?.data?.message;
       })
       .addCase(updateABrand.pending, (state) => {
         state.isLoading = true;
@@ -130,7 +130,7 @@ export const brandSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.payload.response.data.message;
+        state.message = action.payload.response?.data?.message;
       })
       .addCase(deleteABrand.pending, (state) => {
         state.isLoading = true;
@@ -145,7 +145,7 @@ export const brandSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.payload.response.data.message;
+        state.message = action.payload.response?.data?.message;
       })
       .addCase(resetState, () => initialState);
   },

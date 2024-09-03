@@ -45,7 +45,7 @@ export const uploadSlice = createSlice({
     builder
       .addCase(uploadImg.pending, (state) => {
         state.isLoading = true;
-        // toast.promise("Uploading product image.");
+        toast.promise("Uploading product image.");
       })
       .addCase(uploadImg.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -62,7 +62,7 @@ export const uploadSlice = createSlice({
       })
       .addCase(delImg.pending, (state) => {
         state.isLoading = true;
-        // toast.promise("Deleting product image.");
+        toast.promise("Deleting product image.");
       })
       .addCase(delImg.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -75,7 +75,7 @@ export const uploadSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action?.payload?.response?.data?.message;
+        state.message = action.payload.response?.data?.message;
       })
       .addCase(resetState, () => initialState);
   },
