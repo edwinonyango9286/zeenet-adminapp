@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import couponService from "./couponService";
-import { toast } from "react-toastify";
 
 export const createCoupon = createAsyncThunk(
   "coupon/create-coupon",

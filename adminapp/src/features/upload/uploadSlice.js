@@ -45,7 +45,6 @@ export const uploadSlice = createSlice({
     builder
       .addCase(uploadImg.pending, (state) => {
         state.isLoading = true;
-        toast.promise("Uploading product image.");
       })
       .addCase(uploadImg.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -62,7 +61,6 @@ export const uploadSlice = createSlice({
       })
       .addCase(delImg.pending, (state) => {
         state.isLoading = true;
-        toast.promise("Deleting product image.");
       })
       .addCase(delImg.fulfilled, (state, action) => {
         state.isLoading = false;

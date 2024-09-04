@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import brandService from "./brandService";
-import { toast } from "react-toastify";
 
 export const getBrands = createAsyncThunk(
   "brand/get-brands",

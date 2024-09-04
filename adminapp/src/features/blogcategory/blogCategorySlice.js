@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import bCategoryService from "./blogCategoryService";
-import { toast } from "react-toastify";
 
 export const getBlogCategory = createAsyncThunk(
   "bCategory/get-blog-categories",

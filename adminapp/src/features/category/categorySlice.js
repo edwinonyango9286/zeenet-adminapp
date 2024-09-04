@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import categoryService from "./categoryService";
-import { toast } from "react-toastify";
 
 export const getProductCategories = createAsyncThunk(
   "pCategory/get-categories",
