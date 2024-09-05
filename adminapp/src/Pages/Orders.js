@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Table, Spin, Alert } from "antd";
+import { Table, Spin} from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { LoadingOutlined } from "@ant-design/icons";
 import { getOrders, UpdateAnOrder } from "../features/auth/authSlice";
@@ -107,11 +107,8 @@ const Orders = React.memo(() => {
                 <LoadingOutlined style={{ fontSize: 40, fontWeight: 800 }} />
               }
             />
-            <p className="">Loading orders...</p>
           </div>
-        ) : isError ? (
-          <Alert message="Error" description={message} type="error" showIcon />
-        ) : (
+        ) :  (
           <Table columns={columns} dataSource={data} />
         )}{" "}
       </div>

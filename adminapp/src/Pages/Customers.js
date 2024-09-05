@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
-import { Table, Spin, Alert } from "antd";
+import { Table, Spin } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { getUsers, resetState } from "../features/customers/customerSlice";
 
@@ -50,12 +50,12 @@ const Customers = React.memo(() => {
       ?.filter((customer) => customer.role !== "admin")
       .map(
         (customer, index) =>
-          ({
-            key: index + 1,
-            name: `${customer.firstname} ${customer.lastname}`,
-            email: customer.email,
-            mobile: customer.mobile,
-          } || [])
+        ({
+          key: index + 1,
+          name: `${customer.firstname} ${customer.lastname}`,
+          email: customer.email,
+          mobile: customer.mobile,
+        } || [])
       );
 
   return (
@@ -70,10 +70,7 @@ const Customers = React.memo(() => {
               <LoadingOutlined style={{ fontSize: 40, fontWeight: 700 }} />
             }
           />
-          <p className="">Loading customers...</p>
         </div>
-      ) : isError ? (
-        <Alert message="Error" description={message} type="error" showIcon />
       ) : (
         <Table columns={columns} dataSource={data} />
       )}

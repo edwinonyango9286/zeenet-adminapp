@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BsArrowDownRight } from "react-icons/bs";
 import { Column } from "@ant-design/plots";
-import { Spin, Table, Alert } from "antd";
+import { Spin, Table } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -112,15 +112,15 @@ const Dashboard = React.memo(() => {
       orders &&
       orders.map(
         (order, index) =>
-          ({
-            key: index + 1,
-            name: order.user.firstname + " " + order.user.lastname,
-            product: order.orderedItems?.length,
+        ({
+          key: index + 1,
+          name: order.user.firstname + " " + order.user.lastname,
+          product: order.orderedItems?.length,
 
-            price: formatKES(order.totalPrice),
-            discountedPrice: formatKES(order.totalPriceAfterDiscount),
-            status: order.orderStatus,
-          } || [])
+          price: formatKES(order.totalPrice),
+          discountedPrice: formatKES(order.totalPriceAfterDiscount),
+          status: order.orderStatus,
+        } || [])
       );
     setOrderData(data);
   }, [orders]);
@@ -281,15 +281,7 @@ const Dashboard = React.memo(() => {
                     />
                   }
                 />
-                <p className="">Loading recent orders...</p>
               </div>
-            ) : isError ? (
-              <Alert
-                message="Error"
-                description={message}
-                type="error"
-                showIcon
-              />
             ) : (
               <Table columns={columns} dataSource={orderData} />
             )}{" "}

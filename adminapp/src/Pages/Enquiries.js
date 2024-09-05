@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
-import { Table, Spin, Alert } from "antd";
+import { Table, Spin} from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteAEnquiry,
@@ -124,11 +124,8 @@ const Enquiries = React.memo(() => {
                 <LoadingOutlined style={{ fontSize: 40, fontWeight: 700 }} />
               }
             />
-            <p className="">Loading Enquiries...</p>
           </div>
-        ) : isError ? (
-          <Alert message="Error" description={message} type="error" showIcon />
-        ) : (
+        )  : (
           <Table columns={columns} dataSource={data1} />
         )}
         <CustomModal

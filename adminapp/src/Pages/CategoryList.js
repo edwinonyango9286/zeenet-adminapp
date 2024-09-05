@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
-import { Table, Spin, Alert } from "antd";
+import { Table, Spin } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { AiFillDelete } from "react-icons/ai";
@@ -107,10 +107,7 @@ const CategoryList = React.memo(() => {
                 <LoadingOutlined style={{ fontSize: 40, fontWeight: 700 }} />
               }
             />
-            <p className="">Loading Categories...</p>
           </div>
-        ) : isError ? (
-          <Alert message="Error" description={message} type="error" showIcon />
         ) : (
           <Table columns={columns} dataSource={data} />
         )}

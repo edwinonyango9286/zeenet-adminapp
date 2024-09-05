@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
-import { Table, Spin, Alert } from "antd";
+import { Table, Spin } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteABlog, getBlogs, resetState } from "../features/blogs/blogSlice";
 import { Link } from "react-router-dom";
@@ -52,24 +52,24 @@ const BlogList = React.memo(() => {
     blogs &&
     blogs.map(
       (blog, index) =>
-        ({
-          key: index + 1,
-          name: blog.title,
-          category: blog.category,
-          action: (
-            <>
-              <Link to={`/admin/blog/${blog._id}`} className="fs-5">
-                <FiEdit />
-              </Link>
-              <button
-                className="ms-2 fs-5 text-danger bg-transparent border-0"
-                onClick={() => showModal(blog._id)}
-              >
-                <AiFillDelete />
-              </button>
-            </>
-          ),
-        } || [])
+      ({
+        key: index + 1,
+        name: blog.title,
+        category: blog.category,
+        action: (
+          <>
+            <Link to={`/admin/blog/${blog._id}`} className="fs-5">
+              <FiEdit />
+            </Link>
+            <button
+              className="ms-2 fs-5 text-danger bg-transparent border-0"
+              onClick={() => showModal(blog._id)}
+            >
+              <AiFillDelete />
+            </button>
+          </>
+        ),
+      } || [])
     );
 
   const deleteBlog = async (e) => {
@@ -106,10 +106,7 @@ const BlogList = React.memo(() => {
                 <LoadingOutlined style={{ fontSize: 40, fontWeight: 700 }} />
               }
             />
-            <p className="">Loading products...</p>
           </div>
-        ) : isError ? (
-          <Alert message="Error" description={message} type="error" showIcon />
         ) : (
           <Table columns={columns} dataSource={data} />
         )}

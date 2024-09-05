@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Table, Spin, Alert } from "antd";
+import { Table, Spin } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { LoadingOutlined } from "@ant-design/icons";
 
@@ -109,11 +109,8 @@ const BrandList = React.memo(() => {
                 <LoadingOutlined style={{ fontSize: 40, fontWeight: 700 }} />
               }
             />
-            <p className="">Loading brands...</p>
           </div>
-        ) : isError ? (
-          <Alert message="Error" description={message} type="error" showIcon />
-        ) : (
+        ) :  (
           <Table columns={columns} dataSource={data} />
         )}
 

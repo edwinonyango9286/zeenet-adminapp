@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
-import { Table, Spin, Alert } from "antd";
+import { Table, Spin } from "antd";
 import { AiFillDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -77,8 +77,10 @@ const ProductList = React.memo(() => {
     dispatch(getProducts());
   }, [dispatch, getProducts, resetState]);
 
-  const data1 = products &&  products.map(
-    (product, index) =>
+  const data1 =
+    products &&
+    products.map(
+      (product, index) =>
       ({
         key: index + 1,
         title: product.title,
@@ -100,7 +102,7 @@ const ProductList = React.memo(() => {
           </>
         ),
       } || [])
-  );
+    );
 
   const deleteProduct = async (id) => {
     await dispatch(deleteAProduct(id));
@@ -140,10 +142,7 @@ const ProductList = React.memo(() => {
                 <LoadingOutlined style={{ fontSize: 40, fontWeight: 700 }} />
               }
             />
-            <p className="">Loading products...</p>
           </div>
-        ) : isError ? (
-          <Alert message="Error" description={message} type="error" showIcon />
         ) : (
           <Table columns={columns} dataSource={data1} />
         )}

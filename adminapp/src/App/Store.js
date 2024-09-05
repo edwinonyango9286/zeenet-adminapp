@@ -9,10 +9,21 @@ import blogCategoryReducer from "../features/blogcategory/blogCategorySlice";
 import enquiryReducer from "../features/enquiry/enquirySlice";
 import uploadReducer from "../features/upload/uploadSlice";
 import couponReducer from "../features/coupon/couponSlice";
+import { persistReducer, persistStore } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import thunk from "redux-thunk";
+
+const persistConfig = {
+  key: "root",
+  storage,
+  version: 1,
+};
+
+const persistedAuthReducer = persistReducer(persistConfig, authReducer);
 
 export const store = configureStore({
   reducer: {
-    auth: authReducer,
+    auth: persistedAuthReducer,
     customer: customerReducer,
     product: productReducer,
     brand: brandReducer,
@@ -24,4 +35,7 @@ export const store = configureStore({
     coupon: couponReducer,
   },
   devTools: process.env.REACT_APP_NODE_ENV !== "production",
+  middleware: [thunk],
 });
+
+export const persistor = persistStore(store);

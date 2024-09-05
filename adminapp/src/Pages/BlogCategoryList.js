@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
-import { Table, Spin, Alert } from "antd";
+import { Table, Spin} from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteABlogCat,
@@ -51,27 +51,27 @@ const BlogCategoryList = React.memo(() => {
     blogCategories &&
     blogCategories.map(
       (blogCategory, index) =>
-        ({
-          key: index + 1,
-          name: blogCategory.title,
-          action: (
-            <>
-              <Link
-                to={`/admin/blog-category/${blogCategory._id}`}
-                className="fs-5"
-              >
-                <FiEdit />
-              </Link>
-              <button
-                onClick={() => showModal(blogCategory._id)}
-                className="ms-2 text-danger bg-transparent border-0 fs-5"
-                style={{}}
-              >
-                <AiFillDelete />
-              </button>
-            </>
-          ),
-        } || [])
+      ({
+        key: index + 1,
+        name: blogCategory.title,
+        action: (
+          <>
+            <Link
+              to={`/admin/blog-category/${blogCategory._id}`}
+              className="fs-5"
+            >
+              <FiEdit />
+            </Link>
+            <button
+              onClick={() => showModal(blogCategory._id)}
+              className="ms-2 text-danger bg-transparent border-0 fs-5"
+              style={{}}
+            >
+              <AiFillDelete />
+            </button>
+          </>
+        ),
+      } || [])
     );
   const deleteBlogcategory = async (e) => {
     await dispatch(deleteABlogCat(e));
@@ -107,12 +107,10 @@ const BlogCategoryList = React.memo(() => {
                 <LoadingOutlined style={{ fontSize: 40, fontWeight: 700 }} />
               }
             />
-            <p className="">Loading Blog Categories...</p>
           </div>
-        ) : isError ? (
-          <Alert message="Error" description={message} type="error" showIcon />
         ) : (
-          <Table columns={columns} dataSource={data} />
+          <Table scroll={{ x: '100vw' }}
+            columns={columns} dataSource={data} />
         )}
         <CustomModal
           open={open}
