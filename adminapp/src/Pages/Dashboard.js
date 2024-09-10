@@ -73,7 +73,7 @@ const Dashboard = React.memo(() => {
     dispatch(getMonthWiseOrders());
     dispatch(getYearlyStatistics());
     dispatch(getOrders());
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     let monthNames = [

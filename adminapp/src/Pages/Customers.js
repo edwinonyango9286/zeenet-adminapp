@@ -42,7 +42,7 @@ const Customers = React.memo(() => {
   useEffect(() => {
     dispatch(resetState());
     dispatch(getUsers());
-  }, [dispatch]);
+  }, []);
 
   const data =
     customers &&

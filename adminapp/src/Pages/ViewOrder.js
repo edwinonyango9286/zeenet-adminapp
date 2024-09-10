@@ -41,7 +41,7 @@ const ViewOrder = React.memo(() => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAsingleOrder(orderId));
-  }, [dispatch, orderId]);
+  }, [ orderId]);
 
   const order = useSelector((state) => state.auth.singleOrder.order);
   const data = [];

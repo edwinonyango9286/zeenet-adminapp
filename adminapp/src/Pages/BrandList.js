@@ -47,7 +47,7 @@ const BrandList = React.memo(() => {
   useEffect(() => {
     dispatch(resetState());
     dispatch(getBrands());
-  }, [dispatch]);
+  }, []);
 
   const data =
     brands &&

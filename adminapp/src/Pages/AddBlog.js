@@ -31,7 +31,7 @@ const AddBlog = React.memo(() => {
 
   useEffect(() => {
     dispatch(getBlogCategory());
-  }, [dispatch]);
+  }, []);
 
   const blogCatState = useSelector(
     (state) => state.blogCategory.blogCategories
@@ -58,12 +58,12 @@ const AddBlog = React.memo(() => {
     } else {
       dispatch(resetState());
     }
-  }, [dispatch, blogId]);
+  }, [blogId]);
 
   useEffect(() => {
     dispatch(resetState());
     dispatch(getBlogCategory());
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     if (isSuccess && createdBlog) {

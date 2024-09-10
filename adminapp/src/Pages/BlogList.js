@@ -42,7 +42,7 @@ const BlogList = React.memo(() => {
   useEffect(() => {
     dispatch(resetState());
     dispatch(getBlogs());
-  }, [dispatch]);
+  }, []);
 
   const { blogs, isError, isLoading, isSuccess, message } = useSelector(
     (state) => state.blog ?? {}

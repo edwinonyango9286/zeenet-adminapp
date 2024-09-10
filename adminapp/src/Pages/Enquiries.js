@@ -55,7 +55,7 @@ const Enquiries = React.memo(() => {
   useEffect(() => {
     dispatch(resetState());
     dispatch(getEnquiries());
-  }, [dispatch, resetState, getEnquiries]);
+  }, [ resetState, getEnquiries]);
 
   const { enquiries, isError, isLoading, isSuccess, message } = useSelector(
     (state) => state.enquiry ?? {}

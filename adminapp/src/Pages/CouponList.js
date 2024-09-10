@@ -52,7 +52,7 @@ const CouponList = React.memo(() => {
   useEffect(() => {
     dispatch(resetState());
     dispatch(getCoupons());
-  }, [dispatch]);
+  }, []);
 
   const { coupons, isError, isLoading, isSuccess, message } = useSelector(
     (state) => state.coupon ?? {}

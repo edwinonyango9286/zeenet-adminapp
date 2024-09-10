@@ -48,7 +48,7 @@ const CategoryList = React.memo(() => {
   useEffect(() => {
     dispatch(resetState());
     dispatch(getProductCategories());
-  }, [dispatch]);
+  }, []);
 
   const data =
     categories &&

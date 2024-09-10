@@ -51,7 +51,7 @@ const Orders = React.memo(() => {
   const { orders } = useSelector((state) => state.auth.orders);
   useEffect(() => {
     dispatch(getOrders());
-  }, [dispatch]);
+  }, []);
 
   const formatKES = (amount) => {
     return new Intl.NumberFormat("en-KE", {

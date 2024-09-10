@@ -47,10 +47,10 @@ const Login = React.memo(() => {
 
   useEffect(() => {
     if (isError) {
-      dispatch(resetState);
+      dispatch(resetState());
     }
-  }, [dispatch]);
-  
+  }, []);
+
   return (
     <>
       <div

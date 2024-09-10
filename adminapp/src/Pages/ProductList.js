@@ -75,7 +75,7 @@ const ProductList = React.memo(() => {
   useEffect(() => {
     dispatch(resetState());
     dispatch(getProducts());
-  }, [dispatch, getProducts, resetState]);
+  }, [ getProducts, resetState]);
 
   const data1 =
     products &&

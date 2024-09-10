@@ -38,7 +38,7 @@ const AddProduct = React.memo(() => {
   useEffect(() => {
     dispatch(getBrands());
     dispatch(getProductCategories());
-  }, [dispatch]);
+  }, []);
 
   const brandState = useSelector((state) => state.brand.brands);
   const categoryState = useSelector(
@@ -71,11 +71,11 @@ const AddProduct = React.memo(() => {
     } else {
       dispatch(resetState());
     }
-  }, [dispatch, productId]);
+  }, [productId]);
 
   useEffect(() => {
     dispatch(resetState());
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     if (isSuccess && createdProduct) {
