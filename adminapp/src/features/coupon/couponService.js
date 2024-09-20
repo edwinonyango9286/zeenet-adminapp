@@ -3,7 +3,9 @@ import { newRequest } from "../../utils/newRequest";
 
 const getCoupons = async () => {
   const response = await newRequest.get(`coupon/getall`, config);
-  return response.data;
+   if (response.data) {
+     return response.data;
+   }
 };
 
 const createCoupon = async (coupon) => {
@@ -20,17 +22,23 @@ const updateCoupon = async (coupon) => {
     },
     config
   );
-  return response.data;
+   if (response.data) {
+     return response.data;
+   }
 };
 
 const getCoupon = async (id) => {
   const response = await newRequest.get(`coupon/get/${id}`, config);
-  return response.data;
+   if (response.data) {
+     return response.data;
+   }
 };
 
 const deleteCoupon = async (id) => {
   const response = await newRequest.delete(`coupon/delete/${id}`, config);
-  return response.data;
+   if (response.data) {
+     return response.data;
+   }
 };
 
 const couponService = {

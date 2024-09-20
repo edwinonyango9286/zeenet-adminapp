@@ -3,7 +3,9 @@ import { newRequest } from "../../utils/newRequest";
 
 const getBlogCategory = async () => {
   const response = await newRequest.get(`blogcategory/getall`);
-  return response.data;
+ if (response.data) {
+   return response.data;
+ }
 };
 
 const createBlogCategory = async (blogCat) => {
@@ -12,7 +14,9 @@ const createBlogCategory = async (blogCat) => {
     blogCat,
     config
   );
-  return response.data;
+  if (response.data) {
+    return response.data;
+  }
 };
 
 const updateBLogCat = async (blogCat) => {
@@ -21,16 +25,22 @@ const updateBLogCat = async (blogCat) => {
     { title: blogCat.blogCatData.title },
     config
   );
-  return response.data;
+   if (response.data) {
+     return response.data;
+   }
 };
 
 const getBlogCat = async (id) => {
   const response = await newRequest.get(`blogcategory/get/${id}`, config);
-  return response.data;
+   if (response.data) {
+     return response.data;
+   }
 };
 const deleteBLogCat = async (id) => {
   const response = await newRequest.delete(`blogcategory/delete/${id}`, config);
-  return response.data;
+   if (response.data) {
+     return response.data;
+   }
 };
 
 const bCategoryService = {

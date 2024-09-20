@@ -84,7 +84,7 @@ export const blogCategorySlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.payload.response?.data?.message;
+        state.message = action?.payload?.response?.data?.message;
       })
       .addCase(createBlogCategory.pending, (state) => {
         state.isLoading = true;
@@ -99,7 +99,7 @@ export const blogCategorySlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.payload.response?.data?.message;
+        state.message = action?.payload?.response?.data?.message;
       })
       .addCase(getABlogCat.pending, (state) => {
         state.isLoading = true;
@@ -114,7 +114,7 @@ export const blogCategorySlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.payload.response?.data?.message;
+        state.message = action?.payload?.response?.data?.message;
       })
       .addCase(updateABLogCat.pending, (state) => {
         state.isLoading = true;
@@ -129,7 +129,7 @@ export const blogCategorySlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.payload.response?.data?.message;
+        state.message = action?.payload?.response?.data?.message;
       })
       .addCase(deleteABlogCat.pending, (state) => {
         state.isLoading = true;
@@ -144,7 +144,7 @@ export const blogCategorySlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.payload.response?.data?.message;
+        state.message = action?.payload?.response?.data?.message;
       })
       .addCase(resetState, () => initialState);
   },

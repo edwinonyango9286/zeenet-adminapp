@@ -86,7 +86,7 @@ export const productSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.payload.response?.data?.message;
+        state.message = action?.payload?.response?.data?.message;
       })
       .addCase(createProduct.pending, (state) => {
         state.isLoading = true;
@@ -101,7 +101,7 @@ export const productSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.payload.response?.data?.message;
+        state.message = action?.payload?.response?.data?.message;
       })
       .addCase(deleteAProduct.pending, (state) => {
         state.isLoading = true;
@@ -116,7 +116,7 @@ export const productSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.payload.response?.data?.message;
+        state.message = action?.payload?.response?.data?.message;
       })
       .addCase(getAProduct.pending, (state) => {
         state.isLoading = true;
@@ -139,7 +139,7 @@ export const productSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.payload.response?.data?.message;
+        state.message = action?.payload?.response?.data?.message;
       })
       .addCase(updateAProduct.pending, (state) => {
         state.isLoading = true;
@@ -154,7 +154,7 @@ export const productSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.payload.response?.data?.message;
+        state.message = action?.payload?.response?.data?.message;
       })
       .addCase(resetState, () => initialState);
   },

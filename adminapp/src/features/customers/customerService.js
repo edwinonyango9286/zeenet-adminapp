@@ -3,7 +3,9 @@ import { newRequest } from "../../utils/newRequest";
 
 const getUsers = async () => {
   const response = await newRequest.get(`user/getallusers`, config);
-  return response.data;
+   if (response.data) {
+     return response.data;
+   }
 };
 
 const customerService = {

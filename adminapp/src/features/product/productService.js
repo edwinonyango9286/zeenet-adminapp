@@ -3,13 +3,15 @@ import { newRequest } from "../../utils/newRequest";
 
 const getProducts = async () => {
   const response = await newRequest.get(`products/allproducts`);
-  return response.data;
-};
+ if (response.data) {
+   return response.data;
+ }};
 
 const createProduct = async (product) => {
   const response = await newRequest.post(`products/create`, product, config);
-  return response.data;
-};
+ if (response.data) {
+   return response.data;
+ }};
 
 const updateProduct = async (product) => {
   const response = await newRequest.put(
@@ -29,18 +31,21 @@ const updateProduct = async (product) => {
     },
     config
   );
-  return response.data;
-};
+ if (response.data) {
+   return response.data;
+ }};
 
 const getProduct = async (id) => {
   const response = await newRequest.get(`products/getaproduct/${id}`, config);
-  return response.data;
-};
+ if (response.data) {
+   return response.data;
+ }};
 
 const deleteProduct = async (id) => {
   const response = await newRequest.delete(`products/delete/${id}`, config);
-  return response.data;
-};
+ if (response.data) {
+   return response.data;
+ }};
 
 const productService = {
   getProducts,

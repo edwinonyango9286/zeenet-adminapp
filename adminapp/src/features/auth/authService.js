@@ -30,12 +30,16 @@ const resetAdminPassword = async (data) => {
 
 const getAllOrders = async () => {
   const response = await newRequest.get(`user/getallorders`, config);
-  return response.data;
+  if (response.data) {
+    return response.data;
+  }
 };
 
 const getOrder = async (id) => {
   const response = await newRequest.get(`user/getasingleorder/${id}`, config);
-  return response.data;
+  if (response.data) {
+    return response.data;
+  }
 };
 
 const updateOrderStatus = async (data) => {
@@ -44,16 +48,22 @@ const updateOrderStatus = async (data) => {
     { status: data.status },
     config
   );
-  return response.data;
+   if (response.data) {
+     return response.data;
+   }
 };
 
 const getMonthlyOrders = async () => {
   const response = await newRequest.get(`user/getmonthwiseorderincome`, config);
-  return response.data;
+   if (response.data) {
+     return response.data;
+   }
 };
 const getYearlyData = async () => {
   const response = await newRequest.get(`user/getyearlyorders`, config);
-  return response.data;
+  if (response.data) {
+    return response.data;
+  }
 };
 
 const authService = {

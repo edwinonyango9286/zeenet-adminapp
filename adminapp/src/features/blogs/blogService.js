@@ -8,7 +8,9 @@ const getBlogs = async () => {
 
 const createBlog = async (blog) => {
   const response = await newRequest.post(`blog/create`, blog, config);
-  return response.data;
+   if (response.data) {
+     return response.data;
+   }
 };
 
 const updateBlog = async (blog) => {
@@ -22,17 +24,23 @@ const updateBlog = async (blog) => {
     },
     config
   );
-  return response.data;
+   if (response.data) {
+     return response.data;
+   }
 };
 
 const getBlog = async (id) => {
   const response = await newRequest.get(`blog/get/${id}`, config);
-  return response.data;
+  if (response.data) {
+    return response.data;
+  }
 };
 
 const deleteBlog = async (id) => {
   const response = await newRequest.delete(`blog/delete/${id}`, config);
-  return response.data;
+ if (response.data) {
+   return response.data;
+ }
 };
 
 const blogsService = {

@@ -46,6 +46,7 @@ const AddProduct = React.memo(() => {
   );
   const imgState = useSelector((state) => state.upload.images);
   const newProduct = useSelector((state) => state.product);
+  const isLoadingUpload = useSelector((state) => state.upload.isLoading);
 
   const {
     isSuccess,
@@ -268,8 +269,8 @@ const AddProduct = React.memo(() => {
             label="Add a product Screen size. eg. 14.6"
             name="screensize"
             id="screensize"
-            min={10}
-            max={17}
+            min={2}
+            max={30}
             step={0.1}
             onChng={formik.handleChange("screensize")}
             onBlr={formik.handleBlur("screensize")}
@@ -300,9 +301,14 @@ const AddProduct = React.memo(() => {
                 <section>
                   <div {...getRootProps()}>
                     <input {...getInputProps()} />
-                    <p>
-                      Drag and Drop some files here, or Click to select files.
-                    </p>
+
+                    {isLoadingUpload ? (
+                      "Uploading.."
+                    ) : (
+                      <p>
+                        Drag and Drop some files here, or Click to select files.
+                      </p>
+                    )}
                   </div>
                 </section>
               )}
@@ -317,7 +323,13 @@ const AddProduct = React.memo(() => {
                     type="button"
                     onClick={() => dispatch(delImg(i.public_id))}
                     className="btn-close position-absolute"
-                    style={{ top: "10px", right: "10px" }}
+                    style={{
+                      top: "10px",
+                      right: "10px",
+                      border: "none",
+                      outline: "none",
+                      boxShadow: "none",
+                    }}
                   ></button>
                   <img
                     src={i.url}

@@ -85,7 +85,7 @@ export const enquirySlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.payload.response?.data?.message;
+        state.message = action?.payload?.response?.data?.message;
       })
       .addCase(createAEnquiry.pending, (state) => {
         state.isLoading = true;
@@ -100,7 +100,7 @@ export const enquirySlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.payload.response?.data?.message;
+        state.message = action?.payload?.response?.data?.message;
       })
       .addCase(updateAEnquiry.pending, (state) => {
         state.isLoading = true;
@@ -115,7 +115,7 @@ export const enquirySlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.payload.response?.data?.message;
+        state.message = action?.payload?.response?.data?.message;
       })
       .addCase(getAEnquiry.pending, (state) => {
         state.isLoading = true;
@@ -134,7 +134,7 @@ export const enquirySlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.payload.response?.data?.message;
+        state.message = action?.payload?.response?.data?.message;
       })
       .addCase(deleteAEnquiry.pending, (state) => {
         state.isLoading = true;
@@ -149,7 +149,7 @@ export const enquirySlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.payload.response?.data?.message;
+        state.message = action?.payload?.response?.data?.message;
       })
       .addCase(resetState, () => initialState);
   },

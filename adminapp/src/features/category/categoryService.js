@@ -5,7 +5,9 @@ const getCategories = async () => {
   const response = await newRequest.get(
     `productcategory/getallproductcategories`
   );
-  return response.data;
+  if (response.data) {
+    return response.data;
+  }
 };
 const createCategory = async (category) => {
   const response = await newRequest.post(
@@ -13,7 +15,9 @@ const createCategory = async (category) => {
     category,
     config
   );
-  return response.data;
+   if (response.data) {
+     return response.data;
+   }
 };
 
 const updateCategory = async (category) => {
@@ -22,7 +26,9 @@ const updateCategory = async (category) => {
     { title: category.categoryData.title },
     config
   );
-  return response.data;
+   if (response.data) {
+     return response.data;
+   }
 };
 
 const getCategory = async (id) => {
@@ -30,7 +36,9 @@ const getCategory = async (id) => {
     `productcategory/singleproductcategory/${id}`,
     config
   );
-  return response.data;
+   if (response.data) {
+     return response.data;
+   }
 };
 
 const deleteCategory = async (id) => {
@@ -38,7 +46,9 @@ const deleteCategory = async (id) => {
     `productcategory/deleteproductcategory/${id}`,
     config
   );
-  return response.data;
+   if (response.data) {
+     return response.data;
+   }
 };
 
 const categoryService = {

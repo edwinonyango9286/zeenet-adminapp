@@ -3,11 +3,15 @@ import { newRequest } from "../../utils/newRequest";
 
 const uploadImg = async (data) => {
   const response = await newRequest.post(`upload/`, data, config);
-  return response.data;
+  if (response.data) {
+    return response.data;
+  }
 };
 const deleteImg = async (id) => {
   const response = await newRequest.delete(`upload/delete/${id}`, config);
-  return response.data;
+  if (response.data) {
+    return response.data;
+  }
 };
 
 const uploadService = {

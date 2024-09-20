@@ -116,7 +116,7 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.adminUser = action.payload;
-        localStorage.setItem("adminToken", action.payload.token);
+        localStorage.setItem("adminToken", action?.payload?.token);
       })
       .addCase(login.rejected, (state, action) => {
         state.isError = true;
@@ -141,7 +141,7 @@ export const authSlice = createSlice({
         state.isSuccess = false;
         state.isLoading = false;
         state.message = action.error;
-        toast.error(action.payload?.response?.data?.message);
+        toast.error(action?.payload?.response?.data?.message);
       })
       .addCase(resetPassword.pending, (state) => {
         state.isLoading = true;
@@ -175,7 +175,7 @@ export const authSlice = createSlice({
         state.isError = true;
         state.isLoading = false;
         state.isSuccess = false;
-        state.message = action.payload?.response?.data?.message;
+        state.message = action?.payload?.response?.data?.message;
       })
       .addCase(getAsingleOrder.pending, (state) => {
         state.isLoading = true;
@@ -190,7 +190,7 @@ export const authSlice = createSlice({
         state.isError = true;
         state.isLoading = false;
         state.isSuccess = false;
-        state.message = action.payload?.response?.data?.message;
+        state.message = action?.payload?.response?.data?.message;
       })
       .addCase(getMonthWiseOrders.pending, (state) => {
         state.isLoading = true;
@@ -220,7 +220,7 @@ export const authSlice = createSlice({
         state.isError = true;
         state.isLoading = false;
         state.isSuccess = false;
-        state.message = action.payload?.response?.data?.message;
+        state.message = action?.payload?.response?.data?.message;
       })
       .addCase(UpdateAnOrder.pending, (state) => {
         state.isLoading = true;
@@ -235,7 +235,7 @@ export const authSlice = createSlice({
         state.isError = true;
         state.isLoading = false;
         state.isSuccess = false;
-        state.message = action.payload?.response?.data?.message;
+        state.message = action?.payload?.response?.data?.message;
       })
       .addCase(resetState, () => initialState);
   },
