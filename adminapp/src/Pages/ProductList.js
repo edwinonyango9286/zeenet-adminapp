@@ -34,7 +34,7 @@ const columns = [
   },
   {
     title: "Screen size",
-    dataIndex: "screensize",
+    dataIndex: "screenSize",
   },
   {
     title: "Price",
@@ -75,33 +75,33 @@ const ProductList = React.memo(() => {
   useEffect(() => {
     dispatch(resetState());
     dispatch(getProducts());
-  }, [ getProducts, resetState]);
+  }, [getProducts, resetState]);
 
   const data1 =
     products &&
     products.map(
       (product, index) =>
-      ({
-        key: index + 1,
-        title: product.title,
-        brand: product.brand,
-        category: product.category,
-        screensize: `${product.screensize}"`,
-        price: `Ksh ${formatKES(product.price)}`,
-        action: (
-          <>
-            <Link to={`/admin/product/${product._id}`} className="fs-5">
-              <FiEdit />
-            </Link>
-            <button
-              className="ms-2 fs-5 text-danger border-0 bg-transparent"
-              onClick={() => showModal(product._id)}
-            >
-              <AiFillDelete />
-            </button>
-          </>
-        ),
-      } || [])
+        ({
+          key: index + 1,
+          title: product?.title,
+          brand: product?.brand,
+          category: product?.category,
+          screenSize: `${product?.screenSize}"`,
+          price: `Ksh ${formatKES(product?.price)}`,
+          action: (
+            <>
+              <Link to={`/admin/product/${product?._id}`} className="fs-5">
+                <FiEdit />
+              </Link>
+              <button
+                className="ms-2 fs-5 text-danger border-0 bg-transparent"
+                onClick={() => showModal(product?._id)}
+              >
+                <AiFillDelete />
+              </button>
+            </>
+          ),
+        } || [])
     );
 
   const deleteProduct = async (id) => {

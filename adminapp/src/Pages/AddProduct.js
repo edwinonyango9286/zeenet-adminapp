@@ -26,7 +26,7 @@ const schema = Yup.object().shape({
   category: Yup.string().required("Add product category."),
   tags: Yup.string().required("Select product tag."),
   quantity: Yup.number().required("Add product quantity."),
-  screensize: Yup.number().required("Add product screen size."),
+  screenSize: Yup.number().required("Add product screen size."),
 });
 
 const AddProduct = React.memo(() => {
@@ -115,7 +115,7 @@ const AddProduct = React.memo(() => {
       quantity: productQuantity || "",
       images: "",
       tags: productTag || "",
-      screensize: productScreenSize || "",
+      screenSize: productScreenSize || "",
     },
 
     validationSchema: schema,
@@ -267,17 +267,17 @@ const AddProduct = React.memo(() => {
           <CustomInput
             type="number"
             label="Add a product Screen size. eg. 14.6"
-            name="screensize"
-            id="screensize"
+            name="screenSize"
+            id="screenSize"
             min={2}
             max={30}
             step={0.1}
             onChng={formik.handleChange("screensize")}
             onBlr={formik.handleBlur("screensize")}
-            val={formik.values.screensize}
+            val={formik.values.screenSize}
           />
           <div className="error">
-            {formik.touched.quantity && formik.errors.screensize}
+            {formik.touched.screenSize && formik.errors.screenSize}
           </div>
 
           <CustomInput
