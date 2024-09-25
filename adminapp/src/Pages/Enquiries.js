@@ -63,17 +63,17 @@ const Enquiries = React.memo(() => {
 
   const data1 = enquiries &&  enquiries.map((enquiry, index) => ({
     key: index + 1,
-    name: enquiry.name,
-    email: enquiry.email,
-    mobile: enquiry.mobile,
+    name: enquiry?.name,
+    email: enquiry?.email,
+    mobile: enquiry?.mobile,
     status: (
       <>
         <select
           name=""
-          defaultValue={enquiry.status ? enquiry.status : "Submitted"}
+          defaultValue={enquiry?.status ? enquiry?.status : "Submitted"}
           className="form-control form-select shadow-none outline-none"
           id=""
-          onChange={(e) => setEnquiryStatus(e.target.value, enquiry._id)}
+          onChange={(e) => setEnquiryStatus(e.target.value, enquiry?._id)}
         >
           <option value="Submitted">Submitted</option>
           <option value="Contacted">Contacted</option>
@@ -85,7 +85,7 @@ const Enquiries = React.memo(() => {
     action: (
       <>
         <Link
-          to={`/admin/enquiries/${enquiry._id}`}
+          to={`/admin/enquiries/${enquiry?._id}`}
           className="fs-5 ms-2 text-danger "
         >
           <FaRegEye />

@@ -13,7 +13,7 @@ const ViewEnquiry = React.memo(() => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const getEngId = location.pathname.split("/")[3];
-  const enqState = useSelector((state) => state.enquiry);
+  const enqState = useSelector((state) => state?.enquiry);
   const {
     enquiryName,
     enquiryEmail,

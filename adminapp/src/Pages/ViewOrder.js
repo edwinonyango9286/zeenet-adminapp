@@ -43,15 +43,15 @@ const ViewOrder = React.memo(() => {
     dispatch(getAsingleOrder(orderId));
   }, [orderId]);
 
-  const order = useSelector((state) => state.auth.singleOrder.order);
+  const order = useSelector((state) => state?.auth?.singleOrder?.order);
   const data = [];
-  for (let i = 0; i < order.orderedItems.length; i++) {
+  for (let i = 0; i < order.orderedItems?.length; i++) {
     data.push({
       key: i + 1,
-      name: order.orderedItems[i].product.title,
-      brand: order.orderedItems[i].product.brand,
-      count: order.orderedItems[i].quantity,
-      amount: formatKES(order.orderedItems[i].price),
+      name: order.orderedItems[i]?.product?.title,
+      brand: order.orderedItems[i]?.product?.brand,
+      count: order.orderedItems[i]?.quantity,
+      amount: formatKES(order.orderedItems[i]?.price),
     });
   }
 

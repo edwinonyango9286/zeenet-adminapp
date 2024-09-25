@@ -34,10 +34,10 @@ const AddBlog = React.memo(() => {
   }, []);
 
   const blogCatState = useSelector(
-    (state) => state.blogCategory.blogCategories
+    (state) => state?.blogCategory?.blogCategories
   );
-  const imgState = useSelector((state) => state.upload.images);
-  const newBlog = useSelector((state) => state.blog);
+  const imgState = useSelector((state) => state?.upload?.images);
+  const newBlog = useSelector((state) => state?.blog);
 
   const {
     isSuccess,
@@ -165,7 +165,7 @@ const AddBlog = React.memo(() => {
               value={formik.values.category}
             >
               <option>Select blog Category</option>
-              {blogCatState.map((i, j) => {
+              {blogCatState?.map((i, j) => {
                 return (
                   <option key={j} value={i.title}>
                     {i.title}
@@ -210,7 +210,7 @@ const AddBlog = React.memo(() => {
             </div>
 
             <div className="showImages d-flex flex-wrap gap-3">
-              {imgState.map((i, j) => {
+              {imgState?.map((i, j) => {
                 return (
                   <div className="position-relative" key={j}>
                     <button

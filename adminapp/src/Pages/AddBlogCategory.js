@@ -21,7 +21,7 @@ const AddBlogCategory = React.memo(() => {
   const navigate = useNavigate();
   const location = useLocation();
   const blogCategoryId = location.pathname.split("/")[3];
-  const newBlogCategory = useSelector((state) => state.blogCategory);
+  const newBlogCategory = useSelector((state) => state?.blogCategory);
   const {
     isSuccess,
     isError,

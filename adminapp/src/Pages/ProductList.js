@@ -69,7 +69,7 @@ const ProductList = React.memo(() => {
 
   const dispatch = useDispatch();
   const { products, isLoading, isError, message } = useSelector(
-    (state) => state.product ?? {}
+    (state) => state?.product ?? {}
   );
 
   useEffect(() => {
@@ -79,7 +79,7 @@ const ProductList = React.memo(() => {
 
   const data1 =
     products &&
-    products.map(
+    products?.map(
       (product, index) =>
         ({
           key: index + 1,
@@ -87,7 +87,7 @@ const ProductList = React.memo(() => {
           brand: product?.brand,
           category: product?.category,
           screenSize: `${product?.screenSize}"`,
-          price: `Ksh ${formatKES(product?.price)}`,
+          price: `${formatKES(product?.price)}`,
           action: (
             <>
               <Link to={`/admin/product/${product?._id}`} className="fs-5">

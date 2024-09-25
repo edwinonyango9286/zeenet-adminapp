@@ -21,7 +21,7 @@ const AddCategory = React.memo(() => {
   const navigate = useNavigate();
   const location = useLocation();
   const categoryId = location.pathname.split("/")[3];
-  const newCategory = useSelector((state) => state.productCategory);
+  const newCategory = useSelector((state) => state?.productCategory);
   const {
     isSuccess,
     isError,

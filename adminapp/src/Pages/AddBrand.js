@@ -21,7 +21,7 @@ const AddBrand = React.memo(() => {
   const navigate = useNavigate();
   const location = useLocation();
   const brandId = location.pathname.split("/")[3];
-  const newBrand = useSelector((state) => state.brand);
+  const newBrand = useSelector((state) => state?.brand);
   const {
     isSuccess,
     isError,

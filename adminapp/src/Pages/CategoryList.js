@@ -42,7 +42,7 @@ const CategoryList = React.memo(() => {
 
   const dispatch = useDispatch();
   const { categories, isError, isLoading, isSuccess, message } = useSelector(
-    (state) => state.productCategory ?? {}
+    (state) => state?.productCategory ?? {}
   );
 
   useEffect(() => {
@@ -56,14 +56,14 @@ const CategoryList = React.memo(() => {
       (category, index) =>
         ({
           key: index + 1,
-          name: category.title,
+          name: category?.title,
           action: (
             <>
-              <Link to={`/admin/category/${category._id}`} className="fs-5">
+              <Link to={`/admin/category/${category?._id}`} className="fs-5">
                 <FiEdit />
               </Link>
               <button className=" ms-2 fs-5  text-danger bg-transparent border-0">
-                <AiFillDelete onClick={() => showModal(category._id)} />
+                <AiFillDelete onClick={() => showModal(category?._id)} />
               </button>
             </>
           ),

@@ -40,13 +40,13 @@ const AddProduct = React.memo(() => {
     dispatch(getProductCategories());
   }, []);
 
-  const brandState = useSelector((state) => state.brand.brands);
+  const brandState = useSelector((state) => state?.brand?.brands);
   const categoryState = useSelector(
-    (state) => state.productCategory.categories
+    (state) => state?.productCategory?.categories
   );
-  const imgState = useSelector((state) => state.upload.images);
-  const newProduct = useSelector((state) => state.product);
-  const isLoadingUpload = useSelector((state) => state.upload.isLoading);
+  const imgState = useSelector((state) => state?.upload?.images);
+  const newProduct = useSelector((state) => state?.product);
+  const isLoadingUpload = useSelector((state) => state?.upload?.isLoading);
 
   const {
     isSuccess,

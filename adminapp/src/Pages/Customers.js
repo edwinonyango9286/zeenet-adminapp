@@ -37,7 +37,7 @@ const columns = [
 const Customers = React.memo(() => {
   const dispatch = useDispatch();
   const { customers, isLoading, isError, message } = useSelector(
-    (state) => state.customer
+    (state) => state?.customer
   );
   useEffect(() => {
     dispatch(resetState());
@@ -52,9 +52,9 @@ const Customers = React.memo(() => {
         (customer, index) =>
         ({
           key: index + 1,
-          name: `${customer.firstname} ${customer.lastname}`,
-          email: customer.email,
-          mobile: customer.mobile,
+          name: `${customer?.firstname} ${customer?.lastname}`,
+          email: customer?.email,
+          mobile: customer?.mobile,
         } || [])
       );
 

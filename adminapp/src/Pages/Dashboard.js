@@ -51,12 +51,12 @@ const columns = [
 
 const Dashboard = React.memo(() => {
   const dispatch = useDispatch();
-  const monthlyDataState = useSelector((state) => state.auth.monthlyData);
-  const yearlyDataState = useSelector((state) => state.auth.yearlyData);
+  const monthlyDataState = useSelector((state) => state?.auth?.monthlyData);
+  const yearlyDataState = useSelector((state) => state?.auth?.yearlyData);
   const { isError, isLoading, isSuccess, message } = useSelector(
-    (state) => state.auth
+    (state) => state?.auth
   );
-  const { orders } = useSelector((state) => state.auth.orders);
+  const { orders } = useSelector((state) => state?.auth?.orders);
   const [dataMonthly, setDataMonthly] = useState([]);
   const [dataMonthlySales, setDataMonthlySales] = useState([]);
   const [orderData, setOrderData] = useState([]);
@@ -95,13 +95,13 @@ const Dashboard = React.memo(() => {
     for (let index = 0; index < monthlyDataState?.length; index++) {
       const element = monthlyDataState[index];
       data.push({
-        type: monthNames[element._id.month],
-        income: element.amount,
+        type: monthNames[element?._id?.month],
+        income: element?.amount,
       });
       setDataMonthly(data);
       mothlyOrderCount.push({
-        type: monthNames[element._id.month],
-        sales: element.count,
+        type: monthNames[element?._id?.month],
+        sales: element?.count,
       });
     }
     setDataMonthlySales(mothlyOrderCount);
@@ -112,15 +112,15 @@ const Dashboard = React.memo(() => {
       orders &&
       orders.map(
         (order, index) =>
-        ({
-          key: index + 1,
-          name: order.user.firstname + " " + order.user.lastname,
-          product: order.orderedItems?.length,
+          ({
+            key: index + 1,
+            name: order?.user?.firstname + " " + order?.user?.lastname,
+            product: order?.orderedItems?.length,
 
-          price: formatKES(order.totalPrice),
-          discountedPrice: formatKES(order.totalPriceAfterDiscount),
-          status: order.orderStatus,
-        } || [])
+            price: formatKES(order?.totalPrice),
+            discountedPrice: formatKES(order?.totalPriceAfterDiscount),
+            status: order?.orderStatus,
+          } || [])
       );
     setOrderData(data);
   }, [orders]);
@@ -193,10 +193,9 @@ const Dashboard = React.memo(() => {
             <div>
               <p className="desc">Total Income</p>
               <h6 className="mb-0 sub-title">
-                Ksh{" "}
                 {formatKES(
-                  yearlyDataState && yearlyDataState[0].amount
-                    ? yearlyDataState && yearlyDataState[0].amount
+                  yearlyDataState && yearlyDataState[0]?.amount
+                    ? yearlyDataState && yearlyDataState[0]?.amount
                     : 0
                 )}
               </h6>
@@ -213,14 +212,10 @@ const Dashboard = React.memo(() => {
             <div>
               <p className="desc">Total Sales</p>
               <h6 className="mb-0 sub-title">
-                Products sold{" "}
-                {new Intl.NumberFormat("en-KE", {
-                  maximumFractionDigits: 0,
-                }).format(
-                  yearlyDataState && yearlyDataState[0].count
-                    ? yearlyDataState && yearlyDataState[0].count
-                    : 0
-                )}
+                Products sold
+                {yearlyDataState && yearlyDataState[0]?.count
+                  ? yearlyDataState && yearlyDataState[0]?.count
+                  : 0}
               </h6>
             </div>
             <div className="d-flex flex-column align-items-end">
@@ -235,7 +230,6 @@ const Dashboard = React.memo(() => {
             <div>
               <p className="desc">Total Expesence</p>
               <h6 className="mb-0 sub-title">
-                Ksh{" "}
                 {formatKES(
                   yearlyDataState && yearlyDataState[0]?.amount
                     ? yearlyDataState && yearlyDataState[0]?.amount

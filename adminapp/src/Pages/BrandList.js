@@ -41,7 +41,7 @@ const BrandList = React.memo(() => {
   };
   const dispatch = useDispatch();
   const { brands, isLoading, isError, message } = useSelector(
-    (state) => state.brand ?? {}
+    (state) => state?.brand ?? {}
   );
 
   useEffect(() => {
@@ -55,15 +55,15 @@ const BrandList = React.memo(() => {
       (brand, index) =>
         ({
           key: index + 1,
-          name: brand.title,
+          name: brand?.title,
           action: (
             <>
-              <Link to={`/admin/brand/${brand._id}`} className="fs-5">
+              <Link to={`/admin/brand/${brand?._id}`} className="fs-5">
                 <FiEdit />
               </Link>
               <button
                 className="ms-3 fs-5 text-danger bg-transparent border-0"
-                onClick={() => showModal(brand._id)}
+                onClick={() => showModal(brand?._id)}
                 style={{ border: "none", outline: "none", boxShadow: "none" }}
               >
                 <AiFillDelete />

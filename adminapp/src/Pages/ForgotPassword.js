@@ -24,7 +24,7 @@ const ForgotPassword = React.memo(() => {
     },
   });
   const { adminUser, isError, isSuccess, isLoading, message } = useSelector(
-    (state) => state.auth ?? {}
+    (state) => state?.auth ?? {}
   );
 
   return (

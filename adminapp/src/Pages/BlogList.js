@@ -45,7 +45,7 @@ const BlogList = React.memo(() => {
   }, []);
 
   const { blogs, isError, isLoading, isSuccess, message } = useSelector(
-    (state) => state.blog ?? {}
+    (state) => state?.blog ?? {}
   );
 
   const data =
@@ -54,16 +54,16 @@ const BlogList = React.memo(() => {
       (blog, index) =>
       ({
         key: index + 1,
-        name: blog.title,
-        category: blog.category,
+        name: blog?.title,
+        category: blog?.category,
         action: (
           <>
-            <Link to={`/admin/blog/${blog._id}`} className="fs-5">
+            <Link to={`/admin/blog/${blog?._id}`} className="fs-5">
               <FiEdit />
             </Link>
             <button
               className="ms-2 fs-5 text-danger bg-transparent border-0"
-              onClick={() => showModal(blog._id)}
+              onClick={() => showModal(blog?._id)}
             >
               <AiFillDelete />
             </button>

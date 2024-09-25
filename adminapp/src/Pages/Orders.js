@@ -46,9 +46,9 @@ const columns = [
 const Orders = React.memo(() => {
   const dispatch = useDispatch();
   const { isError, isLoading, isSuccess, message } = useSelector(
-    (state) => state.auth
+    (state) => state?.auth
   );
-  const { orders } = useSelector((state) => state.auth.orders);
+  const { orders } = useSelector((state) => state?.auth?.orders);
   useEffect(() => {
     dispatch(getOrders());
   }, []);
@@ -63,19 +63,19 @@ const Orders = React.memo(() => {
 
   const data =
     orders &&
-    orders.map(
+    orders?.map(
       (order, index) =>
         ({
           key: index + 1,
-          name: `${order.user.firstname} ${order.user.lastname}`,
+          name: `${order?.user?.firstname} ${order?.user?.lastname}`,
           product: <Link to={`/admin/order/${order._id}`}>view Order</Link>,
-          amount: formatKES(order.totalPrice),
-          date: new Date(order.createdAt).toLocaleString(),
+          amount: formatKES(order?.totalPrice),
+          date: new Date(order?.createdAt).toLocaleString(),
           action: (
             <>
               <select
-                defaultValue={order.orderStatus}
-                onChange={(e) => updateOrder(order._id, e.target.value)}
+                defaultValue={order?.orderStatus}
+                onChange={(e) => updateOrder(order?._id, e.target.value)}
                 className="form-control form-select"
                 style={{}}
               >

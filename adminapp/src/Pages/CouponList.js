@@ -55,15 +55,15 @@ const CouponList = React.memo(() => {
   }, []);
 
   const { coupons, isError, isLoading, isSuccess, message } = useSelector(
-    (state) => state.coupon ?? {}
+    (state) => state?.coupon ?? {}
   );
-  const data =  coupons && coupons.map(
+  const data =  coupons && coupons?.map(
     (coupon, index) =>
       ({
         key: index + 1,
-        name: coupon.name,
-        expiry: new Date(coupon.expiry).toLocaleString(),
-        discount: coupon.discount,
+        name: coupon?.name,
+        expiry: new Date(coupon?.expiry).toLocaleString(),
+        discount: coupon?.discount,
 
         action: (
           <>

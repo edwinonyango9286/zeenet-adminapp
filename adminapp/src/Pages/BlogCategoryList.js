@@ -45,25 +45,25 @@ const BlogCategoryList = React.memo(() => {
   }, [dispatch]);
 
   const { blogCategories, isError, isLoading, isSuccess, message } =
-    useSelector((state) => state.blogCategory ?? {});
+    useSelector((state) => state?.blogCategory ?? {});
 
   const data =
     blogCategories &&
-    blogCategories.map(
+    blogCategories?.map(
       (blogCategory, index) =>
       ({
         key: index + 1,
-        name: blogCategory.title,
+        name: blogCategory?.title,
         action: (
           <>
             <Link
-              to={`/admin/blog-category/${blogCategory._id}`}
+              to={`/admin/blog-category/${blogCategory?._id}`}
               className="fs-5"
             >
               <FiEdit />
             </Link>
             <button
-              onClick={() => showModal(blogCategory._id)}
+              onClick={() => showModal(blogCategory?._id)}
               className="ms-2 text-danger bg-transparent border-0 fs-5"
               style={{}}
             >

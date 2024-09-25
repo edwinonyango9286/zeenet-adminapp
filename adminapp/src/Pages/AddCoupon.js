@@ -23,7 +23,7 @@ const AddCoupon = React.memo(() => {
   const navigate = useNavigate();
   const location = useLocation();
   const couponId = location.pathname.split("/")[3];
-  const newCoupon = useSelector((state) => state.coupon);
+  const newCoupon = useSelector((state) => state?.coupon);
   const {
     isSuccess,
     isError,
