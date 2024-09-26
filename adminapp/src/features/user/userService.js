@@ -66,7 +66,7 @@ const getYearlyData = async () => {
   }
 };
 
-const authService = {
+const userService = {
   login,
   getAllOrders,
   getOrder,
@@ -77,4 +77,4 @@ const authService = {
   resetAdminPassword,
 };
 
-export default authService;
+export default userService;

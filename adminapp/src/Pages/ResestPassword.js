@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { resetPassword, resetState } from "../features/auth/authSlice";
+import { resetPassword, resetState } from "../features/user/userSlice";
 
 const RESET_PASSWORD_SCHEMA = Yup.object().shape({
   password: Yup.string()
@@ -37,14 +37,14 @@ const ResestPassword = React.memo(() => {
     },
     validationSchema: RESET_PASSWORD_SCHEMA,
     onSubmit: (values) => {
-      dispatch(resetState())
+      dispatch(resetState());
       dispatch(resetPassword({ token: getToken, password: values.password }));
       navigate("/");
     },
   });
 
   const { adminUser, isError, isSuccess, isLoading, message } = useSelector(
-    (state) => state?.auth ?? {}
+    (state) => state?.user ?? {}
   );
 
   return (

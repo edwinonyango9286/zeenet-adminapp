@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import CustomInput from "../Components/CustomInput";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
@@ -272,8 +272,8 @@ const AddProduct = React.memo(() => {
             min={2}
             max={30}
             step={0.1}
-            onChng={formik.handleChange("screensize")}
-            onBlr={formik.handleBlur("screensize")}
+            onChng={formik.handleChange("screenSize")}
+            onBlr={formik.handleBlur("screenSize")}
             val={formik.values.screenSize}
           />
           <div className="error">

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Table } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { getAsingleOrder } from "../features/auth/authSlice";
+import { getAsingleOrder } from "../features/user/userSlice";
 import { useLocation } from "react-router-dom";
 
 const columns = [
@@ -43,7 +43,7 @@ const ViewOrder = React.memo(() => {
     dispatch(getAsingleOrder(orderId));
   }, [orderId]);
 
-  const order = useSelector((state) => state?.auth?.singleOrder?.order);
+  const order = useSelector((state) => state?.user?.singleOrder?.order);
   const data = [];
   for (let i = 0; i < order.orderedItems?.length; i++) {
     data.push({

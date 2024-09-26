@@ -41,11 +41,9 @@ function App() {
           pauseOnFocusLoss
           draggable
           pauseOnHover
-          theme="dark"
+          theme="light"
           transition={Bounce}
           toastStyle={{
-            width: "300px",
-            height: "40px",
             fontSize: "12px",
             fontWeight: "400",
           }}

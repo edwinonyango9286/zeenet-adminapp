@@ -23,7 +23,7 @@ import { TfiMenu } from "react-icons/tfi";
 const { Header, Sider, Content } = Layout;
 
 const MainLayout = React.memo(() => {
-  const adminUser = useSelector((state) => state?.auth?.adminUser);
+  const adminUser = useSelector((state) => state?.user?.adminUser);
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const {

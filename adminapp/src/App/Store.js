@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "../features/auth/authSlice";
+import userReducer from "../features/user/userSlice";
 import customerReducer from "../features/customers/customerSlice";
 import productReducer from "../features/product/productSlice";
 import brandReducer from "../features/brands/brandSlice";
@@ -9,21 +9,10 @@ import blogCategoryReducer from "../features/blogcategory/blogCategorySlice";
 import enquiryReducer from "../features/enquiry/enquirySlice";
 import uploadReducer from "../features/upload/uploadSlice";
 import couponReducer from "../features/coupon/couponSlice";
-import { persistReducer, persistStore } from "redux-persist";
-import storage from "redux-persist/lib/storage";
-import thunk from "redux-thunk";
-
-const persistConfig = {
-  key: "root",
-  storage,
-  version: 1,
-};
-
-const persistedAuthReducer = persistReducer(persistConfig, authReducer);
 
 export const store = configureStore({
   reducer: {
-    auth: persistedAuthReducer,
+    user: userReducer,
     customer: customerReducer,
     product: productReducer,
     brand: brandReducer,
@@ -35,7 +24,4 @@ export const store = configureStore({
     coupon: couponReducer,
   },
   devTools: process.env.REACT_APP_NODE_ENV !== "production",
-  middleware: [thunk],
 });
-
-export const persistor = persistStore(store);

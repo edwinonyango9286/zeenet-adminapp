@@ -9,7 +9,7 @@ import {
   getMonthWiseOrders,
   getOrders,
   getYearlyStatistics,
-} from "../features/auth/authSlice";
+} from "../features/user/userSlice";
 
 const columns = [
   {
@@ -51,12 +51,12 @@ const columns = [
 
 const Dashboard = React.memo(() => {
   const dispatch = useDispatch();
-  const monthlyDataState = useSelector((state) => state?.auth?.monthlyData);
-  const yearlyDataState = useSelector((state) => state?.auth?.yearlyData);
+  const monthlyDataState = useSelector((state) => state?.user?.monthlyData);
+  const yearlyDataState = useSelector((state) => state?.user?.yearlyData);
   const { isError, isLoading, isSuccess, message } = useSelector(
-    (state) => state?.auth
+    (state) => state?.user
   );
-  const { orders } = useSelector((state) => state?.auth?.orders);
+  const { orders } = useSelector((state) => state?.user?.orders);
   const [dataMonthly, setDataMonthly] = useState([]);
   const [dataMonthlySales, setDataMonthlySales] = useState([]);
   const [orderData, setOrderData] = useState([]);

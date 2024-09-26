@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import { Table, Spin} from "antd";
+import { Table, Spin } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { LoadingOutlined } from "@ant-design/icons";
-import { getOrders, UpdateAnOrder } from "../features/auth/authSlice";
+import { getOrders, UpdateAnOrder } from "../features/user/userSlice";
 import { Link } from "react-router-dom";
 
 const columns = [
@@ -46,9 +46,9 @@ const columns = [
 const Orders = React.memo(() => {
   const dispatch = useDispatch();
   const { isError, isLoading, isSuccess, message } = useSelector(
-    (state) => state?.auth
+    (state) => state?.user
   );
-  const { orders } = useSelector((state) => state?.auth?.orders);
+  const { orders } = useSelector((state) => state?.user?.orders);
   useEffect(() => {
     dispatch(getOrders());
   }, []);
@@ -108,7 +108,7 @@ const Orders = React.memo(() => {
               }
             />
           </div>
-        ) :  (
+        ) : (
           <Table columns={columns} dataSource={data} />
         )}{" "}
       </div>

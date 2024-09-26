@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import { login, resetState } from "../features/auth/authSlice";
+import { login, resetState } from "../features/user/userSlice";
 
 const LOGIN_SCHEMA = Yup.object().shape({
   email: Yup.string().email().required(),
@@ -34,7 +34,7 @@ const Login = React.memo(() => {
   });
 
   const { adminUser, isError, isSuccess, isLoading, message } = useSelector(
-    (state) => state?.auth ?? {}
+    (state) => state?.user ?? {}
   );
 
   useEffect(() => {

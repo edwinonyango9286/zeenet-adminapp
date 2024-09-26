@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
-import authService from "./authService";
+import userService from "./userService";
 import { toast } from "react-toastify";
 
 export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
   try {
-    return await authService.login(user);
+    return await userService.login(user);
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
   }
@@ -14,7 +14,7 @@ export const resetPasswordToken = createAsyncThunk(
   "user/reset-password-token",
   async (data, thunkAPI) => {
     try {
-      return await authService.forgotPasswordToken(data);
+      return await userService.forgotPasswordToken(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -25,7 +25,7 @@ export const resetPassword = createAsyncThunk(
   "user/reset-password",
   async (data, thunkAPI) => {
     try {
-      return await authService.resetAdminPassword(data);
+      return await userService.resetAdminPassword(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -36,7 +36,7 @@ export const getOrders = createAsyncThunk(
   "order/get-orders",
   async (thunkAPI) => {
     try {
-      return await authService.getAllOrders();
+      return await userService.getAllOrders();
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -47,7 +47,7 @@ export const UpdateAnOrder = createAsyncThunk(
   "order/update-order-status",
   async (data, thunkAPI) => {
     try {
-      return await authService.updateOrderStatus(data);
+      return await userService.updateOrderStatus(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -58,7 +58,7 @@ export const getAsingleOrder = createAsyncThunk(
   "order/get-order",
   async (id, thunkAPI) => {
     try {
-      return await authService.getOrder(id);
+      return await userService.getOrder(id);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -69,7 +69,7 @@ export const getMonthWiseOrders = createAsyncThunk(
   "order/get-monthwise-orders",
   async (thunkAPI) => {
     try {
-      return await authService.getMonthlyOrders();
+      return await userService.getMonthlyOrders();
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -80,7 +80,7 @@ export const getYearlyStatistics = createAsyncThunk(
   "order/get-year-statics",
   async (thunkAPI) => {
     try {
-      return await authService.getYearlyData();
+      return await userService.getYearlyData();
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -102,8 +102,8 @@ const initialState = {
   message: "",
 };
 
-export const authSlice = createSlice({
-  name: "auth",
+export const userSlice = createSlice({
+  name: "user",
   initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -241,4 +241,4 @@ export const authSlice = createSlice({
   },
 });
 
-export default authSlice.reducer;
+export default userSlice.reducer;
