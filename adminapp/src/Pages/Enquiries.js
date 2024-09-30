@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
-import { Table, Spin} from "antd";
+import { Table, Spin } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteAEnquiry,
@@ -27,8 +27,8 @@ const columns = [
     dataIndex: "email",
   },
   {
-    title: "Mobile",
-    dataIndex: "mobile",
+    title: "Phone",
+    dataIndex: "phone",
   },
   {
     title: "Status",
@@ -55,51 +55,56 @@ const Enquiries = React.memo(() => {
   useEffect(() => {
     dispatch(resetState());
     dispatch(getEnquiries());
-  }, [ resetState, getEnquiries]);
+  }, [resetState, getEnquiries]);
 
   const { enquiries, isError, isLoading, isSuccess, message } = useSelector(
     (state) => state.enquiry ?? {}
   );
 
-  const data1 = enquiries &&  enquiries.map((enquiry, index) => ({
-    key: index + 1,
-    name: enquiry?.name,
-    email: enquiry?.email,
-    mobile: enquiry?.mobile,
-    status: (
-      <>
-        <select
-          name=""
-          defaultValue={enquiry?.status ? enquiry?.status : "Submitted"}
-          className="form-control form-select shadow-none outline-none"
-          id=""
-          onChange={(e) => setEnquiryStatus(e.target.value, enquiry?._id)}
-        >
-          <option value="Submitted">Submitted</option>
-          <option value="Contacted">Contacted</option>
-          <option value="In Progress">In Progress</option>
-          <option value="Resolved">Resolved</option>
-        </select>
-      </>
-    ),
-    action: (
-      <>
-        <Link
-          to={`/admin/enquiries/${enquiry?._id}`}
-          className="fs-5 ms-2 text-danger "
-        >
-          <FaRegEye />
-        </Link>
-        <button
-          className="ms-2 fs-5 text-danger bg-transparent border-0"
-          onClick={() => showModal(enquiry._id)}
-          style={{ border: "none", outline: "none", boxShadow: "none" }}
-        >
-          <AiFillDelete />
-        </button>
-      </>
-    ),
-  } || []));
+  const data1 =
+    enquiries &&
+    enquiries.map(
+      (enquiry, index) =>
+        ({
+          key: index + 1,
+          name: enquiry?.name,
+          email: enquiry?.email,
+          phone: enquiry?.phone,
+          status: (
+            <>
+              <select
+                name=""
+                defaultValue={enquiry?.status ? enquiry?.status : "Submitted"}
+                className="form-control form-select shadow-none outline-none"
+                id=""
+                onChange={(e) => setEnquiryStatus(e.target.value, enquiry?._id)}
+              >
+                <option value="Submitted">Submitted</option>
+                <option value="Contacted">Contacted</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Resolved">Resolved</option>
+              </select>
+            </>
+          ),
+          action: (
+            <>
+              <Link
+                to={`/admin/enquiries/${enquiry?._id}`}
+                className="fs-5 ms-2 text-danger "
+              >
+                <FaRegEye />
+              </Link>
+              <button
+                className="ms-2 fs-5 text-danger bg-transparent border-0"
+                onClick={() => showModal(enquiry._id)}
+                style={{ border: "none", outline: "none", boxShadow: "none" }}
+              >
+                <AiFillDelete />
+              </button>
+            </>
+          ),
+        } || [])
+    );
 
   const setEnquiryStatus = (e, i) => {
     const data = { id: i, enquiryData: e };
@@ -125,7 +130,7 @@ const Enquiries = React.memo(() => {
               }
             />
           </div>
-        )  : (
+        ) : (
           <Table columns={columns} dataSource={data1} />
         )}
         <CustomModal

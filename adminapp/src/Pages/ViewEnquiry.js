@@ -17,7 +17,7 @@ const ViewEnquiry = React.memo(() => {
   const {
     enquiryName,
     enquiryEmail,
-    enquiryMobile,
+    enquiryPhone,
     enquiryComment,
     enquiryStatus,
   } = enqState;
@@ -61,9 +61,9 @@ const ViewEnquiry = React.memo(() => {
           <p className="mb-0">{enquiryName}</p>
         </div>
         <div className="d-flex align-items-center gap-3">
-          <h6 className="mb-0">Mobile:</h6>
+          <h6 className="mb-0">Phone:</h6>
           <p className="mb-0">
-            <a href={`tel:+254${enquiryMobile}`}>{enquiryMobile}</a>
+            <a href={`tel:+254${enquiryPhone}`}>{enquiryPhone}</a>
           </p>
         </div>
         <div className="d-flex align-items-center gap-3">

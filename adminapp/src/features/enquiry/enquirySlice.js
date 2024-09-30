@@ -126,7 +126,7 @@ export const enquirySlice = createSlice({
         state.isSuccess = true;
         state.enquiryName = action.payload.name;
         state.enquiryEmail = action.payload.email;
-        state.enquiryMobile = action.payload.mobile;
+        state.enquiryPhone = action.payload.phone;
         state.enquiryComment = action.payload.comment;
         state.enquiryStatus = action.payload.status;
       })

@@ -29,16 +29,14 @@ const columns = [
     dataIndex: "email",
   },
   {
-    title: "Mobile",
-    dataIndex: "mobile",
+    title: "Phone",
+    dataIndex: "phone",
   },
 ];
 
 const Customers = React.memo(() => {
   const dispatch = useDispatch();
-  const { customers, isLoading, isError, message } = useSelector(
-    (state) => state?.customer
-  );
+  const { customers, isLoading } = useSelector((state) => state?.customer);
   useEffect(() => {
     dispatch(resetState());
     dispatch(getUsers());
@@ -50,12 +48,12 @@ const Customers = React.memo(() => {
       ?.filter((customer) => customer.role !== "admin")
       .map(
         (customer, index) =>
-        ({
-          key: index + 1,
-          name: `${customer?.firstname} ${customer?.lastname}`,
-          email: customer?.email,
-          mobile: customer?.mobile,
-        } || [])
+          ({
+            key: index + 1,
+            name: `${customer?.firstname} ${customer?.lastname}`,
+            email: customer?.email,
+            phone: customer?.phone,
+          } || [])
       );
 
   return (
