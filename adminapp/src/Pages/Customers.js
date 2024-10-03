@@ -34,7 +34,7 @@ const columns = [
   },
 ];
 
-const Customers = React.memo(() => {
+const Customers = () => {
   const dispatch = useDispatch();
   const { customers, isLoading } = useSelector((state) => state?.customer);
   useEffect(() => {
@@ -74,6 +74,6 @@ const Customers = React.memo(() => {
       )}
     </div>
   );
-});
+};
 
 export default Customers;

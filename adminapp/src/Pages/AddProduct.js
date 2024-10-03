@@ -29,7 +29,7 @@ const schema = Yup.object().shape({
   screenSize: Yup.number().required("Add product screen size."),
 });
 
-const AddProduct = React.memo(() => {
+const AddProduct = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -362,6 +362,6 @@ const AddProduct = React.memo(() => {
       </div>
     </>
   );
-});
+};
 
 export default AddProduct;

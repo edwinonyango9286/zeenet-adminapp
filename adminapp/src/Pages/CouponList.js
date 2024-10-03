@@ -36,7 +36,7 @@ const columns = [
   },
 ];
 
-const CouponList = React.memo(() => {
+const CouponList = () => {
   const [open, setOpen] = useState(false);
   const [couponId, setCouponId] = useState("");
   const showModal = (e) => {
@@ -133,5 +133,5 @@ const CouponList = React.memo(() => {
       </div>
     </>
   );
-});
+};
 export default CouponList;

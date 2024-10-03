@@ -29,7 +29,7 @@ const columns = [
   },
 ];
 
-const BrandList = React.memo(() => {
+const BrandList = () => {
   const [open, setOpen] = useState(false);
   const [brandId, setBrandId] = useState("");
   const showModal = (e) => {
@@ -125,5 +125,5 @@ const BrandList = React.memo(() => {
       </div>
     </>
   );
-});
+};
 export default BrandList;

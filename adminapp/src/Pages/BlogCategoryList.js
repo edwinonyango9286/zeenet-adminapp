@@ -28,7 +28,7 @@ const columns = [
   },
 ];
 
-const BlogCategoryList = React.memo(() => {
+const BlogCategoryList = () => {
   const [open, setOpen] = useState(false);
   const [blogCatId, setBlogCatId] = useState("");
   const showModal = (e) => {
@@ -123,6 +123,6 @@ const BlogCategoryList = React.memo(() => {
       </div>
     </>
   );
-});
+};
 
 export default BlogCategoryList;

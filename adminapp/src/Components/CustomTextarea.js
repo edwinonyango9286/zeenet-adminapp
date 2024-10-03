@@ -1,6 +1,6 @@
 import React from "react";
 
-const CustomTextarea = React.memo((props) => {
+const CustomTextarea = (props) => {
   const {
     type,
     label,
@@ -35,6 +35,6 @@ const CustomTextarea = React.memo((props) => {
       </div>
     </>
   );
-});
+};
 
 export default CustomTextarea;

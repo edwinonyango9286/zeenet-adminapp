@@ -35,7 +35,7 @@ const formatKES = (amount) => {
   }).format(amount);
 };
 
-const ViewOrder = React.memo(() => {
+const ViewOrder = () => {
   const location = useLocation();
   const orderId = location.pathname.split("/")[3];
   const dispatch = useDispatch();
@@ -63,6 +63,6 @@ const ViewOrder = React.memo(() => {
       </div>
     </>
   );
-});
+};
 
 export default ViewOrder;

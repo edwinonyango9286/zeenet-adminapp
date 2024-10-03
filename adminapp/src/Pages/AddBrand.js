@@ -16,7 +16,7 @@ let schema = Yup.object().shape({
   title: Yup.string().required("Brand Name is required"),
 });
 
-const AddBrand = React.memo(() => {
+const AddBrand = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -122,6 +122,6 @@ const AddBrand = React.memo(() => {
       </div>
     </>
   );
-});
+};
 
 export default AddBrand;

@@ -49,7 +49,7 @@ const columns = [
   },
 ];
 
-const Dashboard = React.memo(() => {
+const Dashboard = () => {
   const dispatch = useDispatch();
   const monthlyDataState = useSelector((state) => state?.user?.monthlyData);
   const yearlyDataState = useSelector((state) => state?.user?.yearlyData);
@@ -284,6 +284,6 @@ const Dashboard = React.memo(() => {
       </div>
     </>
   );
-});
+};
 
 export default Dashboard;

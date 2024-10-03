@@ -17,7 +17,7 @@ const LOGIN_SCHEMA = Yup.object().shape({
     .required(),
 });
 
-const Login = React.memo(() => {
+const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -121,5 +121,5 @@ const Login = React.memo(() => {
       </div>
     </>
   );
-});
+};
 export default Login;

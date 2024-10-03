@@ -22,7 +22,7 @@ import { TfiMenu } from "react-icons/tfi";
 
 const { Header, Sider, Content } = Layout;
 
-const MainLayout = React.memo(() => {
+const MainLayout = () => {
   const adminUser = useSelector((state) => state?.user?.adminUser);
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
@@ -240,6 +240,6 @@ const MainLayout = React.memo(() => {
       </Layout>
     </Layout>
   );
-});
+};
 
 export default MainLayout;

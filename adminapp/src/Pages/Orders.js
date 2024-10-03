@@ -43,7 +43,7 @@ const columns = [
   },
 ];
 
-const Orders = React.memo(() => {
+const Orders = () => {
   const dispatch = useDispatch();
   const { isError, isLoading, isSuccess, message } = useSelector(
     (state) => state?.user
@@ -114,6 +114,6 @@ const Orders = React.memo(() => {
       </div>
     </>
   );
-});
+};
 
 export default Orders;

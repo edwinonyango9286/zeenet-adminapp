@@ -40,7 +40,7 @@ const columns = [
     dataIndex: "action",
   },
 ];
-const Enquiries = React.memo(() => {
+const Enquiries = () => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [enquiryId, setEnquiryId] = useState("");
@@ -144,6 +144,6 @@ const Enquiries = React.memo(() => {
       </div>
     </>
   );
-});
+};
 
 export default Enquiries;

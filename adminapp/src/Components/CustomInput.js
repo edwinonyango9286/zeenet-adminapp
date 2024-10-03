@@ -1,6 +1,6 @@
 import React from "react";
 
-const CustomInput = React.memo((props) => {
+const CustomInput = (props) => {
   const {
     type,
     label,
@@ -34,5 +34,5 @@ const CustomInput = React.memo((props) => {
       </div>
     </>
   );
-});
+};
 export default CustomInput;

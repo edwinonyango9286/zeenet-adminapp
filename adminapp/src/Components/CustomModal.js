@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal } from "antd";
 
-const CustomModal = React.memo((props) => {
+const CustomModal = (props) => {
   const { open, hideModal, perfomAction, title } = props;
   return (
     <Modal
@@ -15,6 +15,6 @@ const CustomModal = React.memo((props) => {
       <p>{title}</p>
     </Modal>
   );
-});
+};
 
 export default CustomModal;

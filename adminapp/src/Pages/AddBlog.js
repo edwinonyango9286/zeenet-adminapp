@@ -23,7 +23,7 @@ const schema = Yup.object().shape({
   category: Yup.string().required("Category is required"),
 });
 
-const AddBlog = React.memo(() => {
+const AddBlog = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -253,6 +253,6 @@ const AddBlog = React.memo(() => {
       </div>
     </>
   );
-});
+};
 
 export default AddBlog;

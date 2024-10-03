@@ -18,7 +18,7 @@ const schema = Yup.object().shape({
   discount: Yup.number().required("Discount Percentage required"),
 });
 
-const AddCoupon = React.memo(() => {
+const AddCoupon = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -168,6 +168,6 @@ const AddCoupon = React.memo(() => {
       </div>
     </>
   );
-});
+};
 
 export default AddCoupon;

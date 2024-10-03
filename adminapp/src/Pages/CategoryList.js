@@ -28,7 +28,7 @@ const columns = [
   },
 ];
 
-const CategoryList = React.memo(() => {
+const CategoryList = () => {
   const [open, setOpen] = useState(false);
   const [categoryId, setCategoryId] = useState("");
   const showModal = (e) => {
@@ -122,6 +122,6 @@ const CategoryList = React.memo(() => {
       </div>
     </>
   );
-});
+};
 
 export default CategoryList;

@@ -47,7 +47,7 @@ const columns = [
   },
 ];
 
-const ProductList = React.memo(() => {
+const ProductList = () => {
   const [open, setOpen] = useState(false);
   const [productId, setProductId] = useState("");
   const showModal = (e) => {
@@ -155,6 +155,6 @@ const ProductList = React.memo(() => {
       </div>
     </>
   );
-});
+};
 
 export default ProductList;

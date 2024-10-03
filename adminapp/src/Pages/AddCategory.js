@@ -16,7 +16,7 @@ const schema = Yup.object().shape({
   title: Yup.string().required("Product Category Name is Required"),
 });
 
-const AddCategory = React.memo(() => {
+const AddCategory = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -130,6 +130,6 @@ const AddCategory = React.memo(() => {
       </div>
     </>
   );
-});
+};
 
 export default AddCategory;

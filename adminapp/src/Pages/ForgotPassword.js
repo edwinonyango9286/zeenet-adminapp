@@ -10,7 +10,7 @@ const FORGOT_PASSWORD_SCHEMA = Yup.object().shape({
   email: Yup.string().email().required(),
 });
 
-const ForgotPassword = React.memo(() => {
+const ForgotPassword = () => {
   const dispatch = useDispatch();
 
   const formik = useFormik({
@@ -84,6 +84,6 @@ const ForgotPassword = React.memo(() => {
       </div>
     </>
   );
-});
+};
 
 export default ForgotPassword;

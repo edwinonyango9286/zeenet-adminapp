@@ -24,7 +24,7 @@ const RESET_PASSWORD_SCHEMA = Yup.object().shape({
     .required(),
 });
 
-const ResestPassword = React.memo(() => {
+const ResestPassword = () => {
   const location = useLocation();
   const getToken = location.pathname.split("/")[2];
   const dispatch = useDispatch();
@@ -107,6 +107,6 @@ const ResestPassword = React.memo(() => {
       </div>
     </>
   );
-});
+};
 
 export default ResestPassword;
