@@ -1,8 +1,11 @@
 import React, { useEffect } from "react";
-import { LoadingOutlined } from "@ant-design/icons";
+import { Loading3QuartersOutlined } from "@ant-design/icons";
 import { Table, Spin } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { getUsers, resetState } from "../features/customers/customerSlice";
+import {
+  getAllCustomers,
+  resetState,
+} from "../features/customers/customerSlice";
 
 const columns = [
   {
@@ -36,25 +39,23 @@ const columns = [
 
 const Customers = () => {
   const dispatch = useDispatch();
-  const { customers, isLoading } = useSelector((state) => state?.customer);
+  const customers = useSelector((state) => state.customer.customers);
+  const isLoading = useSelector(
+    (state) => state.customer.isLoading.getAllCustomers
+  );
   useEffect(() => {
     dispatch(resetState());
-    dispatch(getUsers());
+    dispatch(getAllCustomers());
   }, []);
 
-  const data =
-    customers &&
-    customers
-      ?.filter((customer) => customer.role !== "admin")
-      .map(
-        (customer, index) =>
-          ({
-            key: index + 1,
-            name: `${customer?.firstname} ${customer?.lastname}`,
-            email: customer?.email,
-            phone: customer?.phone,
-          } || [])
-      );
+  const data = (Array.isArray(customers) ? customers : [])
+    .filter((customer) => customer?.role !== "admin")
+    .map((customer, index) => ({
+      key: index + 1,
+      name: `${customer?.firstname} ${customer?.lastname}`,
+      email: customer?.email,
+      phone: customer?.phone,
+    }));
 
   return (
     <div className="container">
@@ -63,9 +64,15 @@ const Customers = () => {
       {isLoading ? (
         <div className="text-center">
           <Spin
-            size="large"
             indicator={
-              <LoadingOutlined style={{ fontSize: 40, fontWeight: 700 }} />
+              <Loading3QuartersOutlined
+                style={{
+                  fontSize: 40,
+                  fontWeight: "bold",
+                  color: "#000",
+                }}
+                spin
+              />
             }
           />
         </div>

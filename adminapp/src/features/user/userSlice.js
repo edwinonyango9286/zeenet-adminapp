@@ -96,9 +96,36 @@ const adminUser = localStorage.getItem("adminUser")
 const initialState = {
   adminUser: adminUser,
   orders: [],
-  isError: false,
-  isLoading: false,
-  isSuccess: false,
+  isError: {
+    login: false,
+    resetPassword: false,
+    resetPasswordToken: false,
+    UpdateAnOrder: false,
+    getOrders: false,
+    getAsingleOrder: false,
+    getMonthWiseOrders: false,
+    getYearlyStatistics: false,
+  },
+  isLoading: {
+    login: false,
+    resetPassword: false,
+    resetPasswordToken: false,
+    UpdateAnOrder: false,
+    getOrders: false,
+    getAsingleOrder: false,
+    getMonthWiseOrders: false,
+    getYearlyStatistics: false,
+  },
+  isSuccess: {
+    login: false,
+    resetPassword: false,
+    resetPasswordToken: false,
+    UpdateAnOrder: false,
+    getOrders: false,
+    getAsingleOrder: false,
+    getMonthWiseOrders: false,
+    getYearlyStatistics: false,
+  },
   message: "",
 };
 
@@ -109,19 +136,19 @@ export const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(login.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading.login = true;
       })
       .addCase(login.fulfilled, (state, action) => {
-        state.isError = false;
-        state.isLoading = false;
-        state.isSuccess = true;
+        state.isError.login = false;
+        state.isLoading.login = false;
+        state.isSuccess.login = true;
         state.adminUser = action.payload;
         localStorage.setItem("adminToken", action?.payload?.token);
       })
       .addCase(login.rejected, (state, action) => {
-        state.isError = true;
-        state.isSuccess = false;
-        state.isLoading = false;
+        state.isError.login = true;
+        state.isSuccess.login = false;
+        state.isLoading.login = false;
         state.message = action.payload?.response?.data?.message;
       })
       .addCase(resetPasswordToken.pending, (state) => {

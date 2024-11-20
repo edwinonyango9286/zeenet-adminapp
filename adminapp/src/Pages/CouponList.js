@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { LoadingOutlined } from "@ant-design/icons";
+import { Loading3QuartersOutlined } from "@ant-design/icons";
 import { Table, Spin } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -54,12 +54,11 @@ const CouponList = () => {
     dispatch(getCoupons());
   }, []);
 
-  const { coupons, isError, isLoading, isSuccess, message } = useSelector(
-    (state) => state?.coupon ?? {}
-  );
-  const data =  coupons && coupons?.map(
-    (coupon, index) =>
-      ({
+  const coupons = useSelector((state) => state?.coupons);
+  const isLoading = useSelector((state) => state.isLoading.getCoupons);
+
+  const data = Array.isArray(coupons)
+    ? coupons?.map((coupon, index) => ({
         key: index + 1,
         name: coupon?.name,
         expiry: new Date(coupon?.expiry).toLocaleString(),
@@ -78,8 +77,8 @@ const CouponList = () => {
             </button>
           </>
         ),
-      } || [])
-  );
+      }))
+    : [];
 
   const deleteCoupon = async (e) => {
     await dispatch(deleteACoupon(e));
@@ -113,9 +112,15 @@ const CouponList = () => {
         {isLoading ? (
           <div className="text-center">
             <Spin
-              size="large"
               indicator={
-                <LoadingOutlined style={{ fontSize: 40, fontWeight: 700 }} />
+                <Loading3QuartersOutlined
+                  style={{
+                    fontSize: 40,
+                    fontWeight: "bold",
+                    color: "#000",
+                  }}
+                  spin
+                />
               }
             />
           </div>

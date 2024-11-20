@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { LoadingOutlined } from "@ant-design/icons";
+import { Loading3QuartersOutlined } from "@ant-design/icons";
 import { Table, Spin } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteABlog, getBlogs, resetState } from "../features/blogs/blogSlice";
@@ -44,15 +44,11 @@ const BlogList = () => {
     dispatch(getBlogs());
   }, []);
 
-  const { blogs, isError, isLoading, isSuccess, message } = useSelector(
-    (state) => state?.blog ?? {}
-  );
+  const blogs = useSelector((state) => state?.blog?.blogs);
+  const isLoading = useSelector((state) => state?.blog?.getBlogs);
 
-  const data =
-    blogs &&
-    blogs.map(
-      (blog, index) =>
-      ({
+  const data = Array.isArray(blogs)
+    ? blogs.map((blog, index) => ({
         key: index + 1,
         name: blog?.title,
         category: blog?.category,
@@ -69,8 +65,8 @@ const BlogList = () => {
             </button>
           </>
         ),
-      } || [])
-    );
+      }))
+    : [];
 
   const deleteBlog = async (e) => {
     await dispatch(deleteABlog(e));
@@ -101,9 +97,15 @@ const BlogList = () => {
         {isLoading ? (
           <div className="text-center">
             <Spin
-              size="large"
               indicator={
-                <LoadingOutlined style={{ fontSize: 40, fontWeight: 700 }} />
+                <Loading3QuartersOutlined
+                  style={{
+                    fontSize: 40,
+                    fontWeight: "bold",
+                    color: "#000",
+                  }}
+                  spin
+                />
               }
             />
           </div>

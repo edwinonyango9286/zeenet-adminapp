@@ -19,7 +19,7 @@ const CustomInput = (props) => {
       <div className="form-floating mt-4">
         <input
           type={type}
-          className={`form-control border shadow-none ${className}`}
+          className={`form-control border rounded-md shadow-none ${className}`}
           id={id}
           max={max}
           min={min}

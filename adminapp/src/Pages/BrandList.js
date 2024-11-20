@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Table, Spin } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { LoadingOutlined } from "@ant-design/icons";
+import { Loading3QuartersOutlined } from "@ant-design/icons";
 
 import {
   deleteABrand,
@@ -49,29 +49,26 @@ const BrandList = () => {
     dispatch(getBrands());
   }, []);
 
-  const data =
-    brands &&
-    brands?.map(
-      (brand, index) =>
-        ({
-          key: index + 1,
-          name: brand?.title,
-          action: (
-            <>
-              <Link to={`/admin/brand/${brand?._id}`} className="fs-5">
-                <FiEdit />
-              </Link>
-              <button
-                className="ms-3 fs-5 text-danger bg-transparent border-0"
-                onClick={() => showModal(brand?._id)}
-                style={{ border: "none", outline: "none", boxShadow: "none" }}
-              >
-                <AiFillDelete />
-              </button>
-            </>
-          ),
-        } || [])
-    );
+  const data = Array.isArray(brands)
+    ? brands?.map((brand, index) => ({
+        key: index + 1,
+        name: brand?.title,
+        action: (
+          <>
+            <Link to={`/admin/brand/${brand?._id}`} className="fs-5">
+              <FiEdit />
+            </Link>
+            <button
+              className="ms-3 fs-5 text-danger bg-transparent border-0"
+              onClick={() => showModal(brand?._id)}
+              style={{ border: "none", outline: "none", boxShadow: "none" }}
+            >
+              <AiFillDelete />
+            </button>
+          </>
+        ),
+      }))
+    : [];
 
   const deleteBrand = async (e) => {
     await dispatch(deleteABrand(e));
@@ -104,13 +101,19 @@ const BrandList = () => {
         {isLoading ? (
           <div className="text-center">
             <Spin
-              size="large"
               indicator={
-                <LoadingOutlined style={{ fontSize: 40, fontWeight: 700 }} />
+                <Loading3QuartersOutlined
+                  style={{
+                    fontSize: 40,
+                    fontWeight: "bold",
+                    color: "#000",
+                  }}
+                  spin
+                />
               }
             />
           </div>
-        ) :  (
+        ) : (
           <Table columns={columns} dataSource={data} />
         )}
 

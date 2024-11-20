@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import CustomInput from "../Components/CustomInput";
 import "react-quill/dist/quill.snow.css";
 import * as Yup from "yup";
@@ -14,7 +14,7 @@ import {
   updateABlog,
 } from "../features/blogs/blogSlice";
 import { delImg, uploadImg } from "../features/upload/uploadSlice";
-import { getBlogCategory } from "../features/blogcategory/blogCategorySlice";
+import { getAllBlogCategories } from "../features/blogcategory/blogCategorySlice";
 import CustomTextarea from "../Components/CustomTextarea";
 
 const schema = Yup.object().shape({
@@ -30,19 +30,32 @@ const AddBlog = () => {
   const blogId = location.pathname.split("/")[3];
 
   useEffect(() => {
-    dispatch(getBlogCategory());
+    dispatch(resetState());
+    dispatch(getAllBlogCategories());
   }, []);
 
-  const blogCatState = useSelector(
+  const isErrorCreateBlog = useSelector(
+    (state) => state.blog.isError.createBlog
+  );
+  const isSuccessCreateBlog = useSelector(
+    (state) => state.blog.isSuccess.createBlog
+  );
+
+  const blogCategories = useSelector(
     (state) => state?.blogCategory?.blogCategories
   );
   const imgState = useSelector((state) => state?.upload?.images);
   const newBlog = useSelector((state) => state?.blog);
 
+  const isSuccessUpdateABlog = useSelector(
+    (state) => state.blog.isSuccess.updateABlog
+  );
+
+  const isLoading = useSelector(
+    (state) => state.blogCategory.isLoading.getAllBlogCategories
+  );
+
   const {
-    isSuccess,
-    isError,
-    isLoading,
     createdBlog,
     blogName,
     blogDescription,
@@ -61,23 +74,17 @@ const AddBlog = () => {
   }, [blogId]);
 
   useEffect(() => {
-    dispatch(resetState());
-    dispatch(getBlogCategory());
+    dispatch(getAllBlogCategories());
   }, []);
 
   useEffect(() => {
-    if (isSuccess && createdBlog) {
-      toast.success("Blog added successfully.");
+    if (isSuccessCreateBlog && createdBlog) {
       navigate("/admin/blog-list");
     }
-    if (isSuccess && updatedBlog) {
-      toast.success("Blog updated successfully.");
+    if (isSuccessUpdateABlog && updatedBlog) {
       navigate("/admin/blog-list");
     }
-    if (isError) {
-      toast.error("Something went wrong. Please try again.");
-    }
-  }, [isSuccess, isError, isLoading, navigate, createBlog, updatedBlog]);
+  }, [isSuccessCreateBlog, createBlog, updatedBlog]);
 
   const img = [];
   imgState.forEach((i) => {
@@ -165,13 +172,15 @@ const AddBlog = () => {
               value={formik.values.category}
             >
               <option>Select blog Category</option>
-              {blogCatState?.map((i, j) => {
-                return (
-                  <option key={j} value={i.title}>
-                    {i.title}
-                  </option>
-                );
-              })}
+              {Array.isArray(blogCategories)
+                ? blogCategories?.map((i, j) => {
+                    return (
+                      <option key={j} value={i.title}>
+                        {i.title}
+                      </option>
+                    );
+                  })
+                : []}
             </select>
             <div className="error">
               {formik.touched.category && formik.errors.category}

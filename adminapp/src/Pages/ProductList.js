@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { LoadingOutlined } from "@ant-design/icons";
+import { Loading3QuartersOutlined } from "@ant-design/icons";
 import { Table, Spin } from "antd";
 import { AiFillDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
@@ -68,8 +68,13 @@ const ProductList = () => {
   };
 
   const dispatch = useDispatch();
-  const { products, isLoading, isError, message } = useSelector(
-    (state) => state?.product ?? {}
+
+  const products = useSelector((state) => state?.product?.products);
+  const isLoading = useSelector(
+    (state) => state?.product?.isLoading?.getProducts
+  );
+  const isLoadingDeleteProduct = useSelector(
+    (state) => state.product.isLoading.deleteAProduct
   );
 
   useEffect(() => {
@@ -77,32 +82,29 @@ const ProductList = () => {
     dispatch(getProducts());
   }, [getProducts, resetState]);
 
-  const data1 =
-    products &&
-    products?.map(
-      (product, index) =>
-        ({
-          key: index + 1,
-          title: product?.title,
-          brand: product?.brand,
-          category: product?.category,
-          screenSize: `${product?.screenSize}"`,
-          price: `${formatKES(product?.price)}`,
-          action: (
-            <>
-              <Link to={`/admin/product/${product?._id}`} className="fs-5">
-                <FiEdit />
-              </Link>
-              <button
-                className="ms-2 fs-5 text-danger border-0 bg-transparent"
-                onClick={() => showModal(product?._id)}
-              >
-                <AiFillDelete />
-              </button>
-            </>
-          ),
-        } || [])
-    );
+  const data = Array.isArray(products)
+    ? products.map((product, index) => ({
+        key: index + 1,
+        title: product?.title,
+        brand: product?.brand,
+        category: product?.category,
+        screenSize: `${product?.screenSize}"`,
+        price: `${formatKES(product?.price)}`,
+        action: (
+          <>
+            <Link to={`/admin/product/${product?._id}`} className="fs-5">
+              <FiEdit />
+            </Link>
+            <button
+              className="ms-2 fs-5 text-danger border-0 bg-transparent"
+              onClick={() => showModal(product?._id)}
+            >
+              <AiFillDelete />
+            </button>
+          </>
+        ),
+      }))
+    : [];
 
   const deleteProduct = async (id) => {
     await dispatch(deleteAProduct(id));
@@ -137,14 +139,20 @@ const ProductList = () => {
         {isLoading ? (
           <div className="text-center">
             <Spin
-              size="large"
               indicator={
-                <LoadingOutlined style={{ fontSize: 40, fontWeight: 700 }} />
+                <Loading3QuartersOutlined
+                  style={{
+                    fontSize: 40,
+                    fontWeight: "bold",
+                    color: "#000",
+                  }}
+                  spin
+                />
               }
             />
           </div>
         ) : (
-          <Table columns={columns} dataSource={data1} />
+          <Table columns={columns} dataSource={data} />
         )}
         <CustomModal
           open={open}

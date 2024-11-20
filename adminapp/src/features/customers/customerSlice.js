@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import customerService from "./customerService";
 
-export const getUsers = createAsyncThunk(
+export const getAllCustomers = createAsyncThunk(
   "customer/get-customers",
   async (thunkAPI) => {
     try {
-      return await customerService.getUsers();
+      return await customerService.getCustomer();
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -16,9 +16,9 @@ export const resetState = createAction("Reset_all");
 
 const initialState = {
   customers: [],
-  isError: false,
-  isLoading: false,
-  isSuccess: false,
+  isError: { getAllCustomers: false },
+  isLoading: { getAllCustomers: false },
+  isSuccess: { getAllCustomers: false },
   message: "",
 };
 
@@ -28,19 +28,19 @@ export const customerSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getUsers.pending, (state) => {
-        state.isLoading = true;
+      .addCase(getAllCustomers.pending, (state) => {
+        state.isLoading.getAllCustomers = true;
       })
-      .addCase(getUsers.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isError = false;
-        state.isSuccess = true;
-        state.customers = action.payload;
+      .addCase(getAllCustomers.fulfilled, (state, action) => {
+        state.isLoading.getAllCustomers = false;
+        state.isError.getAllCustomers = false;
+        state.isSuccess.getAllCustomers = true;
+        state.customers = action.payload || [];
       })
-      .addCase(getUsers.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.isSuccess = false;
+      .addCase(getAllCustomers.rejected, (state, action) => {
+        state.isLoading.getAllCustomers = false;
+        state.isError.getAllCustomers = true;
+        state.isSuccess.getAllCustomers = false;
         state.message = action?.payload?.response?.data?.message;
       })
       .addCase(resetState, () => initialState);

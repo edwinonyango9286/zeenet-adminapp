@@ -32,7 +32,7 @@ function App() {
     <>
       <Router>
         <ToastContainer
-          position="top-center"
+          position="top-right"
           autoClose={2000}
           hideProgressBar={true}
           newestOnTop={true}
@@ -41,7 +41,7 @@ function App() {
           pauseOnFocusLoss
           draggable
           pauseOnHover
-          theme="light"
+          theme="dark"
           transition={Bounce}
           toastStyle={{
             fontSize: "12px",

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Table, Spin } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { LoadingOutlined } from "@ant-design/icons";
+import { Loading3QuartersOutlined } from "@ant-design/icons";
 import { getOrders, UpdateAnOrder } from "../features/user/userSlice";
 import { Link } from "react-router-dom";
 
@@ -61,36 +61,33 @@ const Orders = () => {
     }).format(amount);
   };
 
-  const data =
-    orders &&
-    orders?.map(
-      (order, index) =>
-        ({
-          key: index + 1,
-          name: `${order?.user?.firstname} ${order?.user?.lastname}`,
-          product: <Link to={`/admin/order/${order._id}`}>view Order</Link>,
-          amount: formatKES(order?.totalPrice),
-          date: new Date(order?.createdAt).toLocaleString(),
-          action: (
-            <>
-              <select
-                defaultValue={order?.orderStatus}
-                onChange={(e) => updateOrder(order?._id, e.target.value)}
-                className="form-control form-select"
-                style={{}}
-              >
-                <option value="Ordered" disabled>
-                  Ordered
-                </option>
-                <option value="Processed">Processed</option>
-                <option value="Shipped">Shipped</option>
-                <option value="Out for delivery">Out for delivery</option>
-                <option value="Delivered">Delivered</option>
-              </select>
-            </>
-          ),
-        } || [])
-    );
+  const data = Array.isArray(orders)
+    ? orders?.map((order, index) => ({
+        key: index + 1,
+        name: `${order?.user?.firstname} ${order?.user?.lastname}`,
+        product: <Link to={`/admin/order/${order._id}`}>view Order</Link>,
+        amount: formatKES(order?.totalPrice),
+        date: new Date(order?.createdAt).toLocaleString(),
+        action: (
+          <>
+            <select
+              defaultValue={order?.orderStatus}
+              onChange={(e) => updateOrder(order?._id, e.target.value)}
+              className="form-control form-select"
+              style={{}}
+            >
+              <option value="Ordered" disabled>
+                Ordered
+              </option>
+              <option value="Processed">Processed</option>
+              <option value="Shipped">Shipped</option>
+              <option value="Out for delivery">Out for delivery</option>
+              <option value="Delivered">Delivered</option>
+            </select>
+          </>
+        ),
+      }))
+    : [];
 
   const updateOrder = (a, b) => {
     dispatch(UpdateAnOrder({ id: a, status: b }));
@@ -102,9 +99,15 @@ const Orders = () => {
         {isLoading ? (
           <div className="text-center">
             <Spin
-              size="large"
               indicator={
-                <LoadingOutlined style={{ fontSize: 40, fontWeight: 800 }} />
+                <Loading3QuartersOutlined
+                  style={{
+                    fontSize: 40,
+                    fontWeight: "bold",
+                    color: "#000",
+                  }}
+                  spin
+                />
               }
             />
           </div>

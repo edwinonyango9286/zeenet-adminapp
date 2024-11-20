@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import couponService from "./couponService";
+import { toast } from "react-toastify";
 
 export const createCoupon = createAsyncThunk(
   "coupon/create-coupon",
@@ -59,9 +60,28 @@ export const resetState = createAction("Reset_all");
 
 const initialState = {
   coupons: [],
-  isError: false,
-  isLoading: false,
-  isSuccess: false,
+  coupon: {},
+  isError: {
+    getCoupons: false,
+    createCoupon: false,
+    getACoupon: false,
+    updateACoupon: false,
+    deleteACoupon: false,
+  },
+  isLoading: {
+    getCoupons: false,
+    createCoupon: false,
+    getACoupon: false,
+    updateACoupon: false,
+    deleteACoupon: false,
+  },
+  isSuccess: {
+    getCoupons: false,
+    createCoupon: false,
+    getACoupon: false,
+    updateACoupon: false,
+    deleteACoupon: false,
+  },
   message: "",
 };
 
@@ -72,82 +92,99 @@ export const couponSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getCoupons.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading.getCoupons = true;
       })
       .addCase(getCoupons.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isError = false;
-        state.isSuccess = true;
+        state.isLoading.getCoupons = false;
+        state.isError.getCoupons = false;
+        state.isSuccess.getCoupons = true;
         state.coupons = action.payload;
       })
       .addCase(getCoupons.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.isSuccess = false;
+        state.isLoading.getCoupons = false;
+        state.isError.getCoupons = true;
+        state.isSuccess.getCoupons = false;
         state.message = action?.payload?.response?.data?.message;
+        if (action?.payload?.response?.data?.message) {
+          toast.error(action?.payload?.response?.data?.message);
+        }
       })
+
       .addCase(createCoupon.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading.createCoupon = true;
       })
       .addCase(createCoupon.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isError = false;
-        state.isSuccess = true;
+        state.isLoading.createCoupon = false;
+        state.isError.createCoupon = false;
+        state.isSuccess.createCoupon = true;
         state.createdCoupon = action.payload;
       })
       .addCase(createCoupon.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.isSuccess = false;
+        state.isLoading.createCoupon = false;
+        state.isError.createCoupon = true;
+        state.isSuccess.createCoupon = false;
         state.message = action?.payload?.response?.data?.message;
+        if (action?.payload?.response?.data?.message) {
+          toast.error(action?.payload?.response?.data?.message);
+        }
       })
 
       .addCase(getACoupon.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading.getACoupon = true;
       })
       .addCase(getACoupon.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isError = false;
-        state.isSuccess = true;
+        state.isLoading.getACoupon = false;
+        state.isError.getACoupon = false;
+        state.isSuccess.getACoupon = true;
+        state.coupon = action.payload;
         state.couponName = action.payload.name;
         state.couponExpiry = action.payload.expiry;
         state.couponDiscount = action.payload.discount;
       })
       .addCase(getACoupon.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.isSuccess = false;
+        state.isLoading.getACoupon = false;
+        state.isError.getACoupon = true;
+        state.isSuccess.getACoupon = false;
         state.message = action?.payload?.response?.data?.message;
+        if (action?.payload?.response?.data?.message) {
+          toast.error(action?.payload?.response?.data?.message);
+        }
       })
       .addCase(updateACoupon.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading.updateACoupon = true;
       })
       .addCase(updateACoupon.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isError = false;
-        state.isSuccess = true;
+        state.isLoading.updateACoupon = false;
+        state.isError.updateACoupon = false;
+        state.isSuccess.updateACoupon = true;
         state.updatedCoupon = action.payload;
       })
       .addCase(updateACoupon.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.isSuccess = false;
+        state.isLoading.updateACoupon = false;
+        state.isError.updateACoupon = true;
+        state.isSuccess.updateACoupon = false;
         state.message = action?.payload?.response?.data?.message;
+        if (action?.payload?.response?.data?.message) {
+          toast.error(action?.payload?.response?.data?.message);
+        }
       })
       .addCase(deleteACoupon.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading.deleteACoupon = true;
       })
       .addCase(deleteACoupon.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isError = false;
-        state.isSuccess = true;
+        state.isLoading.deleteACoupon = false;
+        state.isError.deleteACoupon = false;
+        state.isSuccess.deleteACoupon = true;
         state.deletedCoupon = action.payload;
       })
       .addCase(deleteACoupon.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.isSuccess = false;
+        state.isLoading.deleteACoupon = false;
+        state.isError.deleteACoupon = true;
+        state.isSuccess.deleteACoupon = false;
         state.message = action?.payload?.response?.data?.message;
+        if (action?.payload?.response?.data?.message) {
+          toast.error(action?.payload?.response?.data?.message);
+        }
       })
       .addCase(resetState, () => initialState);
   },

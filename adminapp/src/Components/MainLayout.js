@@ -31,7 +31,12 @@ const MainLayout = () => {
   } = theme.useToken();
   return (
     <Layout>
-      <Sider trigger={null} collapsible collapsed={collapsed}>
+      <Sider
+        trigger={null}
+        collapsible
+        collapsed={collapsed}
+        style={{ backgroundColor: "#fff" }}
+      >
         <div className="logo">
           <h2 className="text-center items-center text-white mb-0 fs-4 py-3">
             <span className="sm-logo">ZN</span>
@@ -39,14 +44,14 @@ const MainLayout = () => {
           </h2>
         </div>
         <Menu
-          theme="dark"
+          theme="light"
           mode="inline"
           defaultSelectedKeys={["1"]}
           onClick={({ key }) => {
             if (key === "signout") {
               localStorage.removeItem("adminUser");
               localStorage.removeItem("adminToken");
-              window.location.reload();
+              navigate("/");
             } else {
               navigate(key);
             }

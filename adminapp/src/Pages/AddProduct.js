@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import CustomInput from "../Components/CustomInput";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
@@ -48,10 +48,15 @@ const AddProduct = () => {
   const newProduct = useSelector((state) => state?.product);
   const isLoadingUpload = useSelector((state) => state?.upload?.isLoading);
 
+  const isSuccess = useSelector(
+    (state) => state.product.isSuccess.createProduct
+  );
+  const isError = useSelector((state) => state.product.isError.createProduct);
+  const isLoading = useSelector(
+    (state) => state.product.isLoading.createProduct
+  );
+
   const {
-    isSuccess,
-    isError,
-    isLoading,
     createdProduct,
     productName,
     productDescription,
@@ -214,7 +219,7 @@ const AddProduct = () => {
             value={formik.values.brand}
           >
             <option>Select Brand</option>
-            {brandState.map((i, j) => {
+            {brandState?.map((i, j) => {
               return (
                 <option key={j} value={i.title}>
                   {i.title}
@@ -353,7 +358,7 @@ const AddProduct = () => {
             }}
           >
             {isLoading
-              ? "Creating..."
+              ? "Please wait..."
               : productId
               ? "Update Product"
               : "Add Product"}

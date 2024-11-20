@@ -12,7 +12,7 @@ import {
 } from "../features/coupon/couponSlice";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 
-const schema = Yup.object().shape({
+const ADD_COUPON_SCHEMA = Yup.object().shape({
   name: Yup.string().required("Coupon Name is required"),
   expiry: Yup.date().required("Select an expiry date required"),
   discount: Yup.number().required("Discount Percentage required"),
@@ -23,17 +23,30 @@ const AddCoupon = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const couponId = location.pathname.split("/")[3];
-  const newCoupon = useSelector((state) => state?.coupon);
+  const coupon = useSelector((state) => state?.coupon);
+  const isLoadingCreateCoupon = useSelector(
+    (state) => state.isLoading.createCoupon
+  );
+
+  const isSuccessCreateCoupon = useSelector(
+    (state) => state.isLoading.createCoupon
+  );
+
+  const isSuccessUpdateACoupon = useSelector(
+    (state) => state.isSuccess.updateACoupon
+  );
+
+  const isErrorCreateCoupon = useSelector(
+    (state) => state.isError.createCoupon
+  );
+
   const {
-    isSuccess,
-    isError,
-    isLoading,
     createdCoupon,
     updatedCoupon,
     couponName,
     couponExpiry,
     couponDiscount,
-  } = newCoupon;
+  } = coupon;
 
   useEffect(() => {
     if (couponId) {
@@ -44,17 +57,17 @@ const AddCoupon = () => {
   }, [couponId]);
 
   useEffect(() => {
-    if (isSuccess && createdCoupon) {
-      toast.success("Coupon added Successfully!!");
+    if (isSuccessCreateCoupon && createdCoupon) {
+      toast.success("Coupon added Successfully.");
     }
-    if (isSuccess && updatedCoupon) {
-      toast.success("Coupon Updated Successfully!!");
+    if (isSuccessUpdateACoupon && updatedCoupon) {
+      toast.success("Coupon Updated Successfully.");
       navigate("/admin/coupon-list");
     }
-    if (isError) {
-      toast.error("Something went Wrong. Please Try Again!!");
+    if (isErrorCreateCoupon) {
+      toast.error("Something went Wrong. Please Try Again.");
     }
-  }, [isSuccess, isError, isLoading]);
+  }, [isSuccessCreateCoupon, isSuccessUpdateACoupon, isErrorCreateCoupon]);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -65,7 +78,8 @@ const AddCoupon = () => {
         : "",
       discount: couponDiscount || "",
     },
-    validationSchema: schema,
+    validationSchema: ADD_COUPON_SCHEMA,
+
     onSubmit: (values) => {
       if (couponId) {
         const data = { id: couponId, couponData: values };
@@ -158,7 +172,7 @@ const AddCoupon = () => {
               boxShadow: "none",
             }}
           >
-            {isLoading
+            {isLoadingCreateCoupon
               ? "Creating..."
               : couponId
               ? "Edit Coupon"

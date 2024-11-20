@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { LoadingOutlined } from "@ant-design/icons";
-import { Table, Spin} from "antd";
+import { Loading3QuartersOutlined } from "@ant-design/icons";
+import { Table, Spin } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  deleteABlogCat,
-  getBlogCategory,
+  deleteABlogCategory,
+  getAllBlogCategories,
   resetState,
 } from "../features/blogcategory/blogCategorySlice";
 import { Link } from "react-router-dom";
@@ -29,6 +29,7 @@ const columns = [
 ];
 
 const BlogCategoryList = () => {
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [blogCatId, setBlogCatId] = useState("");
   const showModal = (e) => {
@@ -38,20 +39,21 @@ const BlogCategoryList = () => {
   const hideModal = () => {
     setOpen(false);
   };
-  const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(resetState());
-    dispatch(getBlogCategory());
-  }, [dispatch]);
+    dispatch(getAllBlogCategories());
+  }, []);
 
-  const { blogCategories, isError, isLoading, isSuccess, message } =
-    useSelector((state) => state?.blogCategory ?? {});
+  const isLoading = useSelector(
+    (state) => state?.blogCategory?.getBlogCategory
+  );
+  const blogCategories = useSelector(
+    (state) => state?.blogCategory?.blogCategories
+  );
 
-  const data =
-    blogCategories &&
-    blogCategories?.map(
-      (blogCategory, index) =>
-      ({
+  const data = Array.isArray(blogCategories)
+    ? blogCategories.map((blogCategory, index) => ({
         key: index + 1,
         name: blogCategory?.title,
         action: (
@@ -71,12 +73,13 @@ const BlogCategoryList = () => {
             </button>
           </>
         ),
-      } || [])
-    );
+      }))
+    : [];
+
   const deleteBlogcategory = async (e) => {
-    await dispatch(deleteABlogCat(e));
+    await dispatch(deleteABlogCategory(e));
     setOpen(false);
-    dispatch(getBlogCategory());
+    dispatch(getAllBlogCategories());
   };
   return (
     <>
@@ -102,15 +105,20 @@ const BlogCategoryList = () => {
         {isLoading ? (
           <div className="text-center">
             <Spin
-              size="large"
               indicator={
-                <LoadingOutlined style={{ fontSize: 40, fontWeight: 700 }} />
+                <Loading3QuartersOutlined
+                  style={{
+                    fontSize: 40,
+                    fontWeight: "bold",
+                    color: "#000",
+                  }}
+                  spin
+                />
               }
             />
           </div>
         ) : (
-          <Table scroll={{ x: '100vw' }}
-            columns={columns} dataSource={data} />
+          <Table columns={columns} dataSource={data} />
         )}
         <CustomModal
           open={open}

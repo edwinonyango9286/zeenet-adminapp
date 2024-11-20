@@ -33,9 +33,11 @@ const Login = () => {
     },
   });
 
-  const { adminUser, isError, isSuccess, isLoading, message } = useSelector(
-    (state) => state?.user ?? {}
-  );
+  const message = useSelector((state) => state.user.message);
+  const adminUser = useSelector((state) => state.user.adminUser);
+  const isError = useSelector((state) => state.user.isError.login);
+  const isSuccess = useSelector((state) => state.user.isSuccess.login);
+  const isLoading = useSelector((state) => state.user.isLoading.login);
 
   useEffect(() => {
     if (adminUser && isSuccess) {
@@ -43,7 +45,7 @@ const Login = () => {
     } else {
       navigate("/");
     }
-  }, [adminUser, isSuccess, isError, isLoading, message, navigate]);
+  }, [adminUser, isSuccess]);
 
   useEffect(() => {
     if (isError) {
@@ -104,7 +106,7 @@ const Login = () => {
                   className="button signup text-white w-100 "
                   disabled={isLoading}
                 >
-                  {isLoading ? "Logging in..." : "Login"}
+                  {isLoading ? "Please wait..." : "Login"}
                 </button>
               </div>
               <div className="mt-3 text-end">

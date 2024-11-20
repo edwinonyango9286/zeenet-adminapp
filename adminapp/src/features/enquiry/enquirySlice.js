@@ -60,9 +60,27 @@ export const resetState = createAction("Reset_all");
 
 const initialState = {
   enquiries: [],
-  isError: false,
-  isLoading: false,
-  isSuccess: false,
+  isError: {
+    getEnquiries: false,
+    createAEnquiry: false,
+    updateAEnquiry: false,
+    getAEnquiry: false,
+    deleteAEnquiry: false,
+  },
+  isLoading: {
+    getEnquiries: false,
+    createAEnquiry: false,
+    updateAEnquiry: false,
+    getAEnquiry: false,
+    deleteAEnquiry: false,
+  },
+  isSuccess: {
+    getEnquiries: false,
+    createAEnquiry: false,
+    updateAEnquiry: false,
+    getAEnquiry: false,
+    deleteAEnquiry: false,
+  },
   message: "",
 };
 
@@ -73,57 +91,57 @@ export const enquirySlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getEnquiries.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading.getEnquiries = true;
       })
       .addCase(getEnquiries.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isError = false;
-        state.isSuccess = true;
+        state.isLoading.getEnquiries = false;
+        state.isError.getEnquiries = false;
+        state.isSuccess.getEnquiries = true;
         state.enquiries = action.payload;
       })
       .addCase(getEnquiries.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.isSuccess = false;
+        state.isLoading.getEnquiries = false;
+        state.isError.getEnquiries = true;
+        state.isSuccess.getEnquiries = false;
         state.message = action?.payload?.response?.data?.message;
       })
       .addCase(createAEnquiry.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading.createAEnquiry = true;
       })
       .addCase(createAEnquiry.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isError = false;
-        state.isSuccess = true;
+        state.isLoading.createAEnquiry = false;
+        state.isError.createAEnquiry = false;
+        state.isSuccess.createAEnquiry = true;
         state.createdEnquiry = action.payload;
       })
       .addCase(createAEnquiry.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.isSuccess = false;
+        state.isLoading.createAEnquiry = false;
+        state.isError.createAEnquiry = true;
+        state.isSuccess.createAEnquiry = false;
         state.message = action?.payload?.response?.data?.message;
       })
       .addCase(updateAEnquiry.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading.updateAEnquiry = true;
       })
       .addCase(updateAEnquiry.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isError = false;
-        state.isSuccess = true;
+        state.isLoading.updateAEnquiry = false;
+        state.isError.updateAEnquiry = false;
+        state.isSuccess.updateAEnquiry = true;
         state.updatedEnquiry = action.payload;
       })
       .addCase(updateAEnquiry.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.isSuccess = false;
+        state.isLoading.updateAEnquiry = false;
+        state.isError.updateAEnquiry = true;
+        state.isSuccess.updateAEnquiry = false;
         state.message = action?.payload?.response?.data?.message;
       })
       .addCase(getAEnquiry.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading.getAEnquiry = true;
       })
       .addCase(getAEnquiry.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isError = false;
-        state.isSuccess = true;
+        state.isLoading.getAEnquiry = false;
+        state.isError.getAEnquiry = false;
+        state.isSuccess.getAEnquiry = true;
         state.enquiryName = action.payload.name;
         state.enquiryEmail = action.payload.email;
         state.enquiryPhone = action.payload.phone;
@@ -131,24 +149,24 @@ export const enquirySlice = createSlice({
         state.enquiryStatus = action.payload.status;
       })
       .addCase(getAEnquiry.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.isSuccess = false;
+        state.isLoading.getAEnquiry = false;
+        state.isError.getAEnquiry = true;
+        state.isSuccess.getAEnquiry = false;
         state.message = action?.payload?.response?.data?.message;
       })
       .addCase(deleteAEnquiry.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading.deleteAEnquiry = true;
       })
       .addCase(deleteAEnquiry.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isError = false;
-        state.isSuccess = true;
+        state.isLoading.deleteAEnquiry = false;
+        state.isError.deleteAEnquiry = false;
+        state.isSuccess.deleteAEnquiry = true;
         state.deletedEnquiry = action.payload;
       })
       .addCase(deleteAEnquiry.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.isSuccess = false;
+        state.isLoading.deleteAEnquiry = false;
+        state.isError.deleteAEnquiry = true;
+        state.isSuccess.deleteAEnquiry = false;
         state.message = action?.payload?.response?.data?.message;
       })
       .addCase(resetState, () => initialState);

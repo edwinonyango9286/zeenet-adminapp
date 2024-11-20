@@ -5,6 +5,7 @@ const CustomModal = (props) => {
   const { open, hideModal, perfomAction, title } = props;
   return (
     <Modal
+      width={420}
       title="Confirm"
       open={open}
       onOk={perfomAction}

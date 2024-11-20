@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import brandService from "./brandService";
+import { toast } from "react-toastify";
 
 export const getBrands = createAsyncThunk(
   "brand/get-brands",
@@ -12,7 +13,7 @@ export const getBrands = createAsyncThunk(
   }
 );
 
-export const createBrand = createAsyncThunk(
+export const createABrand = createAsyncThunk(
   "brand/create-brand",
   async (brandData, thunkAPI) => {
     try {
@@ -58,9 +59,28 @@ export const resetState = createAction("Reset_all");
 
 const initialState = {
   brands: [],
-  isError: false,
-  isLoading: false,
-  isSuccess: false,
+  updatedBrand: {},
+  isError: {
+    getBrands: false,
+    createABrand: false,
+    getABrand: false,
+    updateABrand: false,
+    deleteABrand: false,
+  },
+  isLoading: {
+    getBrands: false,
+    createABrand: false,
+    getABrand: false,
+    updateABrand: false,
+    deleteABrand: false,
+  },
+  isSuccess: {
+    getBrands: false,
+    createABrand: false,
+    getABrand: false,
+    updateABrand: false,
+    deleteABrand: false,
+  },
   message: "",
 };
 
@@ -71,80 +91,115 @@ export const brandSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getBrands.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading.getBrands = true;
       })
       .addCase(getBrands.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isError = false;
-        state.isSuccess = true;
+        state.isLoading.getBrands = false;
+        state.isError.getBrands = false;
+        state.isSuccess.getBrands = true;
         state.brands = action.payload;
       })
 
       .addCase(getBrands.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.isSuccess = false;
+        state.isLoading.getBrands = false;
+        state.isError.getBrands = true;
+        state.isSuccess.getBrands = false;
         state.message = action?.payload?.response?.data?.message;
+        if (action?.payload?.response?.data?.message) {
+          toast.error(action?.payload?.response?.data?.message);
+        } else {
+          toast.error(
+            "An unexpected error occurred. Please try again in a moment."
+          );
+        }
       })
-      .addCase(createBrand.pending, (state) => {
-        state.isLoading = true;
+      .addCase(createABrand.pending, (state) => {
+        state.isLoading.createABrand = true;
       })
-      .addCase(createBrand.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isError = false;
-        state.isSuccess = true;
+      .addCase(createABrand.fulfilled, (state, action) => {
+        state.isLoading.createABrand = false;
+        state.isError.createABrand = false;
+        state.isSuccess.createABrand = true;
         state.createdBrand = action.payload;
       })
-      .addCase(createBrand.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.isSuccess = false;
+      .addCase(createABrand.rejected, (state, action) => {
+        state.isLoading.createABrand = false;
+        state.isError.createABrand = true;
+        state.isSuccess.createABrand = false;
         state.message = action?.payload?.response?.data?.message;
+        if (action?.payload?.response?.data?.message) {
+          toast.error(action?.payload?.response?.data?.message);
+        } else {
+          toast.error(
+            "An unexpected error occurred. Please try again in a moment."
+          );
+        }
       })
       .addCase(getABrand.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading.getABrand = true;
       })
       .addCase(getABrand.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isError = false;
-        state.isSuccess = true;
+        state.isLoading.getABrand = false;
+        state.isError.getABrand = false;
+        state.isSuccess.getABrand = true;
         state.brandName = action.payload.title;
       })
       .addCase(getABrand.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.isSuccess = false;
+        state.isLoading.getABrand = false;
+        state.isError.getABrand = true;
+        state.isSuccess.getABrand = false;
         state.message = action?.payload?.response?.data?.message;
+        if (action?.payload?.response?.data?.message) {
+          toast.error(action?.payload?.response?.data?.message);
+        } else {
+          toast.error(
+            "An unexpected error occurred. Please try again in a moment."
+          );
+        }
       })
       .addCase(updateABrand.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading.updateABrand = true;
       })
       .addCase(updateABrand.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isError = false;
-        state.isSuccess = true;
+        state.isLoading.updateABrand = false;
+        state.isError.updateABrand = false;
+        state.isSuccess.updateABrand = true;
         state.updatedBrand = action.payload;
       })
       .addCase(updateABrand.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.isSuccess = false;
+        state.isLoading.updateABrand = false;
+        state.isError.updateABrand = true;
+        state.isSuccess.updateABrand = false;
         state.message = action?.payload?.response?.data?.message;
+        if (action?.payload?.response?.data?.message) {
+          toast.error(action?.payload?.response?.data?.message);
+        } else {
+          toast.error(
+            "An unexpected error occurred. Please try again in a moment."
+          );
+        }
       })
       .addCase(deleteABrand.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading.deleteABrand = true;
       })
       .addCase(deleteABrand.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isError = false;
-        state.isSuccess = true;
+        state.isLoading.deleteABrand = false;
+        state.isError.deleteABrand = false;
+        state.isSuccess.deleteABrand = true;
         state.deletedBrand = action.payload;
       })
       .addCase(deleteABrand.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.isSuccess = false;
+        state.isLoading.deleteABrand = false;
+        state.isError.deleteABrand = true;
+        state.isSuccess.deleteABrand = false;
         state.message = action?.payload?.response?.data?.message;
+        if (action?.payload?.response?.data?.message) {
+          toast.error(action.payload.response.data.message);
+        } else {
+          toast.error(
+            "An unexpected error occurred. Please try again in a moment."
+          );
+        }
       })
       .addCase(resetState, () => initialState);
   },

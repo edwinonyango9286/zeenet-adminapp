@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { LoadingOutlined } from "@ant-design/icons";
+import { Loading3QuartersOutlined } from "@ant-design/icons";
 import { Table, Spin } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -50,28 +50,25 @@ const CategoryList = () => {
     dispatch(getProductCategories());
   }, []);
 
-  const data =
-    categories &&
-    categories?.map(
-      (category, index) =>
-        ({
-          key: index + 1,
-          name: category?.title,
-          action: (
-            <>
-              <Link to={`/admin/category/${category?._id}`} className="fs-5">
-                <FiEdit />
-              </Link>
-              <button className=" ms-2 fs-5  text-danger bg-transparent border-0">
-                <AiFillDelete onClick={() => showModal(category?._id)} />
-              </button>
-            </>
-          ),
-        } || [])
-    );
+  const data = Array.isArray(categories)
+    ? categories?.map((category, index) => ({
+        key: index + 1,
+        name: category?.title,
+        action: (
+          <>
+            <Link to={`/admin/category/${category?._id}`} className="fs-5">
+              <FiEdit />
+            </Link>
+            <button className=" ms-2 fs-5  text-danger bg-transparent border-0">
+              <AiFillDelete onClick={() => showModal(category?._id)} />
+            </button>
+          </>
+        ),
+      }))
+    : [];
 
   const deleteCategory = async (e) => {
-    await dispatch(deleteACategory(e));
+  await  dispatch(deleteACategory(e));
     setOpen(false);
     dispatch(getProductCategories());
   };
@@ -102,9 +99,15 @@ const CategoryList = () => {
         {isLoading ? (
           <div className="text-center">
             <Spin
-              size="large"
               indicator={
-                <LoadingOutlined style={{ fontSize: 40, fontWeight: 700 }} />
+                <Loading3QuartersOutlined
+                  style={{
+                    fontSize: 40,
+                    fontWeight: "bold",
+                    color: "#000",
+                  }}
+                  spin
+                />
               }
             />
           </div>

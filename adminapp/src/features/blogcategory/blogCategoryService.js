@@ -1,11 +1,11 @@
 import { config } from "../../utils/axiosConfig";
 import { newRequest } from "../../utils/newRequest";
 
-const getBlogCategory = async () => {
-  const response = await newRequest.get(`blogcategory/getall`);
- if (response.data) {
-   return response.data;
- }
+const getBlogCategories = async () => {
+  const response = await newRequest.get(`blogcategory/getblogcategories`);
+  if (response.data) {
+    return response.data;
+  }
 };
 
 const createBlogCategory = async (blogCat) => {
@@ -19,36 +19,36 @@ const createBlogCategory = async (blogCat) => {
   }
 };
 
-const updateBLogCat = async (blogCat) => {
+const updateBLogCategory = async (blogCat) => {
   const response = await newRequest.put(
     `blogcategory/update/${blogCat.id}`,
     { title: blogCat.blogCatData.title },
     config
   );
-   if (response.data) {
-     return response.data;
-   }
+  if (response.data) {
+    return response.data;
+  }
 };
 
-const getBlogCat = async (id) => {
+const getBlogCategory = async (id) => {
   const response = await newRequest.get(`blogcategory/get/${id}`, config);
-   if (response.data) {
-     return response.data;
-   }
+  if (response.data) {
+    return response.data;
+  }
 };
-const deleteBLogCat = async (id) => {
+const deleteBLogCategory = async (id) => {
   const response = await newRequest.delete(`blogcategory/delete/${id}`, config);
-   if (response.data) {
-     return response.data;
-   }
+  if (response.data) {
+    return response.data;
+  }
 };
 
-const bCategoryService = {
-  getBlogCategory,
+const blogCategoryService = {
+  getBlogCategories,
   createBlogCategory,
-  deleteBLogCat,
-  getBlogCat,
-  updateBLogCat,
+  updateBLogCategory,
+  getBlogCategory,
+  deleteBLogCategory,
 };
 
-export default bCategoryService;
+export default blogCategoryService;
