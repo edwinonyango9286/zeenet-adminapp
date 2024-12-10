@@ -41,7 +41,7 @@ const ViewOrder = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAsingleOrder(orderId));
-  }, [orderId]);
+  }, [orderId, dispatch]);
 
   const order = useSelector((state) => state?.user?.singleOrder?.order);
   const data = [];

@@ -46,7 +46,7 @@ const Customers = () => {
   useEffect(() => {
     dispatch(resetState());
     dispatch(getAllCustomers());
-  }, []);
+  }, [dispatch]);
 
   const data = (Array.isArray(customers) ? customers : [])
     .filter((customer) => customer?.role !== "admin")

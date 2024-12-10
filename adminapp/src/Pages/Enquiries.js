@@ -55,11 +55,9 @@ const Enquiries = () => {
   useEffect(() => {
     dispatch(resetState());
     dispatch(getEnquiries());
-  }, [resetState, getEnquiries]);
+  }, [dispatch]);
 
-  const { enquiries, isError, isLoading, isSuccess, message } = useSelector(
-    (state) => state.enquiry ?? {}
-  );
+  const { enquiries, isLoading } = useSelector((state) => state.enquiry ?? {});
 
   const data1 =
     enquiries &&

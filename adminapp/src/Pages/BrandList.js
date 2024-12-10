@@ -47,7 +47,7 @@ const BrandList = () => {
   useEffect(() => {
     dispatch(resetState());
     dispatch(getBrands());
-  }, []);
+  }, [dispatch]);
 
   const data = Array.isArray(brands)
     ? brands?.map((brand, index) => ({

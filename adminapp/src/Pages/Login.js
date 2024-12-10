@@ -51,7 +51,7 @@ const Login = () => {
     if (isError) {
       dispatch(resetState());
     }
-  }, []);
+  }, [isError]);
 
   return (
     <>

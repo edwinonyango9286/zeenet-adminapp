@@ -54,20 +54,23 @@ const AddCoupon = () => {
     } else {
       dispatch(resetState());
     }
-  }, [couponId]);
+  }, [couponId, dispatch]);
 
   useEffect(() => {
     if (isSuccessCreateCoupon && createdCoupon) {
-      toast.success("Coupon added Successfully.");
-    }
-    if (isSuccessUpdateACoupon && updatedCoupon) {
-      toast.success("Coupon Updated Successfully.");
+      formik.resetForm();
       navigate("/admin/coupon-list");
     }
-    if (isErrorCreateCoupon) {
-      toast.error("Something went Wrong. Please Try Again.");
+    if (isSuccessUpdateACoupon && updatedCoupon) {
+      formik.resetForm();
+      navigate("/admin/coupon-list");
     }
-  }, [isSuccessCreateCoupon, isSuccessUpdateACoupon, isErrorCreateCoupon]);
+  }, [
+    isSuccessCreateCoupon,
+    isSuccessUpdateACoupon,
+    isErrorCreateCoupon,
+    createCoupon,
+  ]);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -83,14 +86,11 @@ const AddCoupon = () => {
     onSubmit: (values) => {
       if (couponId) {
         const data = { id: couponId, couponData: values };
-        dispatch(updateACoupon(data));
         dispatch(resetState());
+        dispatch(updateACoupon(data));
       } else {
+        dispatch(resetState());
         dispatch(createCoupon(values));
-        formik.resetForm();
-        setTimeout(() => {
-          dispatch(resetState());
-        }, 500);
       }
     },
   });
@@ -112,7 +112,6 @@ const AddCoupon = () => {
                 textDecoration: "none",
               }}
             >
-              {" "}
               View Coupons.
             </Link>
           </button>

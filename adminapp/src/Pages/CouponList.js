@@ -52,7 +52,7 @@ const CouponList = () => {
   useEffect(() => {
     dispatch(resetState());
     dispatch(getCoupons());
-  }, []);
+  }, [dispatch]);
 
   const coupons = useSelector((state) => state?.coupons);
   const isLoading = useSelector((state) => state.isLoading.getCoupons);

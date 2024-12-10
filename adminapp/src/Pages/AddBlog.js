@@ -29,18 +29,9 @@ const AddBlog = () => {
   const location = useLocation();
   const blogId = location.pathname.split("/")[3];
 
-  useEffect(() => {
-    dispatch(resetState());
-    dispatch(getAllBlogCategories());
-  }, []);
-
-  const isErrorCreateBlog = useSelector(
-    (state) => state.blog.isError.createBlog
-  );
   const isSuccessCreateBlog = useSelector(
     (state) => state.blog.isSuccess.createBlog
   );
-
   const blogCategories = useSelector(
     (state) => state?.blogCategory?.blogCategories
   );
@@ -50,11 +41,9 @@ const AddBlog = () => {
   const isSuccessUpdateABlog = useSelector(
     (state) => state.blog.isSuccess.updateABlog
   );
-
   const isLoading = useSelector(
     (state) => state.blogCategory.isLoading.getAllBlogCategories
   );
-
   const {
     createdBlog,
     blogName,
@@ -63,28 +52,6 @@ const AddBlog = () => {
     blogImages,
     updatedBlog,
   } = newBlog;
-
-  useEffect(() => {
-    if (blogId) {
-      dispatch(getABlog(blogId));
-      img.push(blogImages);
-    } else {
-      dispatch(resetState());
-    }
-  }, [blogId]);
-
-  useEffect(() => {
-    dispatch(getAllBlogCategories());
-  }, []);
-
-  useEffect(() => {
-    if (isSuccessCreateBlog && createdBlog) {
-      navigate("/admin/blog-list");
-    }
-    if (isSuccessUpdateABlog && updatedBlog) {
-      navigate("/admin/blog-list");
-    }
-  }, [isSuccessCreateBlog, createBlog, updatedBlog]);
 
   const img = [];
   imgState.forEach((i) => {
@@ -113,14 +80,40 @@ const AddBlog = () => {
         dispatch(resetState());
         dispatch(updateABlog(data));
       } else {
+        dispatch(resetState());
         dispatch(createBlog(values));
-        formik.resetForm();
-        setTimeout(() => {
-          dispatch(resetState());
-        }, 500);
       }
     },
   });
+
+  useEffect(() => {
+    if (isSuccessCreateBlog && createdBlog) {
+      formik.resetForm();
+      navigate("/admin/blog-list");
+    }
+    if (isSuccessUpdateABlog && updatedBlog) {
+      formik.resetForm();
+      navigate("/admin/blog-list");
+    }
+  }, [isSuccessCreateBlog, createBlog, updatedBlog, isSuccessUpdateABlog]);
+
+  useEffect(() => {
+    dispatch(resetState());
+    dispatch(getAllBlogCategories());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (blogId) {
+      dispatch(getABlog(blogId));
+      img.push(blogImages);
+    } else {
+      dispatch(resetState());
+    }
+  }, [blogId, dispatch]);
+
+  useEffect(() => {
+    dispatch(getAllBlogCategories());
+  }, [dispatch]);
 
   return (
     <>
@@ -143,7 +136,6 @@ const AddBlog = () => {
                 textDecoration: "none",
               }}
             >
-              {" "}
               View Blogs.
             </Link>
           </button>

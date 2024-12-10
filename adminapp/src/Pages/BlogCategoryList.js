@@ -43,7 +43,7 @@ const BlogCategoryList = () => {
   useEffect(() => {
     dispatch(resetState());
     dispatch(getAllBlogCategories());
-  }, []);
+  }, [dispatch]);
 
   const isLoading = useSelector(
     (state) => state?.blogCategory?.getBlogCategory

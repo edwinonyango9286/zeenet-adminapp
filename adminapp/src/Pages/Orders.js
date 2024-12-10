@@ -45,9 +45,7 @@ const columns = [
 
 const Orders = () => {
   const dispatch = useDispatch();
-  const { isError, isLoading, isSuccess, message } = useSelector(
-    (state) => state?.user
-  );
+  const { isLoading } = useSelector((state) => state?.user);
   const { orders } = useSelector((state) => state?.user?.orders);
   useEffect(() => {
     dispatch(getOrders());

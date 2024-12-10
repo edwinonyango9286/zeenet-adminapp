@@ -24,4 +24,8 @@ export const store = configureStore({
     coupon: couponReducer,
   },
   devTools: process.env.REACT_APP_NODE_ENV !== "production",
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });

@@ -38,7 +38,7 @@ const AddProduct = () => {
   useEffect(() => {
     dispatch(getBrands());
     dispatch(getProductCategories());
-  }, []);
+  }, [dispatch]);
 
   const brandState = useSelector((state) => state?.brand?.brands);
   const categoryState = useSelector(
@@ -77,25 +77,22 @@ const AddProduct = () => {
     } else {
       dispatch(resetState());
     }
-  }, [productId]);
+  }, [productId, dispatch]);
 
   useEffect(() => {
     dispatch(resetState());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (isSuccess && createdProduct) {
-      toast.success("Product added successfully.");
+      formik.resetForm();
       navigate("/admin/product-list");
     }
     if (isSuccess && updatedProduct) {
-      toast.success("Product updated successfully.");
+      formik.resetForm();
       navigate("/admin/product-list");
     }
-    if (isError) {
-      toast.error("Something went wrong. Please try again later.");
-    }
-  }, [isSuccess, isError, isLoading, createdProduct, navigate, updatedProduct]);
+  }, [isSuccess, createdProduct, updatedProduct]);
 
   const img = [];
   imgState.forEach((i) => {
@@ -110,7 +107,6 @@ const AddProduct = () => {
   }, [imgState]);
 
   const formik = useFormik({
-    enableReinitialize: true,
     initialValues: {
       title: productName || "",
       description: productDescription || "",
@@ -122,7 +118,7 @@ const AddProduct = () => {
       tags: productTag || "",
       screenSize: productScreenSize || "",
     },
-
+    enableReinitialize: true,
     validationSchema: schema,
     onSubmit: (values) => {
       if (productId) {
@@ -130,11 +126,8 @@ const AddProduct = () => {
         dispatch(resetState());
         dispatch(updateAProduct(data));
       } else {
+        dispatch(resetState());
         dispatch(createProduct(values));
-        formik.resetForm();
-        setTimeout(() => {
-          dispatch(resetState());
-        }, 500);
       }
     },
   });

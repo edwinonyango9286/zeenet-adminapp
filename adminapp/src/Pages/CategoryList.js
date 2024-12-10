@@ -48,7 +48,7 @@ const CategoryList = () => {
   useEffect(() => {
     dispatch(resetState());
     dispatch(getProductCategories());
-  }, []);
+  }, [dispatch]);
 
   const data = Array.isArray(categories)
     ? categories?.map((category, index) => ({
@@ -68,7 +68,7 @@ const CategoryList = () => {
     : [];
 
   const deleteCategory = async (e) => {
-  await  dispatch(deleteACategory(e));
+    await dispatch(deleteACategory(e));
     setOpen(false);
     dispatch(getProductCategories());
   };

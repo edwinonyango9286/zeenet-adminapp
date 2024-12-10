@@ -39,19 +39,6 @@ const AddBlogCategory = () => {
     }
   }, [blogCategoryId]);
 
-  useEffect(() => {
-    if (isSuccess && createdBlogCategory) {
-      toast.success("Blog category added successfully.");
-    }
-    if (isSuccess && updatedBlogCat) {
-      toast.success("Blog category updated successfully.");
-      navigate("/admin/blog-category-list");
-    }
-    if (isError) {
-      toast.error("Something went wrong. Please try again.");
-    }
-  }, [isSuccess, isError, isLoading]);
-
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -64,14 +51,22 @@ const AddBlogCategory = () => {
         dispatch(updateABLogCat(data));
         dispatch(resetState());
       } else {
+        dispatch(resetState());
         dispatch(createBlogCategory(values));
-        formik.resetForm();
-        setTimeout(() => {
-          dispatch(resetState());
-        }, 500);
       }
     },
   });
+
+  useEffect(() => {
+    if (isSuccess && createdBlogCategory) {
+      formik.resetForm();
+      navigate("/admin/blog-category-list");
+    }
+    if (isSuccess && updatedBlogCat) {
+      formik.resetForm();
+      navigate("/admin/blog-category-list");
+    }
+  }, [isSuccess, createdBlogCategory, updatedBlogCat]);
 
   return (
     <>
@@ -79,7 +74,7 @@ const AddBlogCategory = () => {
         <div className="d-flex justify-content-between align-items-center ">
           <h5 className="mb-2 title">
             {blogCategoryId ? "Edit" : "Add"} Blog Category
-          </h5>{" "}
+          </h5>
           <button
             className=" btn btn-primary border-0 rounded-2 my-3 text-white"
             type="button"

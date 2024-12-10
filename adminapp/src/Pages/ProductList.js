@@ -80,7 +80,7 @@ const ProductList = () => {
   useEffect(() => {
     dispatch(resetState());
     dispatch(getProducts());
-  }, [getProducts, resetState]);
+  }, [getProducts, resetState, dispatch]);
 
   const data = Array.isArray(products)
     ? products.map((product, index) => ({

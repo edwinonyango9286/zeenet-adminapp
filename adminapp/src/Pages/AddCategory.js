@@ -3,7 +3,7 @@ import CustomInput from "../Components/CustomInput";
 import { toast } from "react-toastify";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import * as Yup from "yup";
-import { useFormik } from "formik";
+import { Formik, useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import {
   createCategory,
@@ -37,21 +37,18 @@ const AddCategory = () => {
     } else {
       dispatch(resetState());
     }
-  }, [categoryId]);
+  }, [categoryId, dispatch]);
 
   useEffect(() => {
     if (isSuccess && createdCategory) {
-      toast.success("Product category added successfully.");
+      formik.resetForm();
       navigate("/admin/category-list");
     }
     if (isSuccess && updatedCategory) {
-      toast.success("Category updated successfully.");
+      formik.resetForm();
       navigate("/admin/category-list");
     }
-    if (isError) {
-      toast.error("Something went wrong. Please try again later.");
-    }
-  }, [isSuccess, isError, isLoading]);
+  }, [isSuccess, createdCategory, updatedCategory]);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -62,17 +59,16 @@ const AddCategory = () => {
     onSubmit: (values) => {
       if (categoryId) {
         const data = { id: categoryId, categoryData: values };
-        dispatch(updateACategory(data));
         dispatch(resetState());
+        dispatch(updateACategory(data));
       } else {
+        dispatch(resetState());
         dispatch(createCategory(values));
-        formik.resetForm();
-        setTimeout(() => {
-          dispatch(resetState());
-        }, 500);
       }
     },
   });
+
+  
   return (
     <>
       <div>

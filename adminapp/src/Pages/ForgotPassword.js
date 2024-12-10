@@ -23,11 +23,9 @@ const ForgotPassword = () => {
       dispatch(resetPasswordToken(values));
     },
   });
-  const { adminUser, isError, isSuccess, isLoading, message } = useSelector(
+  const { isError, isLoading, message } = useSelector(
     (state) => state?.user ?? {}
   );
-
-  
 
   return (
     <>
