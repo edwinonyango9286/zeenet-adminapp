@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import enquiryService from "./enquiryService";
+import { toast } from "react-toastify";
+
 
 export const getEnquiries = createAsyncThunk(
   "enquiry/get-enquries",
@@ -104,6 +106,13 @@ export const enquirySlice = createSlice({
         state.isError.getEnquiries = true;
         state.isSuccess.getEnquiries = false;
         state.message = action?.payload?.response?.data?.message;
+          if (action?.payload?.response?.data?.message) {
+          toast.error(action?.payload?.response?.data?.message);
+        } else {
+          toast.error(
+            "An unexpected error occurred. Please try again in a moment."
+          );
+        }
       })
       .addCase(createAEnquiry.pending, (state) => {
         state.isLoading.createAEnquiry = true;
@@ -113,12 +122,20 @@ export const enquirySlice = createSlice({
         state.isError.createAEnquiry = false;
         state.isSuccess.createAEnquiry = true;
         state.createdEnquiry = action.payload;
+        toast.success("Enquiry created successfully.")
       })
       .addCase(createAEnquiry.rejected, (state, action) => {
         state.isLoading.createAEnquiry = false;
         state.isError.createAEnquiry = true;
         state.isSuccess.createAEnquiry = false;
         state.message = action?.payload?.response?.data?.message;
+          if (action?.payload?.response?.data?.message) {
+          toast.error(action?.payload?.response?.data?.message);
+        } else {
+          toast.error(
+            "An unexpected error occurred. Please try again in a moment."
+          );
+        }
       })
       .addCase(updateAEnquiry.pending, (state) => {
         state.isLoading.updateAEnquiry = true;
@@ -128,12 +145,20 @@ export const enquirySlice = createSlice({
         state.isError.updateAEnquiry = false;
         state.isSuccess.updateAEnquiry = true;
         state.updatedEnquiry = action.payload;
+        toast.success("Enquiry updated successfully.")
       })
       .addCase(updateAEnquiry.rejected, (state, action) => {
         state.isLoading.updateAEnquiry = false;
         state.isError.updateAEnquiry = true;
         state.isSuccess.updateAEnquiry = false;
         state.message = action?.payload?.response?.data?.message;
+          if (action?.payload?.response?.data?.message) {
+          toast.error(action?.payload?.response?.data?.message);
+        } else {
+          toast.error(
+            "An unexpected error occurred. Please try again in a moment."
+          );
+        }
       })
       .addCase(getAEnquiry.pending, (state) => {
         state.isLoading.getAEnquiry = true;
@@ -153,6 +178,13 @@ export const enquirySlice = createSlice({
         state.isError.getAEnquiry = true;
         state.isSuccess.getAEnquiry = false;
         state.message = action?.payload?.response?.data?.message;
+          if (action?.payload?.response?.data?.message) {
+          toast.error(action?.payload?.response?.data?.message);
+        } else {
+          toast.error(
+            "An unexpected error occurred. Please try again in a moment."
+          );
+        }
       })
       .addCase(deleteAEnquiry.pending, (state) => {
         state.isLoading.deleteAEnquiry = true;
@@ -162,12 +194,20 @@ export const enquirySlice = createSlice({
         state.isError.deleteAEnquiry = false;
         state.isSuccess.deleteAEnquiry = true;
         state.deletedEnquiry = action.payload;
+        toast.success("Enquiry deleted successfully.")
       })
       .addCase(deleteAEnquiry.rejected, (state, action) => {
         state.isLoading.deleteAEnquiry = false;
         state.isError.deleteAEnquiry = true;
         state.isSuccess.deleteAEnquiry = false;
         state.message = action?.payload?.response?.data?.message;
+          if (action?.payload?.response?.data?.message) {
+          toast.error(action?.payload?.response?.data?.message);
+        } else {
+          toast.error(
+            "An unexpected error occurred. Please try again in a moment."
+          );
+        }
       })
       .addCase(resetState, () => initialState);
   },

@@ -44,7 +44,6 @@ const Customers = () => {
     (state) => state.customer.isLoading.getAllCustomers
   );
   useEffect(() => {
-    dispatch(resetState());
     dispatch(getAllCustomers());
   }, [dispatch]);
 

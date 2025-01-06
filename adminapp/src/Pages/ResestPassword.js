@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CustomInput from "../Components/CustomInput";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { resetPassword, resetState } from "../features/user/userSlice";
+import { resetPassword, resetUserState } from "../features/user/userSlice";
 
 const RESET_PASSWORD_SCHEMA = Yup.object().shape({
   password: Yup.string()
@@ -37,15 +37,19 @@ const ResestPassword = () => {
     },
     validationSchema: RESET_PASSWORD_SCHEMA,
     onSubmit: (values) => {
-      dispatch(resetState());
+      dispatch(resetUserState());
       dispatch(resetPassword({ token: getToken, password: values.password }));
-      navigate("/");
     },
   });
-
-  const { isError, isLoading, message } = useSelector(
-    (state) => state?.user ?? {}
-  );
+  const isSuccess = useSelector((state) => state.user.isSuccess.resetPassword);
+  const isLoading = useSelector((state) => state.user.isLoading.resetPassword);
+  const newPassword = useSelector((state) => state.user.newPassword);
+  useEffect(() => {
+    if (isSuccess && newPassword) {
+      formik.resetForm();
+      navigate("/");
+    }
+  }, [isSuccess, newPassword, formik, navigate]);
 
   return (
     <>
@@ -63,11 +67,7 @@ const ResestPassword = () => {
           >
             <h5 className="text-center title">Reset Password</h5>
             <p className="text-center">Create a new password.</p>
-            <div className="error text-center">
-              {isError && message
-                ? message || "Something went wrong. Please try again later."
-                : ""}
-            </div>
+
             <form action="" onSubmit={formik.handleSubmit}>
               <CustomInput
                 type="password"
@@ -98,7 +98,7 @@ const ResestPassword = () => {
                   className="button signup text-white w-100 "
                   disabled={isLoading}
                 >
-                  {isLoading ? "Submitting..." : "Reset password"}
+                  {isLoading ? <div></div> : "Reset password"}
                 </button>
               </div>
             </form>

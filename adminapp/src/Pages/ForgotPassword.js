@@ -1,31 +1,45 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CustomInput from "../Components/CustomInput";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { resetPasswordToken, resetState } from "../features/user/userSlice";
+import { Link, useNavigate } from "react-router-dom";
+import { resetPasswordToken, resetUserState } from "../features/user/userSlice";
 
 const FORGOT_PASSWORD_SCHEMA = Yup.object().shape({
-  email: Yup.string().email().required(),
+  email: Yup.string().email().required("Please provide your email address."),
 });
 
 const ForgotPassword = () => {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       email: "",
     },
     validationSchema: FORGOT_PASSWORD_SCHEMA,
     onSubmit: (values) => {
-      dispatch(resetState());
+      dispatch(resetUserState());
       dispatch(resetPasswordToken(values));
     },
   });
-  const { isError, isLoading, message } = useSelector(
-    (state) => state?.user ?? {}
+
+  const isSuccess = useSelector(
+    (state) => state.user.isSuccess.resetPasswordToken
   );
+  const token = useSelector((state) => state.user.token);
+
+  const isLoading = useSelector(
+    (state) => state.user.isLoading.resetPasswordToken
+  );
+
+  useEffect(() => {
+    if (isSuccess && token) {
+      formik.resetForm();
+      dispatch(resetUserState())
+      navigate("/");
+    }
+  }, [isSuccess, token, formik, navigate,dispatch]);
 
   return (
     <>
@@ -45,12 +59,6 @@ const ForgotPassword = () => {
             <p className="text-center">
               Please enter a registered email to proceed.
             </p>
-            <div className="error text-center">
-              {isError && message
-                ? message || "Something went wrong. Please try again later."
-                : ""}
-            </div>
-
             <form action="" onSubmit={formik.handleSubmit}>
               <CustomInput
                 type="email"
@@ -70,7 +78,18 @@ const ForgotPassword = () => {
                   type="submit"
                   disabled={isLoading}
                 >
-                  {isLoading ? "Submitting..." : "Submit"}
+                  {isLoading ? (
+                    <div className="d-flex flex-row gap-1 align-items-center justify-content-center">
+                      <span
+                        class="spinner-border spinner-border-sm"
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
+                      <span>Please wait...</span>
+                    </div>
+                  ) : (
+                    "Submit"
+                  )}
                 </button>
               </div>
               <div className="mt-3 text-center ">

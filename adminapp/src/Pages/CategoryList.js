@@ -41,12 +41,21 @@ const CategoryList = () => {
   };
 
   const dispatch = useDispatch();
-  const { categories, isError, isLoading, isSuccess, message } = useSelector(
-    (state) => state?.productCategory ?? {}
+   const  categories= useSelector(
+    (state) => state.productCategory.categories
+  );
+     const  isError = useSelector(
+    (state) => state.productCategory.isError.getProductCategories
+  );
+     const  isLoading = useSelector(
+    (state) => state?.productCategory.isLoading.getProductCategories
+  );
+     const isSuccess = useSelector(
+    (state) => state.productCategory.isSuccess.getProductCategories 
   );
 
+
   useEffect(() => {
-    dispatch(resetState());
     dispatch(getProductCategories());
   }, [dispatch]);
 
@@ -90,7 +99,6 @@ const CategoryList = () => {
                 textDecoration: "none",
               }}
             >
-              {" "}
               Add New Product Category.
             </Link>
           </button>

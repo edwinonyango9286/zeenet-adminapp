@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import CustomInput from "../Components/CustomInput";
-import { toast } from "react-toastify";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -23,9 +22,8 @@ const AddBrand = () => {
   const brandId = location.pathname.split("/")[3];
   const newBrand = useSelector((state) => state?.brand);
   const isSuccessCreateABrand = useSelector(
-    (state) => state.isSuccess.createABrand
+    (state) => state.brand.isSuccess.createABrand
   );
-
   const isSuccessUpdateABrand = useSelector(
     (state) => state.brand.isSuccess.updateABrand
   );
@@ -38,6 +36,7 @@ const AddBrand = () => {
     (state) => state.brand.isLoading.updateABrand
   );
   const { createdBrand, brandName, updatedBrand } = newBrand;
+
   useEffect(() => {
     if (brandId) {
       dispatch(getABrand(brandId));
@@ -45,22 +44,6 @@ const AddBrand = () => {
       dispatch(resetState());
     }
   }, [brandId, dispatch]);
-
-  useEffect(() => {
-    if (isSuccessCreateABrand && createdBrand) {
-      formik.resetForm();
-      navigate("/admin/brand-list");
-    }
-    if (isSuccessUpdateABrand && updatedBrand) {
-      formik.resetForm();
-      navigate("/admin/brand-list");
-    }
-  }, [
-    isSuccessCreateABrand,
-    isSuccessUpdateABrand,
-    createdBrand,
-    updatedBrand,
-  ]);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -80,6 +63,24 @@ const AddBrand = () => {
     },
   });
 
+    useEffect(() => {
+      if (isSuccessCreateABrand && createdBrand) {
+        formik.resetForm();
+        navigate("/admin/brand-list");
+      }
+      if (isSuccessUpdateABrand && updatedBrand) {
+        formik.resetForm();
+        navigate("/admin/brand-list");
+      }
+    }, [
+      isSuccessCreateABrand,
+      isSuccessUpdateABrand,
+      createdBrand,
+      updatedBrand,
+      navigate,
+      formik,
+    ]);
+
   return (
     <>
       <div>
@@ -97,7 +98,6 @@ const AddBrand = () => {
                 textDecoration: "none",
               }}
             >
-              {" "}
               View Brands.
             </Link>
           </button>

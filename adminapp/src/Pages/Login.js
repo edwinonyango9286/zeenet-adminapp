@@ -4,17 +4,17 @@ import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import { login, resetState } from "../features/user/userSlice";
+import { login, resetUserState } from "../features/user/userSlice";
 
 const LOGIN_SCHEMA = Yup.object().shape({
-  email: Yup.string().email().required(),
+  email: Yup.string().email().required("Please provide your email."),
   password: Yup.string()
     .min(8)
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
       "Password must have a mix of upper and lowercase letters, atleast one number and a special character,"
     )
-    .required(),
+    .required("Please provide your password."),
 });
 
 const Login = () => {
@@ -28,30 +28,22 @@ const Login = () => {
     },
     validationSchema: LOGIN_SCHEMA,
     onSubmit: (values) => {
-      dispatch(resetState());
+      dispatch(resetUserState());
       dispatch(login(values));
     },
   });
 
-  const message = useSelector((state) => state.user.message);
   const adminUser = useSelector((state) => state.user.adminUser);
-  const isError = useSelector((state) => state.user.isError.login);
   const isSuccess = useSelector((state) => state.user.isSuccess.login);
   const isLoading = useSelector((state) => state.user.isLoading.login);
 
   useEffect(() => {
     if (adminUser && isSuccess) {
+      formik.resetForm();
+      dispatch(resetUserState());
       navigate("admin");
-    } else {
-      navigate("/");
     }
-  }, [adminUser, isSuccess]);
-
-  useEffect(() => {
-    if (isError) {
-      dispatch(resetState());
-    }
-  }, [isError]);
+  }, [adminUser, isSuccess, navigate, formik, dispatch]);
 
   return (
     <>
@@ -69,11 +61,6 @@ const Login = () => {
           >
             <h5 className="text-center title">Login</h5>
             <p className="text-center">Login to your account to continue.</p>
-            <div className="error text-center">
-              {isError && message
-                ? message || "Something went wrong. Please try again later."
-                : ""}
-            </div>
             <form action="" onSubmit={formik.handleSubmit}>
               <CustomInput
                 type="email"
@@ -106,7 +93,18 @@ const Login = () => {
                   className="button signup text-white w-100 "
                   disabled={isLoading}
                 >
-                  {isLoading ? "Please wait..." : "Login"}
+                  {isLoading ? (
+                    <div className="d-flex flex-row gap-1 align-items-center justify-content-center">
+                      <span
+                        class="spinner-border spinner-border-sm"
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
+                      <span>Please wait...</span>
+                    </div>
+                  ) : (
+                    "Login"
+                  )}
                 </button>
               </div>
               <div className="mt-3 text-end">

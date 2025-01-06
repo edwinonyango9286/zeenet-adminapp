@@ -60,7 +60,7 @@ export const resetState = createAction("Reset_all");
 
 const initialState = {
   coupons: [],
-  coupon: {},
+  coupon: null,
   isError: {
     getCoupons: false,
     createCoupon: false,
@@ -105,11 +105,14 @@ export const couponSlice = createSlice({
         state.isError.getCoupons = true;
         state.isSuccess.getCoupons = false;
         state.message = action?.payload?.response?.data?.message;
-        if (action?.payload?.response?.data?.message) {
+          if (action?.payload?.response?.data?.message) {
           toast.error(action?.payload?.response?.data?.message);
+        } else {
+          toast.error(
+            "An unexpected error occurred. Please try again in a moment."
+          );
         }
       })
-
       .addCase(createCoupon.pending, (state) => {
         state.isLoading.createCoupon = true;
       })
@@ -118,17 +121,22 @@ export const couponSlice = createSlice({
         state.isError.createCoupon = false;
         state.isSuccess.createCoupon = true;
         state.createdCoupon = action.payload;
+        toast.success("Coupon created successfully.")
+
       })
       .addCase(createCoupon.rejected, (state, action) => {
         state.isLoading.createCoupon = false;
         state.isError.createCoupon = true;
         state.isSuccess.createCoupon = false;
         state.message = action?.payload?.response?.data?.message;
-        if (action?.payload?.response?.data?.message) {
+          if (action?.payload?.response?.data?.message) {
           toast.error(action?.payload?.response?.data?.message);
+        } else {
+          toast.error(
+            "An unexpected error occurred. Please try again in a moment."
+          );
         }
       })
-
       .addCase(getACoupon.pending, (state) => {
         state.isLoading.getACoupon = true;
       })
@@ -139,15 +147,20 @@ export const couponSlice = createSlice({
         state.coupon = action.payload;
         state.couponName = action.payload.name;
         state.couponExpiry = action.payload.expiry;
-        state.couponDiscount = action.payload.discount;
+        state.couponDiscount = action?.payload?.discount;
+
       })
       .addCase(getACoupon.rejected, (state, action) => {
         state.isLoading.getACoupon = false;
         state.isError.getACoupon = true;
         state.isSuccess.getACoupon = false;
         state.message = action?.payload?.response?.data?.message;
-        if (action?.payload?.response?.data?.message) {
+         if (action?.payload?.response?.data?.message) {
           toast.error(action?.payload?.response?.data?.message);
+        } else {
+          toast.error(
+            "An unexpected error occurred. Please try again in a moment."
+          );
         }
       })
       .addCase(updateACoupon.pending, (state) => {
@@ -157,7 +170,9 @@ export const couponSlice = createSlice({
         state.isLoading.updateACoupon = false;
         state.isError.updateACoupon = false;
         state.isSuccess.updateACoupon = true;
-        state.updatedCoupon = action.payload;
+        state.updatedCoupon = action?.payload;
+        toast.success("Coupon updated successfully.")
+
       })
       .addCase(updateACoupon.rejected, (state, action) => {
         state.isLoading.updateACoupon = false;
@@ -166,6 +181,10 @@ export const couponSlice = createSlice({
         state.message = action?.payload?.response?.data?.message;
         if (action?.payload?.response?.data?.message) {
           toast.error(action?.payload?.response?.data?.message);
+        } else {
+          toast.error(
+            "An unexpected error occurred. Please try again in a moment."
+          );
         }
       })
       .addCase(deleteACoupon.pending, (state) => {
@@ -175,15 +194,21 @@ export const couponSlice = createSlice({
         state.isLoading.deleteACoupon = false;
         state.isError.deleteACoupon = false;
         state.isSuccess.deleteACoupon = true;
-        state.deletedCoupon = action.payload;
+        state.deletedCoupon = action?.payload;
+        toast.success("Coupon deleted successfully.")
+
       })
       .addCase(deleteACoupon.rejected, (state, action) => {
         state.isLoading.deleteACoupon = false;
         state.isError.deleteACoupon = true;
         state.isSuccess.deleteACoupon = false;
         state.message = action?.payload?.response?.data?.message;
-        if (action?.payload?.response?.data?.message) {
+         if (action?.payload?.response?.data?.message) {
           toast.error(action?.payload?.response?.data?.message);
+        } else {
+          toast.error(
+            "An unexpected error occurred. Please try again in a moment."
+          );
         }
       })
       .addCase(resetState, () => initialState);

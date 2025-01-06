@@ -35,7 +35,7 @@ export const customerSlice = createSlice({
         state.isLoading.getAllCustomers = false;
         state.isError.getAllCustomers = false;
         state.isSuccess.getAllCustomers = true;
-        state.customers = action.payload || [];
+        state.customers = action.payload;
       })
       .addCase(getAllCustomers.rejected, (state, action) => {
         state.isLoading.getAllCustomers = false;

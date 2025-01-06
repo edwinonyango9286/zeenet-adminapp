@@ -3,7 +3,6 @@ import CustomInput from "../Components/CustomInput";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
 import {
   createCoupon,
   getACoupon,
@@ -25,19 +24,19 @@ const AddCoupon = () => {
   const couponId = location.pathname.split("/")[3];
   const coupon = useSelector((state) => state?.coupon);
   const isLoadingCreateCoupon = useSelector(
-    (state) => state.isLoading.createCoupon
+    (state) => state.coupon.isLoading.createCoupon
   );
 
   const isSuccessCreateCoupon = useSelector(
-    (state) => state.isLoading.createCoupon
+    (state) => state.coupon.isLoading.createCoupon
   );
 
   const isSuccessUpdateACoupon = useSelector(
-    (state) => state.isSuccess.updateACoupon
+    (state) => state.coupon.isSuccess.updateACoupon
   );
 
   const isErrorCreateCoupon = useSelector(
-    (state) => state.isError.createCoupon
+    (state) => state.coupon.isError.createCoupon
   );
 
   const {
@@ -51,26 +50,8 @@ const AddCoupon = () => {
   useEffect(() => {
     if (couponId) {
       dispatch(getACoupon(couponId));
-    } else {
-      dispatch(resetState());
     }
   }, [couponId, dispatch]);
-
-  useEffect(() => {
-    if (isSuccessCreateCoupon && createdCoupon) {
-      formik.resetForm();
-      navigate("/admin/coupon-list");
-    }
-    if (isSuccessUpdateACoupon && updatedCoupon) {
-      formik.resetForm();
-      navigate("/admin/coupon-list");
-    }
-  }, [
-    isSuccessCreateCoupon,
-    isSuccessUpdateACoupon,
-    isErrorCreateCoupon,
-    createCoupon,
-  ]);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -94,6 +75,26 @@ const AddCoupon = () => {
       }
     },
   });
+
+
+    useEffect(() => {
+    if (isSuccessCreateCoupon && createdCoupon) {
+      formik.resetForm();
+      navigate("/admin/coupon-list");
+    }
+    if (isSuccessUpdateACoupon && updatedCoupon) {
+      formik.resetForm();
+      navigate("/admin/coupon-list");
+    }
+  }, [
+    isSuccessCreateCoupon,
+    createdCoupon,
+    isSuccessUpdateACoupon,
+    updatedCoupon,
+    isErrorCreateCoupon,
+    navigate,
+    formik
+  ]);
 
   return (
     <>

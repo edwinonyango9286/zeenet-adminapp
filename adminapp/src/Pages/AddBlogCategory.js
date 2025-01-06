@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect} from "react";
 import CustomInput from "../Components/CustomInput";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import {
   createBlogCategory,
@@ -22,10 +21,10 @@ const AddBlogCategory = () => {
   const location = useLocation();
   const blogCategoryId = location.pathname.split("/")[3];
   const newBlogCategory = useSelector((state) => state?.blogCategory);
+  const isSuccess = useSelector((state)=>state.blogCategory.isSuccess.createBlogCategory)
+ const isLoading = useSelector((state)=>state.blogCategory.isLoading.createBlogCategory)
+
   const {
-    isSuccess,
-    isError,
-    isLoading,
     createdBlogCategory,
     updatedBlogCat,
     blogCatName,
@@ -33,11 +32,10 @@ const AddBlogCategory = () => {
 
   useEffect(() => {
     if (blogCategoryId) {
-      dispatch(getABlogCat(blogCategoryId));
-    } else {
       dispatch(resetState());
+      dispatch(getABlogCat(blogCategoryId));
     }
-  }, [blogCategoryId]);
+  }, [blogCategoryId, dispatch]);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -48,8 +46,8 @@ const AddBlogCategory = () => {
     onSubmit: (values) => {
       if (blogCategoryId) {
         const data = { id: blogCategoryId, blogCatData: values };
-        dispatch(updateABLogCat(data));
         dispatch(resetState());
+        dispatch(updateABLogCat(data));
       } else {
         dispatch(resetState());
         dispatch(createBlogCategory(values));
@@ -66,7 +64,7 @@ const AddBlogCategory = () => {
       formik.resetForm();
       navigate("/admin/blog-category-list");
     }
-  }, [isSuccess, createdBlogCategory, updatedBlogCat]);
+  }, [isSuccess, createdBlogCategory, updatedBlogCat, formik, navigate]);
 
   return (
     <>
@@ -114,7 +112,7 @@ const AddBlogCategory = () => {
               style={{ border: "none", outline: "none", boxShadow: "none" }}
             >
               {isLoading
-                ? "Loading..."
+                ? "Creating..."
                 : blogCategoryId
                 ? "Edit Blog category"
                 : "Add Blog Category"}

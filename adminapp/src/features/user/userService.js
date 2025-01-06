@@ -48,16 +48,16 @@ const updateOrderStatus = async (data) => {
     { status: data.status },
     config
   );
-   if (response.data) {
-     return response.data;
-   }
+  if (response.data) {
+    return response.data;
+  }
 };
 
 const getMonthlyOrders = async () => {
   const response = await newRequest.get(`user/getmonthwiseorderincome`, config);
-   if (response.data) {
-     return response.data;
-   }
+  if (response.data) {
+    return response.data;
+  }
 };
 const getYearlyData = async () => {
   const response = await newRequest.get(`user/getyearlyorders`, config);

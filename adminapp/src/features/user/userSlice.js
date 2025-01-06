@@ -87,7 +87,7 @@ export const getYearlyStatistics = createAsyncThunk(
   }
 );
 
-export const resetState = createAction("Reset_all");
+export const resetUserState = createAction("Reset_all");
 
 const adminUser = localStorage.getItem("adminUser")
   ? JSON.parse(localStorage.getItem("adminUser"))
@@ -142,7 +142,7 @@ export const userSlice = createSlice({
         state.isError.login = false;
         state.isLoading.login = false;
         state.isSuccess.login = true;
-        state.adminUser = action.payload;
+        state.adminUser = action?.payload;
         localStorage.setItem("adminToken", action?.payload?.token);
       })
       .addCase(login.rejected, (state, action) => {
@@ -150,121 +150,175 @@ export const userSlice = createSlice({
         state.isSuccess.login = false;
         state.isLoading.login = false;
         state.message = action.payload?.response?.data?.message;
+        if (action?.payload?.response?.data?.message) {
+          toast.error(action?.payload?.response?.data?.message);
+        } else {
+          toast.error(
+            "We are having a problem logging you in. Please check your internet connection or try again in a moment."
+          );
+        }
       })
       .addCase(resetPasswordToken.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading.resetPasswordToken = true;
       })
       .addCase(resetPasswordToken.fulfilled, (state, action) => {
-        state.isError = false;
-        state.isLoading = false;
-        state.isSuccess = true;
-        state.token = action.payload;
+        state.isError.resetPasswordToken = false;
+        state.isLoading.resetPasswordToken = false;
+        state.isSuccess.resetPasswordToken = true;
+        state.token = action?.payload;
         toast.success(
-          "A password reset link has been sent to your email. Please check your email to reset your password."
+          "A password reset link has been sent to your email. Please check your email to proceed with reseting your password."
         );
       })
       .addCase(resetPasswordToken.rejected, (state, action) => {
-        state.isError = true;
-        state.isSuccess = false;
-        state.isLoading = false;
-        state.message = action.error;
-        toast.error(action?.payload?.response?.data?.message);
+        state.isError.resetPasswordToken = true;
+        state.isSuccess.resetPasswordToken = false;
+        state.isLoading.resetPasswordToken = false;
+        state.message = action?.payload?.response?.data?.message;
+        if (action?.payload?.response?.data?.message) {
+          toast.error(action?.payload?.response?.data?.message);
+        } else {
+          toast.error(
+            "We are having a problem sending you a password reset email. Please check your internet connection or try again in a moment."
+          );
+        }
       })
       .addCase(resetPassword.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading.resetPassword = true;
       })
       .addCase(resetPassword.fulfilled, (state, action) => {
-        state.isError = false;
-        state.isLoading = false;
-        state.isSuccess = true;
-        state.newPassword = action.payload;
+        state.isError.resetPassword = false;
+        state.isLoading.resetPassword = false;
+        state.isSuccess.resetPassword = true;
+        state.newPassword = action?.payload;
         toast.success(
           "Your password has been reset. Please login with your new credentials."
         );
       })
       .addCase(resetPassword.rejected, (state, action) => {
-        state.isError = true;
-        state.isSuccess = false;
-        state.isLoading = false;
-        state.message = action.error;
+        state.isError.resetPassword = true;
+        state.isSuccess.resetPassword = false;
+        state.isLoading.resetPassword = false;
+        state.message = action?.payload?.response?.data?.message;
+        if (action?.payload?.response?.data?.message) {
+          toast.error(action?.payload?.response?.data?.message);
+        } else {
+          toast.error(
+            "We are having a problem updating your password. Please check your internet connection or try again in a moment."
+          );
+        }
       })
-
       .addCase(getOrders.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading.getOrders = true;
       })
       .addCase(getOrders.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isError = false;
-        state.isSuccess = true;
+        state.isLoading.getOrders = false;
+        state.isError.getOrders = false;
+        state.isSuccess.getOrders = true;
         state.orders = action.payload;
       })
       .addCase(getOrders.rejected, (state, action) => {
-        state.isError = true;
-        state.isLoading = false;
-        state.isSuccess = false;
+        state.isError.getOrders = true;
+        state.isLoading.getOrders = false;
+        state.isSuccess.getOrders = false;
         state.message = action?.payload?.response?.data?.message;
+        if (action?.payload?.response?.data?.message) {
+          toast.error(action?.payload?.response?.data?.message);
+        } else {
+          toast.error(
+            "We are having a problem fetching orders. Please check your internet connection or try again in a moment."
+          );
+        }
       })
       .addCase(getAsingleOrder.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading.getAsingleOrder = true;
       })
       .addCase(getAsingleOrder.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isError = false;
-        state.isSuccess = true;
-        state.singleOrder = action.payload;
+        state.isLoading.getAsingleOrder = false;
+        state.isError.getAsingleOrder = false;
+        state.isSuccess.getAsingleOrder = true;
+        state.singleOrder = action?.payload;
       })
       .addCase(getAsingleOrder.rejected, (state, action) => {
-        state.isError = true;
-        state.isLoading = false;
-        state.isSuccess = false;
+        state.isError.getAsingleOrder = true;
+        state.isLoading.getAsingleOrder = false;
+        state.isSuccess.getAsingleOrder = false;
         state.message = action?.payload?.response?.data?.message;
+        if (action?.payload?.response?.data?.message) {
+          toast.error(action?.payload?.response?.data?.message);
+        } else {
+          toast.error(
+            "We are having a problem fetching the order. Please check your internet connection or try again in a moment."
+          );
+        }
       })
       .addCase(getMonthWiseOrders.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading.getMonthWiseOrders = true;
       })
       .addCase(getMonthWiseOrders.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isError = false;
-        state.isSuccess = true;
-        state.monthlyData = action.payload;
+        state.isLoading.getMonthWiseOrders = false;
+        state.isError.getMonthWiseOrders = false;
+        state.isSuccess.getMonthWiseOrders = true;
+        state.monthlyData = action?.payload;
       })
       .addCase(getMonthWiseOrders.rejected, (state, action) => {
-        state.isError = true;
-        state.isLoading = false;
-        state.isSuccess = false;
-        state.message = action.error;
+        state.isError.getMonthWiseOrders = true;
+        state.isLoading.getMonthWiseOrders = false;
+        state.isSuccess.getMonthWiseOrders = false;
+        state.message = action?.payload?.response?.data?.message;
+        if (action?.payload?.response?.data?.message) {
+          toast.error(action?.payload?.response?.data?.message);
+        } else {
+          toast.error(
+            "We are having a problem fetching monthly orders. Please check your internet connection or try again in a moment."
+          );
+        }
       })
       .addCase(getYearlyStatistics.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading.getYearlyStatistics = true;
       })
       .addCase(getYearlyStatistics.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isError = false;
-        state.isSuccess = true;
-        state.yearlyData = action.payload;
+        state.isLoading.getYearlyStatistics = false;
+        state.isError.getYearlyStatistics = false;
+        state.isSuccess.getYearlyStatistics = true;
+        state.yearlyData = action?.payload;
       })
       .addCase(getYearlyStatistics.rejected, (state, action) => {
-        state.isError = true;
-        state.isLoading = false;
-        state.isSuccess = false;
+        state.isError.getYearlyStatistics = true;
+        state.isLoading.getYearlyStatistics = false;
+        state.isSuccess.getYearlyStatistics = false;
         state.message = action?.payload?.response?.data?.message;
+        if (action?.payload?.response?.data?.message) {
+          toast.error(action?.payload?.response?.data?.message);
+        } else {
+          toast.error(
+            "We are having a problem fetching yearly orders. Please check your internet connection or try again in a moment."
+          );
+        }
       })
       .addCase(UpdateAnOrder.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading.UpdateAnOrder = true;
       })
       .addCase(UpdateAnOrder.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isError = false;
-        state.isSuccess = true;
-        state.updatedOrder = action.payload;
+        state.isLoading.UpdateAnOrder = false;
+        state.isError.UpdateAnOrder = false;
+        state.isSuccess.UpdateAnOrder = true;
+        state.updatedOrder = action?.payload;
       })
       .addCase(UpdateAnOrder.rejected, (state, action) => {
-        state.isError = true;
-        state.isLoading = false;
-        state.isSuccess = false;
+        state.isError.UpdateAnOrder = true;
+        state.isLoading.UpdateAnOrder = false;
+        state.isSuccess.UpdateAnOrder = false;
         state.message = action?.payload?.response?.data?.message;
+        if (action?.payload?.response?.data?.message) {
+          toast.error(action?.payload?.response?.data?.message);
+        } else {
+          toast.error(
+            "We are having a problem fetching updating the orders. Please check your internet connection or try again in a moment."
+          );
+        }
       })
-      .addCase(resetState, () => initialState);
+      .addCase(resetUserState, () => initialState);
   },
 });
 

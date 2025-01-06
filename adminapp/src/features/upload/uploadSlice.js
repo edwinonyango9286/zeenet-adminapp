@@ -31,9 +31,9 @@ export const resetState = createAction("Reset_all");
 
 const initialState = {
   images: [],
-  isError: false,
-  isLoading: false,
-  isSuccess: false,
+  isError: {uploadImg:false, delImg:false},
+  isLoading: {uploadImg:false, delImg:false},
+  isSuccess: {uploadImg:false, delImg:false},
   message: "",
 };
 
@@ -44,36 +44,50 @@ export const uploadSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(uploadImg.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading.uploadImg = true;
       })
       .addCase(uploadImg.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isError = false;
-        state.isSuccess = true;
+        state.isLoading.uploadImg = false;
+        state.isError.uploadImg = false;
+        state.isSuccess.uploadImg = true;
         state.images = action.payload;
         toast.success("Product Image uploaded.");
       })
       .addCase(uploadImg.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.isSuccess = false;
+        state.isLoading.uploadImg = false;
+        state.isError.uploadImg = true;
+        state.isSuccess.uploadImg = false;
         state.message = action?.payload?.response?.data?.message;
+         if (action?.payload?.response?.data?.message) {
+          toast.error(action?.payload?.response?.data?.message);
+        } else {
+          toast.error(
+            "An unexpected error occurred. Please try again in a moment."
+          );
+        }
       })
       .addCase(delImg.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading.delImg = true;
       })
       .addCase(delImg.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isError = false;
-        state.isSuccess = true;
+        state.isLoading.delImg = false;
+        state.isError.delImg = false;
+        state.isSuccess.delImg = true;
         state.images = [];
         toast.success("Product image deleted.");
       })
       .addCase(delImg.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.isSuccess = false;
+        state.isLoading.delImg = false;
+        state.isError.delImg = true;
+        state.isSuccess.delImg = false;
         state.message = action?.payload?.response?.data?.message;
+         if (action?.payload?.response?.data?.message) {
+          toast.error(action?.payload?.response?.data?.message);
+        } else {
+          toast.error(
+            "An unexpected error occurred. Please try again in a moment."
+          );
+        }
       })
       .addCase(resetState, () => initialState);
   },

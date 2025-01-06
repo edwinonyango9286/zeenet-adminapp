@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect} from "react";
 import CustomInput from "../Components/CustomInput";
 import "react-quill/dist/quill.snow.css";
 import * as Yup from "yup";
@@ -6,7 +6,6 @@ import { useFormik } from "formik";
 import Dropzone from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, Link } from "react-router-dom";
-import { toast } from "react-toastify";
 import {
   createBlog,
   getABlog,
@@ -33,10 +32,10 @@ const AddBlog = () => {
     (state) => state.blog.isSuccess.createBlog
   );
   const blogCategories = useSelector(
-    (state) => state?.blogCategory?.blogCategories
+    (state) => state.blogCategory.blogCategories
   );
-  const imgState = useSelector((state) => state?.upload?.images);
-  const newBlog = useSelector((state) => state?.blog);
+  const imgState = useSelector((state) => state.upload.images);
+  const newBlog = useSelector((state) => state.blog);
 
   const isSuccessUpdateABlog = useSelector(
     (state) => state.blog.isSuccess.updateABlog
@@ -95,10 +94,9 @@ const AddBlog = () => {
       formik.resetForm();
       navigate("/admin/blog-list");
     }
-  }, [isSuccessCreateBlog, createBlog, updatedBlog, isSuccessUpdateABlog]);
+  }, [isSuccessCreateBlog, createdBlog, updatedBlog, isSuccessUpdateABlog,formik,navigate]);
 
   useEffect(() => {
-    dispatch(resetState());
     dispatch(getAllBlogCategories());
   }, [dispatch]);
 
@@ -109,11 +107,8 @@ const AddBlog = () => {
     } else {
       dispatch(resetState());
     }
-  }, [blogId, dispatch]);
+  }, [blogId, dispatch,blogImages]);
 
-  useEffect(() => {
-    dispatch(getAllBlogCategories());
-  }, [dispatch]);
 
   return (
     <>

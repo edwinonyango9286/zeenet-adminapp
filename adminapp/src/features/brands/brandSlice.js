@@ -59,7 +59,7 @@ export const resetState = createAction("Reset_all");
 
 const initialState = {
   brands: [],
-  updatedBrand: {},
+  updatedBrand: null,
   isError: {
     getBrands: false,
     createABrand: false,
@@ -97,7 +97,7 @@ export const brandSlice = createSlice({
         state.isLoading.getBrands = false;
         state.isError.getBrands = false;
         state.isSuccess.getBrands = true;
-        state.brands = action.payload;
+        state.brands = action?.payload;
       })
 
       .addCase(getBrands.rejected, (state, action) => {
@@ -120,7 +120,8 @@ export const brandSlice = createSlice({
         state.isLoading.createABrand = false;
         state.isError.createABrand = false;
         state.isSuccess.createABrand = true;
-        state.createdBrand = action.payload;
+        state.createdBrand = action?.payload;
+        toast.success("Brand created successfully.")
       })
       .addCase(createABrand.rejected, (state, action) => {
         state.isLoading.createABrand = false;
@@ -142,7 +143,7 @@ export const brandSlice = createSlice({
         state.isLoading.getABrand = false;
         state.isError.getABrand = false;
         state.isSuccess.getABrand = true;
-        state.brandName = action.payload.title;
+        state.brandName = action?.payload?.title;
       })
       .addCase(getABrand.rejected, (state, action) => {
         state.isLoading.getABrand = false;
@@ -164,7 +165,8 @@ export const brandSlice = createSlice({
         state.isLoading.updateABrand = false;
         state.isError.updateABrand = false;
         state.isSuccess.updateABrand = true;
-        state.updatedBrand = action.payload;
+        state.updatedBrand = action?.payload;
+        toast.success("Brand updated successfully.")
       })
       .addCase(updateABrand.rejected, (state, action) => {
         state.isLoading.updateABrand = false;
@@ -186,7 +188,9 @@ export const brandSlice = createSlice({
         state.isLoading.deleteABrand = false;
         state.isError.deleteABrand = false;
         state.isSuccess.deleteABrand = true;
-        state.deletedBrand = action.payload;
+        state.deletedBrand = action?.payload;
+        toast.success("Brand deleted successfully.")
+
       })
       .addCase(deleteABrand.rejected, (state, action) => {
         state.isLoading.deleteABrand = false;

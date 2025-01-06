@@ -58,7 +58,7 @@ const MainLayout = () => {
           }}
           items={[
             {
-              key: "",
+              key: "dashboard",
               icon: <MdDashboardCustomize className="fs-5" />,
               label: "Dashboard",
             },
@@ -72,36 +72,37 @@ const MainLayout = () => {
               icon: <GrCatalog className="fs-5 " />,
               label: "Catalog",
               children: [
+                  {
+                  key: "product-list",
+                  icon: <BsCart3 className="fs-5" />,
+                  label: "Product List",
+                },
                 {
                   key: "product",
                   icon: <BsCart3 className="fs-5" />,
                   label: " Add Product",
                 },
-                {
-                  key: "product-list",
-                  icon: <BsCart3 className="fs-5" />,
-                  label: "Product List",
+                 {
+                  key: "brand-list",
+                  icon: <SiBrandfolder className="fs-5" />,
+                  label: "Brand List",
                 },
                 {
                   key: "brand",
                   icon: <SiBrandfolder className="fs-5" />,
                   label: " Add Brand",
                 },
-                {
-                  key: "brand-list",
-                  icon: <SiBrandfolder className="fs-5" />,
-                  label: "Brand List",
+                 {
+                  key: "category-list",
+                  icon: <TbCategory className="fs-5" />,
+                  label: "Category List",
                 },
                 {
                   key: "category",
                   icon: <TbCategory className="fs-5" />,
                   label: " Add Category",
                 },
-                {
-                  key: "category-list",
-                  icon: <TbCategory className="fs-5" />,
-                  label: "Category List",
-                },
+               
               ],
             },
 
@@ -110,22 +111,22 @@ const MainLayout = () => {
               icon: <FaClipboardList className="fs-5" />,
               label: "Orders",
             },
-
             {
               key: "marketing",
               icon: <SiMarketo className="fs-5" />,
               label: "Marketing",
               children: [
+                   {
+                  key: "coupon-list",
+                  icon: <RiCoupon5Fill className="fs-5" />,
+                  label: " Coupon List ",
+                },
                 {
                   key: "coupon",
                   icon: <RiCoupon5Fill className="fs-5" />,
                   label: " Add Coupon ",
                 },
-                {
-                  key: "coupon-list",
-                  icon: <RiCoupon5Fill className="fs-5" />,
-                  label: " Coupon List ",
-                },
+             
               ],
             },
             {
@@ -133,26 +134,29 @@ const MainLayout = () => {
               icon: <ImBlogger2 className="fs-5" />,
               label: "Blogs",
               children: [
-                {
-                  key: "blog",
-                  icon: <LiaBlogSolid className="fs-5" />,
-                  label: " Add Blog ",
+
+                   {
+                  key: "blog-category-list",
+                  icon: <ImBlogger2 className="fs-5" />,
+                  label: "Blog Category List",
                 },
-                {
+
+                  {
+                  key: "blog-category",
+                  icon: <LiaBlogSolid className="fs-5" />,
+                  label: "Add Blog Category",
+                },
+                 {
                   key: "blog-list",
                   icon: <ImBlogger2 className="fs-5" />,
                   label: "Blog List",
                 },
                 {
-                  key: "blog-category",
+                  key: "blog",
                   icon: <LiaBlogSolid className="fs-5" />,
-                  label: "Add Blog Category",
+                  label: " Add Blog ",
                 },
-                {
-                  key: "blog-category-list",
-                  icon: <ImBlogger2 className="fs-5" />,
-                  label: "Blog Category List",
-                },
+               
               ],
             },
             {

@@ -50,12 +50,11 @@ const CouponList = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(resetState());
     dispatch(getCoupons());
   }, [dispatch]);
 
-  const coupons = useSelector((state) => state?.coupons);
-  const isLoading = useSelector((state) => state.isLoading.getCoupons);
+  const coupons = useSelector((state) => state.coupon.coupons);
+  const isLoading = useSelector((state) => state.coupon.isLoading.getCoupons);
 
   const data = Array.isArray(coupons)
     ? coupons?.map((coupon, index) => ({
@@ -103,7 +102,6 @@ const CouponList = () => {
                 textDecoration: "none",
               }}
             >
-              {" "}
               Add New Coupon.
             </Link>
           </button>

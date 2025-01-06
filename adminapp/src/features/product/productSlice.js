@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import productService from "./productService";
+import { toast } from "react-toastify";
 
 export const getProducts = createAsyncThunk(
   "product/get-products",
@@ -105,6 +106,13 @@ export const productSlice = createSlice({
         state.isError.getProducts = true;
         state.isSuccess.getProducts = false;
         state.message = action?.payload?.response?.data?.message;
+           if (action?.payload?.response?.data?.message) {
+          toast.error(action?.payload?.response?.data?.message);
+        } else {
+          toast.error(
+            "An unexpected error occurred. Please try again in a moment."
+          );
+        }
       })
       .addCase(createProduct.pending, (state) => {
         state.isLoading.createProduct = true;
@@ -114,12 +122,20 @@ export const productSlice = createSlice({
         state.isError.createProduct = false;
         state.isSuccess.createProduct = true;
         state.createdProduct = action?.payload;
+        toast.success("Product created successfully.")
       })
       .addCase(createProduct.rejected, (state, action) => {
         state.isLoading.createProduct = false;
         state.isError.createProduct = true;
         state.isSuccess.createProduct = false;
         state.message = action?.payload?.response?.data?.message;
+           if (action?.payload?.response?.data?.message) {
+          toast.error(action?.payload?.response?.data?.message);
+        } else {
+          toast.error(
+            "An unexpected error occurred. Please try again in a moment."
+          );
+        }
       })
       .addCase(deleteAProduct.pending, (state) => {
         state.isLoading.deleteAProduct = true;
@@ -129,12 +145,20 @@ export const productSlice = createSlice({
         state.isError.deleteAProduct = false;
         state.isSuccess.deleteAProduct = true;
         state.deletedProduct = action?.payload;
+        toast.success("Product deleted successfully.")
       })
       .addCase(deleteAProduct.rejected, (state, action) => {
         state.isLoading.deleteAProduct = false;
         state.isError.deleteAProduct = true;
         state.isSuccess.deleteAProduct = false;
         state.message = action?.payload?.response?.data?.message;
+           if (action?.payload?.response?.data?.message) {
+          toast.error(action?.payload?.response?.data?.message);
+        } else {
+          toast.error(
+            "An unexpected error occurred. Please try again in a moment."
+          );
+        }
       })
       .addCase(getAProduct.pending, (state) => {
         state.isLoading.getAProduct = true;
@@ -152,12 +176,20 @@ export const productSlice = createSlice({
         state.productImages = action?.payload?.images;
         state.productTag = action?.payload?.tags;
         state.productScreenSize = action?.payload?.screenSize;
+
       })
       .addCase(getAProduct.rejected, (state, action) => {
         state.isLoading.getAProduct = false;
         state.isError.getAProduct = true;
         state.isSuccess.getAProduct = false;
         state.message = action?.payload?.response?.data?.message;
+           if (action?.payload?.response?.data?.message) {
+          toast.error(action?.payload?.response?.data?.message);
+        } else {
+          toast.error(
+            "An unexpected error occurred. Please try again in a moment."
+          );
+        }
       })
       .addCase(updateAProduct.pending, (state) => {
         state.isLoading.updateAProduct = true;
@@ -167,12 +199,20 @@ export const productSlice = createSlice({
         state.isError.updateAProduct = false;
         state.isSuccess.updateAProduct = true;
         state.updatedProduct = action?.payload;
+        toast.success("Product updated successfully.")
       })
       .addCase(updateAProduct.rejected, (state, action) => {
         state.isLoading.updateAProduct = false;
         state.isError.updateAProduct = true;
         state.isSuccess.updateAProduct = false;
         state.message = action?.payload?.response?.data?.message;
+           if (action?.payload?.response?.data?.message) {
+          toast.error(action?.payload?.response?.data?.message);
+        } else {
+          toast.error(
+            "An unexpected error occurred. Please try again in a moment."
+          );
+        }
       })
       .addCase(resetState, () => initialState);
   },
