@@ -7,7 +7,6 @@ import { AiFillDelete } from "react-icons/ai";
 import {
   deleteACategory,
   getProductCategories,
-  resetState,
 } from "../features/category/categorySlice";
 import CustomModal from "../Components/CustomModal";
 import { FiEdit } from "react-icons/fi";
@@ -41,19 +40,10 @@ const CategoryList = () => {
   };
 
   const dispatch = useDispatch();
-   const  categories= useSelector(
-    (state) => state.productCategory.categories
+  const categories = useSelector((state) => state?.productCategory?.categories);
+  const isLoading = useSelector(
+    (state) => state?.productCategory?.isLoading?.getProductCategories
   );
-     const  isError = useSelector(
-    (state) => state.productCategory.isError.getProductCategories
-  );
-     const  isLoading = useSelector(
-    (state) => state?.productCategory.isLoading.getProductCategories
-  );
-     const isSuccess = useSelector(
-    (state) => state.productCategory.isSuccess.getProductCategories 
-  );
-
 
   useEffect(() => {
     dispatch(getProductCategories());
@@ -94,9 +84,12 @@ const CategoryList = () => {
           >
             <Link
               to={"/admin/category"}
-              className="text-white"
+              className="text-white fw-bold fs-6"
               style={{
                 textDecoration: "none",
+                border: "none",
+                outline: "none",
+                boxShadow: "none",
               }}
             >
               Add New Product Category.

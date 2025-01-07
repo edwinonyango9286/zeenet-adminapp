@@ -12,7 +12,7 @@ import {
 } from "../features/brands/brandSlice";
 
 const BRAND_SCHEMA = Yup.object().shape({
-  title: Yup.string().required("Brand Name is required"),
+  title: Yup.string().trim().required("Brand Name is required"),
 });
 
 const AddBrand = () => {
@@ -22,18 +22,18 @@ const AddBrand = () => {
   const brandId = location.pathname.split("/")[3];
   const newBrand = useSelector((state) => state?.brand);
   const isSuccessCreateABrand = useSelector(
-    (state) => state.brand.isSuccess.createABrand
+    (state) => state?.brand?.isSuccess?.createABrand
   );
   const isSuccessUpdateABrand = useSelector(
-    (state) => state.brand.isSuccess.updateABrand
+    (state) => state?.brand?.isSuccess?.updateABrand
   );
 
   const isLoadingCreateABrand = useSelector(
-    (state) => state.brand.isLoading.createABrand
+    (state) => state?.brand?.isLoading?.createABrand
   );
 
   const isLoadingUpdateABrand = useSelector(
-    (state) => state.brand.isLoading.updateABrand
+    (state) => state?.brand?.isLoading?.updateABrand
   );
   const { createdBrand, brandName, updatedBrand } = newBrand;
 
@@ -63,23 +63,23 @@ const AddBrand = () => {
     },
   });
 
-    useEffect(() => {
-      if (isSuccessCreateABrand && createdBrand) {
-        formik.resetForm();
-        navigate("/admin/brand-list");
-      }
-      if (isSuccessUpdateABrand && updatedBrand) {
-        formik.resetForm();
-        navigate("/admin/brand-list");
-      }
-    }, [
-      isSuccessCreateABrand,
-      isSuccessUpdateABrand,
-      createdBrand,
-      updatedBrand,
-      navigate,
-      formik,
-    ]);
+  useEffect(() => {
+    if (isSuccessCreateABrand && createdBrand) {
+      formik.resetForm();
+      navigate("/admin/brand-list");
+    }
+    if (isSuccessUpdateABrand && updatedBrand) {
+      formik.resetForm();
+      navigate("/admin/brand-list");
+    }
+  }, [
+    isSuccessCreateABrand,
+    isSuccessUpdateABrand,
+    createdBrand,
+    updatedBrand,
+    navigate,
+    formik.resetForm,
+  ]);
 
   return (
     <>
@@ -93,9 +93,12 @@ const AddBrand = () => {
           >
             <Link
               to={"/admin/brand-list"}
-              className="text-white"
+              className="text-white fw-bold fs-6"
               style={{
                 textDecoration: "none",
+                border: "none",
+                outline: "none",
+                boxShadow: "none",
               }}
             >
               View Brands.

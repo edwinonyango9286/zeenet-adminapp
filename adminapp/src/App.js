@@ -1,6 +1,5 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "./Pages/Login";
 import ResestPassword from "./Pages/ResestPassword";
 import ForgotPassword from "./Pages/ForgotPassword";
 import Dashboard from "./Pages/Dashboard";
@@ -22,10 +21,10 @@ import AddCoupon from "./Pages/AddCoupon";
 import CouponList from "./Pages/CouponList";
 import ViewEnquiry from "./Pages/ViewEnquiry";
 import ViewOrder from "./Pages/ViewOrder";
-import { OpenRoutes } from "./routing/OpenRoutes";
 import { PrivateRoutes } from "./routing/PrivateRoutes";
 import { Bounce, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import SigIn from "./Pages/SigIn";
 
 function App() {
   return (
@@ -49,22 +48,8 @@ function App() {
           }}
         />
         <Routes>
-          <Route
-            path="/"
-            element={
-              <OpenRoutes>
-                <Login />
-              </OpenRoutes>
-            }
-          />
-          <Route
-            path="/reset-password/:token"
-            element={
-              <OpenRoutes>
-                <ResestPassword />
-              </OpenRoutes>
-            }
-          />
+          <Route path="/" element={<SigIn />} />
+          <Route path="/reset-password/:token" element={<ResestPassword />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route
             path="/admin"

@@ -17,6 +17,20 @@ const columns = [
     title: "SNO",
     dataIndex: "key",
   },
+
+  {
+    title: "Product Image",
+    dataIndex: "image",
+    render: (text, record) => (
+      <img
+        src={record.image}
+        alt={record.title}
+        width={60}
+        height={60}
+        className="rounded-3 border border-1"
+      />
+    ),
+  },
   {
     title: "Title",
     dataIndex: "title",
@@ -73,21 +87,19 @@ const ProductList = () => {
   const isLoading = useSelector(
     (state) => state?.product?.isLoading?.getProducts
   );
-  const isLoadingDeleteProduct = useSelector(
-    (state) => state.product.isLoading.deleteAProduct
-  );
 
   useEffect(() => {
     dispatch(resetState());
     dispatch(getProducts());
-  }, [getProducts, resetState, dispatch]);
+  }, [dispatch]);
 
   const data = Array.isArray(products)
     ? products.map((product, index) => ({
         key: index + 1,
+        image: product?.images[0]?.url,
         title: product?.title,
-        brand: product?.brand,
-        category: product?.category,
+        brand: product?.brand?.title,
+        category: product?.category?.title,
         screenSize: `${product?.screenSize}"`,
         price: `${formatKES(product?.price)}`,
         action: (

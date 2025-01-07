@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
 import CustomInput from "../Components/CustomInput";
-import { toast } from "react-toastify";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import * as Yup from "yup";
-import { Formik, useFormik } from "formik";
+import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import {
   createCategory,
@@ -13,7 +12,7 @@ import {
 } from "../features/category/categorySlice";
 
 const schema = Yup.object().shape({
-  title: Yup.string().required("Product Category Name is Required"),
+  title: Yup.string().trim().required("Product Category Name is Required"),
 });
 
 const AddCategory = () => {
@@ -22,33 +21,16 @@ const AddCategory = () => {
   const location = useLocation();
   const categoryId = location.pathname.split("/")[3];
   const newCategory = useSelector((state) => state?.productCategory);
-  const {
-    isSuccess,
-    isError,
-    isLoading,
-    createdCategory,
-    categoryName,
-    updatedCategory,
-  } = newCategory;
 
-  useEffect(() => {
-    if (categoryId) {
-      dispatch(getACategory(categoryId));
-    } else {
-      dispatch(resetState());
-    }
-  }, [categoryId, dispatch]);
+  const isSuccess = useSelector(
+    (state) => state?.productCategory?.isSuccess?.createCategory
+  );
+  const isLoading = useSelector(
+    (state) => state?.productCategory?.isLoading?.createCategory
+  );
+  const { createdCategory, categoryName, updatedCategory } = newCategory;
 
-  useEffect(() => {
-    if (isSuccess && createdCategory) {
-      formik.resetForm();
-      navigate("/admin/category-list");
-    }
-    if (isSuccess && updatedCategory) {
-      formik.resetForm();
-      navigate("/admin/category-list");
-    }
-  }, [isSuccess, createdCategory, updatedCategory]);
+
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -68,7 +50,32 @@ const AddCategory = () => {
     },
   });
 
-  
+
+    useEffect(() => {
+      if (categoryId) {
+        dispatch(getACategory(categoryId));
+      } else {
+        dispatch(resetState());
+      }
+    }, [categoryId, dispatch]);
+
+    useEffect(() => {
+      if (isSuccess && createdCategory) {
+        formik.resetForm();
+        navigate("/admin/category-list");
+      }
+      if (isSuccess && updatedCategory) {
+        formik.resetForm();
+        navigate("/admin/category-list");
+      }
+    }, [
+      isSuccess,
+      createdCategory,
+      updatedCategory,
+      formik.resetForm,
+      navigate,
+    ]);
+
   return (
     <>
       <div>
@@ -81,7 +88,7 @@ const AddCategory = () => {
           >
             <Link
               to={"/admin/category-list"}
-              className="text-white"
+              className="text-white fw-bold fs-6 "
               style={{
                 textDecoration: "none",
                 border: "none",
@@ -89,7 +96,6 @@ const AddCategory = () => {
                 boxShadow: "none",
               }}
             >
-              {" "}
               View Product Categories.
             </Link>
           </button>
@@ -116,7 +122,7 @@ const AddCategory = () => {
               style={{ border: "none", outline: "none", boxShadow: "none" }}
             >
               {isLoading
-                ? "Creating..."
+                ? "Please wait..."
                 : categoryId
                 ? "Edit Category"
                 : "Add Category"}

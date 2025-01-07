@@ -4,20 +4,22 @@ import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import { login, resetUserState } from "../features/user/userSlice";
+import { signInUser, resetUserState } from "../features/user/userSlice";
 
 const LOGIN_SCHEMA = Yup.object().shape({
-  email: Yup.string().email().required("Please provide your email."),
+  email: Yup.string()
+    .email("Please provide a valid email address.")
+    .required("Please provide your email."),
   password: Yup.string()
-    .min(8)
+    .min(8, "Password must be atleast 8 characters long.")
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-      "Password must have a mix of upper and lowercase letters, atleast one number and a special character,"
+      "Password must have a mix of upper and lowercase letters, atleast one number and a special character."
     )
     .required("Please provide your password."),
 });
 
-const Login = () => {
+const SigIn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -29,21 +31,21 @@ const Login = () => {
     validationSchema: LOGIN_SCHEMA,
     onSubmit: (values) => {
       dispatch(resetUserState());
-      dispatch(login(values));
+      dispatch(signInUser(values));
     },
   });
 
-  const adminUser = useSelector((state) => state.user.adminUser);
-  const isSuccess = useSelector((state) => state.user.isSuccess.login);
-  const isLoading = useSelector((state) => state.user.isLoading.login);
+  const adminUser = useSelector((state) => state?.user?.adminUser);
+  const isSuccess = useSelector((state) => state?.user?.isSuccess?.signInUser);
+  const isLoading = useSelector((state) => state?.user?.isLoading?.signInUser);
 
   useEffect(() => {
     if (adminUser && isSuccess) {
       formik.resetForm();
-      dispatch(resetUserState());
       navigate("admin");
+      dispatch(resetUserState());
     }
-  }, [adminUser, isSuccess, navigate, formik, dispatch]);
+  }, [adminUser, isSuccess]);
 
   return (
     <>
@@ -59,8 +61,8 @@ const Login = () => {
             className="my-4 w-full bg-white rounded p-4"
             style={{ width: "360px", height: "auto", borderRadius: "10px" }}
           >
-            <h5 className="text-center title">Login</h5>
-            <p className="text-center">Login to your account to continue.</p>
+            <h5 className="text-center title">Sign In</h5>
+            <p className="text-center">Sign In to your account to continue.</p>
             <form action="" onSubmit={formik.handleSubmit}>
               <CustomInput
                 type="email"
@@ -122,4 +124,4 @@ const Login = () => {
     </>
   );
 };
-export default Login;
+export default SigIn;

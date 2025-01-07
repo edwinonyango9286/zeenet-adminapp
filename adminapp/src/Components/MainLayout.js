@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Layout, Menu, Button, theme } from "antd";
 import { MdDashboardCustomize } from "react-icons/md";
 import { BsPeople } from "react-icons/bs";
@@ -17,18 +17,30 @@ import { RiCoupon5Fill } from "react-icons/ri";
 import { SiMarketo } from "react-icons/si";
 import { GrCatalog } from "react-icons/gr";
 import { IoLogOutOutline } from "react-icons/io5";
-import { useSelector } from "react-redux";
 import { TfiMenu } from "react-icons/tfi";
+import Cookies from "js-cookie";
 
 const { Header, Sider, Content } = Layout;
 
 const MainLayout = () => {
-  const adminUser = useSelector((state) => state?.user?.adminUser);
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+  const [firstName, setFirstName] = useState("");
+  const [email, setEmail] = useState("");
+  const [avatar, SetAvatar] = useState("");
+
+  useEffect(() => {
+    const adminFirstName = Cookies.get("firstName");
+    const adminEmail = Cookies.get("email");
+    const adminAvatar = Cookies.get("avatar");
+    if (adminFirstName) setFirstName(adminFirstName);
+    if (adminEmail) setEmail(adminEmail);
+    if (adminAvatar) SetAvatar(adminAvatar);
+  }, []);
+
   return (
     <Layout>
       <Sider
@@ -49,8 +61,10 @@ const MainLayout = () => {
           defaultSelectedKeys={["1"]}
           onClick={({ key }) => {
             if (key === "signout") {
-              localStorage.removeItem("adminUser");
-              localStorage.removeItem("adminToken");
+              Cookies.remove("firstName");
+              Cookies.remove("email");
+              Cookies.remove("avatar");
+              Cookies.remove("token");
               navigate("/");
             } else {
               navigate(key);
@@ -60,114 +74,167 @@ const MainLayout = () => {
             {
               key: "dashboard",
               icon: <MdDashboardCustomize className="fs-5" />,
-              label: "Dashboard",
+              label: (
+                <p className="fs-5 text-start fw-medium m-0 p-0">Dashboard</p>
+              ),
             },
             {
               key: "customers",
               icon: <BsPeople className="fs-5" />,
-              label: "Customers",
+              label: (
+                <p className="fs-5 text-start fw-medium m-0 p-0">Customers</p>
+              ),
             },
             {
               key: "catalog",
               icon: <GrCatalog className="fs-5 " />,
-              label: "Catalog",
+              label: (
+                <p className="fs-5 text-start fw-medium m-0 p-0">Catalog</p>
+              ),
               children: [
-                  {
+                {
                   key: "product-list",
                   icon: <BsCart3 className="fs-5" />,
-                  label: "Product List",
+                  label: (
+                    <p className="fs-5 text-start fw-medium m-0 p-0">
+                      Products
+                    </p>
+                  ),
                 },
                 {
                   key: "product",
                   icon: <BsCart3 className="fs-5" />,
-                  label: " Add Product",
+                  label: (
+                    <p className="fs-5 text-start fw-medium m-0 p-0">
+                      Add product
+                    </p>
+                  ),
                 },
-                 {
+                {
                   key: "brand-list",
                   icon: <SiBrandfolder className="fs-5" />,
-                  label: "Brand List",
+                  label: (
+                    <p className="fs-5 text-start fw-medium m-0 p-0">Brands</p>
+                  ),
                 },
                 {
                   key: "brand",
                   icon: <SiBrandfolder className="fs-5" />,
-                  label: " Add Brand",
+                  label: (
+                    <p className="fs-5 text-start fw-medium m-0 p-0">
+                      Add Brand
+                    </p>
+                  ),
                 },
-                 {
+                {
                   key: "category-list",
                   icon: <TbCategory className="fs-5" />,
-                  label: "Category List",
+                  label: (
+                    <p className="fs-5 text-start fw-medium m-0 p-0">
+                      Product Categories
+                    </p>
+                  ),
                 },
                 {
                   key: "category",
                   icon: <TbCategory className="fs-5" />,
-                  label: " Add Category",
+                  label: (
+                    <p className="fs-5 text-start fw-medium m-0 p-0">
+                      {" "}
+                      Add Product category
+                    </p>
+                  ),
                 },
-               
               ],
             },
 
             {
               key: "orders",
               icon: <FaClipboardList className="fs-5" />,
-              label: "Orders",
+              label: (
+                <p className="fs-5 text-start fw-medium m-0 p-0">Orders</p>
+              ),
             },
             {
               key: "marketing",
               icon: <SiMarketo className="fs-5" />,
-              label: "Marketing",
+              label: (
+                <p className="fs-5 text-start fw-medium m-0 p-0">Marketing</p>
+              ),
               children: [
-                   {
+                {
                   key: "coupon-list",
                   icon: <RiCoupon5Fill className="fs-5" />,
-                  label: " Coupon List ",
+                  label: (
+                    <p className="fs-5 text-start fw-medium m-0 p-0">Coupons</p>
+                  ),
                 },
                 {
                   key: "coupon",
                   icon: <RiCoupon5Fill className="fs-5" />,
-                  label: " Add Coupon ",
+                  label: (
+                    <p className="fs-5 text-start fw-medium m-0 p-0">
+                      Add coupon
+                    </p>
+                  ),
                 },
-             
               ],
             },
             {
               key: "blogs",
               icon: <ImBlogger2 className="fs-5" />,
-              label: "Blogs",
+              label: <p className="fs-5 text-start fw-medium m-0 p-0">Blogs</p>,
               children: [
-
-                   {
+                {
                   key: "blog-category-list",
                   icon: <ImBlogger2 className="fs-5" />,
-                  label: "Blog Category List",
+                  label: (
+                    <p className="fs-5 text-start fw-medium m-0 p-0">
+                      Blog categories
+                    </p>
+                  ),
                 },
 
-                  {
+                {
                   key: "blog-category",
                   icon: <LiaBlogSolid className="fs-5" />,
-                  label: "Add Blog Category",
+                  label: (
+                    <p className="fs-5 text-start fw-medium m-0 p-0">
+                      Add blog category
+                    </p>
+                  ),
                 },
-                 {
+                {
                   key: "blog-list",
                   icon: <ImBlogger2 className="fs-5" />,
-                  label: "Blog List",
+                  label: (
+                    <p className="fs-5 text-start fw-medium m-0 p-0">Blogs</p>
+                  ),
                 },
                 {
                   key: "blog",
                   icon: <LiaBlogSolid className="fs-5" />,
-                  label: " Add Blog ",
+                  label: (
+                    <p className="fs-5 text-start fw-medium m-0 p-0">
+                      Add blog
+                    </p>
+                  ),
                 },
-               
               ],
             },
             {
               key: "enquiries",
               icon: <BiSolidMessageEdit className="fs-5" />,
-              label: "Enquiries",
+              label: (
+                <p className="fs-5 text-start fw-medium m-0 p-0">Enquiries</p>
+              ),
             },
             {
               key: "signout",
               icon: <IoLogOutOutline className="fs-5" />,
-              label: "Signout",
+              label: (
+                <p className="fs-5 text-start fw-medium m-0 p-0">Sign out</p>
+              ),
             },
           ]}
         />
@@ -201,7 +268,7 @@ const MainLayout = () => {
               <img
                 width={34}
                 height={34}
-                src={adminUser?.avatar}
+                src={avatar}
                 alt="userimage"
                 className="rounded-circle"
               ></img>
@@ -212,10 +279,8 @@ const MainLayout = () => {
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              <p className=" mb-0 text-capitalize">
-                {adminUser?.firstname} {adminUser?.lastname}
-              </p>
-              <p className="mb-0">{adminUser?.email}</p>
+              <p className=" mb-0 text-capitalize"> Welcome, {firstName}</p>
+              <p className="mb-0">{email}</p>
             </div>
             <div
               className="dropdown-menu"

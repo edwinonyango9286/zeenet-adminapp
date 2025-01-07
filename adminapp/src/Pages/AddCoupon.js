@@ -173,7 +173,7 @@ const AddCoupon = () => {
             }}
           >
             {isLoadingCreateCoupon
-              ? "Creating..."
+              ? "Please wait..."
               : couponId
               ? "Edit Coupon"
               : "Add Coupon"}

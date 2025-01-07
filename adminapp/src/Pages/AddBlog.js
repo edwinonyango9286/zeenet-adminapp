@@ -1,4 +1,4 @@
-import React, { useEffect} from "react";
+import React, { useEffect } from "react";
 import CustomInput from "../Components/CustomInput";
 import "react-quill/dist/quill.snow.css";
 import * as Yup from "yup";
@@ -29,19 +29,19 @@ const AddBlog = () => {
   const blogId = location.pathname.split("/")[3];
 
   const isSuccessCreateBlog = useSelector(
-    (state) => state.blog.isSuccess.createBlog
+    (state) => state?.blog?.isSuccess?.createBlog
   );
   const blogCategories = useSelector(
-    (state) => state.blogCategory.blogCategories
+    (state) => state?.blogCategory?.blogCategories
   );
-  const imgState = useSelector((state) => state.upload.images);
-  const newBlog = useSelector((state) => state.blog);
+  const imgState = useSelector((state) => state?.upload?.images);
+  const newBlog = useSelector((state) => state?.blog);
 
   const isSuccessUpdateABlog = useSelector(
-    (state) => state.blog.isSuccess.updateABlog
+    (state) => state?.blog?.isSuccess?.updateABlog
   );
   const isLoading = useSelector(
-    (state) => state.blogCategory.isLoading.getAllBlogCategories
+    (state) => state?.blogCategory?.isLoading?.getAllBlogCategories
   );
   const {
     createdBlog,
@@ -94,7 +94,14 @@ const AddBlog = () => {
       formik.resetForm();
       navigate("/admin/blog-list");
     }
-  }, [isSuccessCreateBlog, createdBlog, updatedBlog, isSuccessUpdateABlog,formik,navigate]);
+  }, [
+    isSuccessCreateBlog,
+    createdBlog,
+    updatedBlog,
+    isSuccessUpdateABlog,
+    formik,
+    navigate,
+  ]);
 
   useEffect(() => {
     dispatch(getAllBlogCategories());
@@ -107,8 +114,7 @@ const AddBlog = () => {
     } else {
       dispatch(resetState());
     }
-  }, [blogId, dispatch,blogImages]);
-
+  }, [blogId, dispatch, blogImages]);
 
   return (
     <>
@@ -242,7 +248,11 @@ const AddBlog = () => {
                 boxShadow: "none",
               }}
             >
-              {isLoading ? "Creating..." : blogId ? "Update Blog" : "Add blog"}
+              {isLoading
+                ? "Please wait..."
+                : blogId
+                ? "Update Blog"
+                : "Add blog"}
             </button>
           </form>
         </div>

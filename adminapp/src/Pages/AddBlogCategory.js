@@ -112,7 +112,7 @@ const AddBlogCategory = () => {
               style={{ border: "none", outline: "none", boxShadow: "none" }}
             >
               {isLoading
-                ? "Creating..."
+                ? "Please wait..."
                 : blogCategoryId
                 ? "Edit Blog category"
                 : "Add Blog Category"}

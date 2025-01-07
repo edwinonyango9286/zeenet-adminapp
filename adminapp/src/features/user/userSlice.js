@@ -1,14 +1,18 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import userService from "./userService";
 import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
-export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
-  try {
-    return await userService.login(user);
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error);
+export const signInUser = createAsyncThunk(
+  "auth/login",
+  async (user, thunkAPI) => {
+    try {
+      return await userService.signIn(user);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
   }
-});
+);
 
 export const resetPasswordToken = createAsyncThunk(
   "user/reset-password-token",
@@ -97,7 +101,7 @@ const initialState = {
   adminUser: adminUser,
   orders: [],
   isError: {
-    login: false,
+    signInUser: false,
     resetPassword: false,
     resetPasswordToken: false,
     UpdateAnOrder: false,
@@ -107,7 +111,7 @@ const initialState = {
     getYearlyStatistics: false,
   },
   isLoading: {
-    login: false,
+    signInUser: false,
     resetPassword: false,
     resetPasswordToken: false,
     UpdateAnOrder: false,
@@ -117,7 +121,7 @@ const initialState = {
     getYearlyStatistics: false,
   },
   isSuccess: {
-    login: false,
+    signInUser: false,
     resetPassword: false,
     resetPasswordToken: false,
     UpdateAnOrder: false,
@@ -135,26 +139,46 @@ export const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(login.pending, (state) => {
-        state.isLoading.login = true;
+      .addCase(signInUser.pending, (state) => {
+        state.isLoading.signInUser = true;
       })
-      .addCase(login.fulfilled, (state, action) => {
-        state.isError.login = false;
-        state.isLoading.login = false;
-        state.isSuccess.login = true;
+      .addCase(signInUser.fulfilled, (state, action) => {
+        state.isError.signInUser = false;
+        state.isLoading.signInUser = false;
+        state.isSuccess.signInUser = true;
         state.adminUser = action?.payload;
-        localStorage.setItem("adminToken", action?.payload?.token);
+        Cookies.set("firstName", action?.payload?.firstName, {
+          expires: 1,
+          secure: true,
+          sameSite: "Strict",
+        });
+        Cookies.set("email", action?.payload?.email, {
+          expires: 1,
+          secure: true,
+          sameSite: "Strict",
+        });
+        Cookies.set("avatar", action?.payload?.avatar, {
+          expires: 1,
+          secure: true,
+          sameSite: "Strict",
+        });
+        Cookies.set("token", action?.payload?.token, {
+          expires: 1,
+          secure: true,
+          sameSite: "Strict",
+        });
       })
-      .addCase(login.rejected, (state, action) => {
-        state.isError.login = true;
-        state.isSuccess.login = false;
-        state.isLoading.login = false;
+
+      .addCase(signInUser.rejected, (state, action) => {
+        state.isError.signInUser = true;
+        state.isSuccess.signInUser = false;
+        state.isLoading.signInUser = false;
         state.message = action.payload?.response?.data?.message;
         if (action?.payload?.response?.data?.message) {
           toast.error(action?.payload?.response?.data?.message);
         } else {
           toast.error(
-            "We are having a problem logging you in. Please check your internet connection or try again in a moment."
+            "We are having a problem signing you in. Please check your internet connection or try again in a moment."
           );
         }
       })

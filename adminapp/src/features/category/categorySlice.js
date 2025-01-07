@@ -2,6 +2,17 @@ import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import categoryService from "./categoryService";
 import { toast } from "react-toastify";
 
+export const createCategory = createAsyncThunk(
+  "pCategory/create-category",
+  async (categoryData, thunkAPI) => {
+    try {
+      return await categoryService.createCategory(categoryData);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const getProductCategories = createAsyncThunk(
   "pCategory/get-categories",
   async (thunkAPI) => {
@@ -13,16 +24,7 @@ export const getProductCategories = createAsyncThunk(
   }
 );
 
-export const createCategory = createAsyncThunk(
-  "pCategory/create-category",
-  async (categoryData, thunkAPI) => {
-    try {
-      return await categoryService.createCategory(categoryData);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
+
 
 export const getACategory = createAsyncThunk(
   "pCategory/get-category",

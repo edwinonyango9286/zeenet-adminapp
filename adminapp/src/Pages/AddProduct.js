@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import CustomInput from "../Components/CustomInput";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
@@ -14,19 +14,30 @@ import {
   resetState,
   updateAProduct,
 } from "../features/product/productSlice";
-import { toast } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
 import CustomTextarea from "../Components/CustomTextarea";
 
 const schema = Yup.object().shape({
-  title: Yup.string().required("Add product name."),
-  description: Yup.string().required("Add product description."),
-  price: Yup.number().required("Add product price."),
-  brand: Yup.string().required("Add product brand."),
-  category: Yup.string().required("Add product category."),
-  tags: Yup.string().required("Select product tag."),
-  quantity: Yup.number().required("Add product quantity."),
-  screenSize: Yup.number().required("Add product screen size."),
+  title: Yup.string().trim().required("Please add the product name."),
+  description: Yup.string()
+    .trim()
+    .required("Please add the product description."),
+  price: Yup.number()
+    .positive("The price must be a positive number.")
+    .required("Please add the product price."),
+  brand: Yup.string().trim().required("Please add the product brand."),
+  category: Yup.string().trim().required("Please add the product category."),
+  tags: Yup.string().trim().required("Please select the product tag."),
+  quantity: Yup.number()
+    .positive("The quantity must be a positive number.")
+    .integer("The quantity must be an integer.")
+    .required("Please add the product quantity."),
+  screenSize: Yup.number()
+    .positive("The screen size must be a positive number.")
+    .required("Please add the product screen size."),
+  images: Yup.array()
+    .min(1, "Please upload at least one image.")
+    .required("Please upload at least one image."),
 });
 
 const AddProduct = () => {
@@ -46,14 +57,15 @@ const AddProduct = () => {
   );
   const imgState = useSelector((state) => state?.upload?.images);
   const newProduct = useSelector((state) => state?.product);
-  const isLoadingUpload = useSelector((state) => state?.upload?.isLoading);
+  const isLoadingUpload = useSelector(
+    (state) => state?.upload?.isLoading?.uploadImg
+  );
 
   const isSuccess = useSelector(
-    (state) => state.product.isSuccess.createProduct
+    (state) => state?.product?.isSuccess?.createProduct
   );
-  const isError = useSelector((state) => state.product.isError.createProduct);
   const isLoading = useSelector(
-    (state) => state.product.isLoading.createProduct
+    (state) => state?.product?.isLoading?.createProduct
   );
 
   const {
@@ -114,13 +126,17 @@ const AddProduct = () => {
       brand: productBrand || "",
       category: productCategory || "",
       quantity: productQuantity || "",
-      images: "",
+      images: [],
       tags: productTag || "",
       screenSize: productScreenSize || "",
     },
     enableReinitialize: true,
     validationSchema: schema,
     onSubmit: (values) => {
+      if (!values.images || values.images.length === 0) {
+        formik.setFieldError("images", "Please upload at least one image.");
+        return;
+      }
       if (productId) {
         const data = { id: productId, productData: values };
         dispatch(resetState());
@@ -148,12 +164,14 @@ const AddProduct = () => {
           >
             <Link
               to={"/admin/product-list"}
-              className="text-white"
+              className="text-white fw-bold fs-6"
               style={{
                 textDecoration: "none",
+                border: "none",
+                outline: "none",
+                boxShadow: "none",
               }}
             >
-              {" "}
               View Products.
             </Link>
           </button>
@@ -165,7 +183,7 @@ const AddProduct = () => {
         >
           <CustomInput
             type="text"
-            label="Enter product name."
+            label="Enter product title."
             name="title"
             onChng={formik.handleChange("title")}
             onBlr={formik.handleBlur("title")}
@@ -214,8 +232,8 @@ const AddProduct = () => {
             <option>Select Brand</option>
             {brandState?.map((i, j) => {
               return (
-                <option key={j} value={i.title}>
-                  {i.title}
+                <option key={j} value={i?._id}>
+                  {i?.title}
                 </option>
               );
             })}
@@ -233,8 +251,8 @@ const AddProduct = () => {
             <option>Select Category</option>
             {categoryState.map((i, j) => {
               return (
-                <option key={j} value={i.title}>
-                  {i.title}
+                <option key={j} value={i?._id}>
+                  {i?.title}
                 </option>
               );
             })}
@@ -291,7 +309,7 @@ const AddProduct = () => {
             {formik.touched.quantity && formik.errors.quantity}
           </div>
 
-          <div className="bg-white text-center boder-1 p-4">
+          <div className="bg-white text-center border-1 p-4">
             <Dropzone
               onDrop={(acceptedFiles) => dispatch(uploadImg(acceptedFiles))}
             >
@@ -299,7 +317,6 @@ const AddProduct = () => {
                 <section>
                   <div {...getRootProps()}>
                     <input {...getInputProps()} />
-
                     {isLoadingUpload ? (
                       "Uploading.."
                     ) : (
@@ -311,6 +328,9 @@ const AddProduct = () => {
                 </section>
               )}
             </Dropzone>
+          </div>
+          <div className="error">
+            {formik.touched.images && formik.errors.images}
           </div>
 
           <div className="showImages d-flex flex-wrap gap-3">

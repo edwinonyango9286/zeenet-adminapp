@@ -1,10 +1,9 @@
 import { config } from "../../utils/axiosConfig";
 import { newRequest } from "../../utils/newRequest";
 
-const login = async (userData) => {
-  const response = await newRequest.post(`user/admin-login`, userData);
+const signIn = async (userData) => {
+  const response = await newRequest.post(`user/admin-signin`, userData);
   if (response.data) {
-    localStorage.setItem("adminUser", JSON.stringify(response.data));
   }
   return response.data;
 };
@@ -67,7 +66,7 @@ const getYearlyData = async () => {
 };
 
 const userService = {
-  login,
+  signIn,
   getAllOrders,
   getOrder,
   getMonthlyOrders,

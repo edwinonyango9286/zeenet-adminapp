@@ -1,10 +1,10 @@
-const adminUser = localStorage.getItem("adminUser")
-  ? JSON.parse(localStorage.getItem("adminUser"))
-  : null;
+import Cookies from "js-cookie";
+
+const token = Cookies.get("token");
 
 export const config = {
   headers: {
-    Authorization: `Bearer ${adminUser !== null ? adminUser.token : ""}`,
+    Authorization: `Bearer ${token ? token : ""}`,
     Accept: "application/json",
   },
 };

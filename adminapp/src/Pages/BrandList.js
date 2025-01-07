@@ -32,6 +32,8 @@ const columns = [
 const BrandList = () => {
   const [open, setOpen] = useState(false);
   const [brandId, setBrandId] = useState("");
+  const dispatch = useDispatch();
+
   const showModal = (e) => {
     setOpen(true);
     setBrandId(e);
@@ -39,10 +41,9 @@ const BrandList = () => {
   const hideModal = () => {
     setOpen(false);
   };
-  const dispatch = useDispatch();
-  const { brands, isLoading, isError, message } = useSelector(
-    (state) => state?.brand ?? {}
-  );
+
+  const brands = useSelector((state) => state?.brand?.brands);
+  const isLoading = useSelector((state) => state?.brand?.isLoading?.getBrands);
 
   useEffect(() => {
     dispatch(resetState());
@@ -88,7 +89,7 @@ const BrandList = () => {
           >
             <Link
               to={"/admin/brand"}
-              className="text-white"
+              className="text-white fs-6 fw-bold"
               style={{
                 textDecoration: "none",
               }}
