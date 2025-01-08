@@ -132,9 +132,12 @@ const AddBlog = () => {
           >
             <Link
               to={"/admin/blog-list"}
-              className="text-white"
+              className="text-white fw-bold fs-6"
               style={{
                 textDecoration: "none",
+                border: "none",
+                outline: "none",
+                boxShadow: "none",
               }}
             >
               View Blogs.

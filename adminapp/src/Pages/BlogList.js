@@ -85,9 +85,12 @@ const BlogList = () => {
           >
             <Link
               to={"/admin/blog"}
-              className="text-white"
+              className="text-white fw-bold fs-6"
               style={{
                 textDecoration: "none",
+                border: "none",
+                outline: "none",
+                boxShadow: "none",
               }}
             >
               Add New Blog.

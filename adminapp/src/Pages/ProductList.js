@@ -135,7 +135,7 @@ const ProductList = () => {
           >
             <Link
               to="/admin/product"
-              className="text-white"
+              className="text-white fs-6 fw-bold"
               style={{
                 textDecoration: "none",
                 border: "none",

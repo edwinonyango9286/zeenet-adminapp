@@ -1,4 +1,4 @@
-import React, { useEffect} from "react";
+import React, { useEffect } from "react";
 import CustomInput from "../Components/CustomInput";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -21,14 +21,14 @@ const AddBlogCategory = () => {
   const location = useLocation();
   const blogCategoryId = location.pathname.split("/")[3];
   const newBlogCategory = useSelector((state) => state?.blogCategory);
-  const isSuccess = useSelector((state)=>state.blogCategory.isSuccess.createBlogCategory)
- const isLoading = useSelector((state)=>state.blogCategory.isLoading.createBlogCategory)
+  const isSuccess = useSelector(
+    (state) => state.blogCategory.isSuccess.createBlogCategory
+  );
+  const isLoading = useSelector(
+    (state) => state.blogCategory.isLoading.createBlogCategory
+  );
 
-  const {
-    createdBlogCategory,
-    updatedBlogCat,
-    blogCatName,
-  } = newBlogCategory;
+  const { createdBlogCategory, updatedBlogCat, blogCatName } = newBlogCategory;
 
   useEffect(() => {
     if (blogCategoryId) {
@@ -80,19 +80,21 @@ const AddBlogCategory = () => {
           >
             <Link
               to={"/admin/blog-category-list"}
-              className="text-white"
+              className="text-white fw-bold f-6"
               style={{
                 textDecoration: "none",
+                border: "none",
+                outline: "none",
+                boxShadow: "none",
               }}
             >
-              {" "}
               View Blog Categories.
             </Link>
           </button>
         </div>
 
         <div>
-          <form action="" onSubmit={formik.handleSubmit}>
+          <form onSubmit={formik.handleSubmit}>
             <CustomInput
               type="text"
               label="Enter Blog Category"

@@ -10,6 +10,7 @@ import {
   getAllOrders,
   getYearlyStatistics,
 } from "../features/user/userSlice";
+import { getProducts } from "../features/product/productSlice";
 
 const columns = [
   {
@@ -56,6 +57,7 @@ const Dashboard = () => {
 
   const isLoading = useSelector((state) => state?.user?.getAllOrders);
   const orders = useSelector((state) => state?.user?.orders);
+  const products = useSelector((state) => state?.product?.products);
 
   const [dataMonthly, setDataMonthly] = useState([]);
   const [dataMonthlySales, setDataMonthlySales] = useState([]);
@@ -73,6 +75,7 @@ const Dashboard = () => {
     dispatch(getMonthWiseOrders());
     dispatch(getYearlyStatistics());
     dispatch(getAllOrders());
+    dispatch(getProducts());
   }, [dispatch]);
 
   useEffect(() => {
@@ -212,7 +215,7 @@ const Dashboard = () => {
             <div>
               <p className="desc">Total Sales</p>
               <h6 className="mb-0 sub-title">
-                Products sold
+                ksh{" "}
                 {yearlyDataState && yearlyDataState[0]?.count
                   ? yearlyDataState && yearlyDataState[0]?.count
                   : 0}
@@ -243,6 +246,23 @@ const Dashboard = () => {
                 32%
               </h6>
               <p className="mb-0 desc">Expesence from in last year. </p>
+            </div>
+          </div>
+          <div className="d-flex justify-content-between align-items-end  flex-grow-1 bg-white p-4 rounded-2">
+            <div>
+              <p className="desc">Product Statistics</p>
+              <h6 className="mb-0 sub-title">
+                <span>Sold{"  "} {products.length || 0}</span>
+                <span> vs </span>
+                <span>In stock  { "  "}{products.length || 0}</span>
+              </h6>
+            </div>
+            <div className="d-flex flex-column align-items-end">
+              <h6 className="red">
+                <BsArrowDownRight />
+                32%
+              </h6>
+              <p className="mb-0 desc">Products Sold vs In stock.</p>
             </div>
           </div>
         </div>

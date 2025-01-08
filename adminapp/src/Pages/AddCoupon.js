@@ -76,8 +76,7 @@ const AddCoupon = () => {
     },
   });
 
-
-    useEffect(() => {
+  useEffect(() => {
     if (isSuccessCreateCoupon && createdCoupon) {
       formik.resetForm();
       navigate("/admin/coupon-list");
@@ -93,7 +92,7 @@ const AddCoupon = () => {
     updatedCoupon,
     isErrorCreateCoupon,
     navigate,
-    formik
+    formik,
   ]);
 
   return (
@@ -108,9 +107,12 @@ const AddCoupon = () => {
           >
             <Link
               to={"/admin/coupon-list"}
-              className="text-white"
+              className="text-white fw-bold fs-6"
               style={{
                 textDecoration: "none",
+                border: "none",
+                outline: "none",
+                boxShadow: "none",
               }}
             >
               View Coupons.

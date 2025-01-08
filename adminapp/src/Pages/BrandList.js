@@ -92,6 +92,9 @@ const BrandList = () => {
               className="text-white fs-6 fw-bold"
               style={{
                 textDecoration: "none",
+                border: "none",
+                outline: "none",
+                boxShadow: "none",
               }}
             >
               Add New Brand.

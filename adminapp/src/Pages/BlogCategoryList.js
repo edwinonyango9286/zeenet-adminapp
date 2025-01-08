@@ -46,7 +46,7 @@ const BlogCategoryList = () => {
   }, [dispatch]);
 
   const isLoading = useSelector(
-    (state) => state?.blogCategory?.getBlogCategory
+    (state) => state?.blogCategory?.isLoading?.getAllBlogCategories
   );
   const blogCategories = useSelector(
     (state) => state?.blogCategory?.blogCategories
@@ -93,9 +93,12 @@ const BlogCategoryList = () => {
           >
             <Link
               to={"/admin/blog-category"}
-              className="text-white"
+              className="text-white fw-bold fs-6"
               style={{
                 textDecoration: "none",
+                border: "none",
+                outline: "none",
+                boxShadow: "none", 
               }}
             >
               Add New Blog Category.

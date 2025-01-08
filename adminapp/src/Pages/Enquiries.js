@@ -43,10 +43,10 @@ const columns = [
 const Enquiries = () => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
-  const [enquiryId, setEnquiryId] = useState("");
+  const [selectedEnquiryId, setSelectedEnquiryId] = useState("");
   const showModal = (e) => {
     setOpen(true);
-    setEnquiryId(e);
+    setSelectedEnquiryId(e);
   };
   const hideModal = () => {
     setOpen(false);
@@ -62,8 +62,13 @@ const Enquiries = () => {
     (state) => state?.enquiry?.isLoading?.getAllEnquiries
   );
 
-  const data1 =
-    enquiries &&
+  const handleStatusUpdate = (status, enquiryId) => {
+    const data = { id: enquiryId, enquiryData: status };
+    dispatch(updateAEnquiry(data));
+  };
+
+  const dataSource =
+    Array.isArray(enquiries) &&
     enquiries.map(
       (enquiry, index) =>
         ({
@@ -74,11 +79,11 @@ const Enquiries = () => {
           status: (
             <>
               <select
-                name=""
-                defaultValue={enquiry?.status ? enquiry?.status : "Submitted"}
+                defaultValue={enquiry?.status}
                 className="form-control form-select shadow-none outline-none"
-                id=""
-                onChange={(e) => setEnquiryStatus(e.target.value, enquiry?._id)}
+                onChange={(e) =>
+                  handleStatusUpdate(e.target.value, enquiry?._id)
+                }
               >
                 <option value="Submitted">Submitted</option>
                 <option value="Contacted">Contacted</option>
@@ -107,11 +112,6 @@ const Enquiries = () => {
         } || [])
     );
 
-  const setEnquiryStatus = (e, i) => {
-    const data = { id: i, enquiryData: e };
-    dispatch(updateAEnquiry(data));
-  };
-
   const deleteEnquiry = async (e) => {
     await dispatch(deleteAEnquiry(e));
     setOpen(false);
@@ -138,13 +138,13 @@ const Enquiries = () => {
             />
           </div>
         ) : (
-          <Table columns={columns} dataSource={data1} />
+          <Table columns={columns} dataSource={dataSource} />
         )}
         <CustomModal
           open={open}
           hideModal={hideModal}
           perfomAction={() => {
-            deleteEnquiry(enquiryId);
+            deleteEnquiry(selectedEnquiryId);
           }}
           title="Are you sure you want to delete this enquiry?"
         />

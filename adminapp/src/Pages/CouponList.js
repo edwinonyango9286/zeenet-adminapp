@@ -97,9 +97,12 @@ const CouponList = () => {
           >
             <Link
               to={"/admin/coupon"}
-              className="text-white"
+              className="text-white fw-bold fs-6"
               style={{
                 textDecoration: "none",
+                border: "none",
+                outline: "none",
+                boxShadow: "none",
               }}
             >
               Add New Coupon.
