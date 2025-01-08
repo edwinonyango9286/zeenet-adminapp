@@ -27,7 +27,7 @@ const resetAdminPassword = async (data) => {
   }
 };
 
-const getAllOrders = async () => {
+const getOrders = async () => {
   const response = await newRequest.get(`user/getallorders`, config);
   if (response.data) {
     return response.data;
@@ -67,7 +67,7 @@ const getYearlyData = async () => {
 
 const userService = {
   signIn,
-  getAllOrders,
+  getOrders,
   getOrder,
   getMonthlyOrders,
   getYearlyData,

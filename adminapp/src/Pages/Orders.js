@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Table, Spin } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { Loading3QuartersOutlined } from "@ant-design/icons";
-import { getOrders, UpdateAnOrder } from "../features/user/userSlice";
+import { getAllOrders, UpdateAnOrder } from "../features/user/userSlice";
 import { Link } from "react-router-dom";
 
 const columns = [
@@ -45,11 +45,14 @@ const columns = [
 
 const Orders = () => {
   const dispatch = useDispatch();
-  const { isLoading } = useSelector((state) => state?.user);
-  const { orders } = useSelector((state) => state?.user?.orders);
+  const isLoading = useSelector(
+    (state) => state?.user?.isLoading?.getAllOrders
+  );
+  const orders = useSelector((state) => state?.user?.orders);
+
   useEffect(() => {
-    dispatch(getOrders());
-  }, []);
+    dispatch(getAllOrders());
+  }, [dispatch]);
 
   const formatKES = (amount) => {
     return new Intl.NumberFormat("en-KE", {
@@ -90,6 +93,7 @@ const Orders = () => {
   const updateOrder = (a, b) => {
     dispatch(UpdateAnOrder({ id: a, status: b }));
   };
+
   return (
     <>
       <div>
@@ -111,7 +115,7 @@ const Orders = () => {
           </div>
         ) : (
           <Table columns={columns} dataSource={data} />
-        )}{" "}
+        )}
       </div>
     </>
   );

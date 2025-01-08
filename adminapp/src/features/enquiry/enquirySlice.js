@@ -2,8 +2,7 @@ import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import enquiryService from "./enquiryService";
 import { toast } from "react-toastify";
 
-
-export const getEnquiries = createAsyncThunk(
+export const getAllEnquiries = createAsyncThunk(
   "enquiry/get-enquries",
   async (thunkAPI) => {
     try {
@@ -63,21 +62,21 @@ export const resetState = createAction("Reset_all");
 const initialState = {
   enquiries: [],
   isError: {
-    getEnquiries: false,
+    getAllEnquiries: false,
     createAEnquiry: false,
     updateAEnquiry: false,
     getAEnquiry: false,
     deleteAEnquiry: false,
   },
   isLoading: {
-    getEnquiries: false,
+    getAllEnquiries: false,
     createAEnquiry: false,
     updateAEnquiry: false,
     getAEnquiry: false,
     deleteAEnquiry: false,
   },
   isSuccess: {
-    getEnquiries: false,
+    getAllEnquiries: false,
     createAEnquiry: false,
     updateAEnquiry: false,
     getAEnquiry: false,
@@ -92,21 +91,21 @@ export const enquirySlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getEnquiries.pending, (state) => {
-        state.isLoading.getEnquiries = true;
+      .addCase(getAllEnquiries.pending, (state) => {
+        state.isLoading.getAllEnquiries = true;
       })
-      .addCase(getEnquiries.fulfilled, (state, action) => {
-        state.isLoading.getEnquiries = false;
-        state.isError.getEnquiries = false;
-        state.isSuccess.getEnquiries = true;
-        state.enquiries = action.payload;
+      .addCase(getAllEnquiries.fulfilled, (state, action) => {
+        state.isLoading.getAllEnquiries = false;
+        state.isError.getAllEnquiries = false;
+        state.isSuccess.getAllEnquiries = true;
+        state.enquiries = action?.payload;
       })
-      .addCase(getEnquiries.rejected, (state, action) => {
-        state.isLoading.getEnquiries = false;
-        state.isError.getEnquiries = true;
-        state.isSuccess.getEnquiries = false;
+      .addCase(getAllEnquiries.rejected, (state, action) => {
+        state.isLoading.getAllEnquiries = false;
+        state.isError.getAllEnquiries = true;
+        state.isSuccess.getAllEnquiries = false;
         state.message = action?.payload?.response?.data?.message;
-          if (action?.payload?.response?.data?.message) {
+        if (action?.payload?.response?.data?.message) {
           toast.error(action?.payload?.response?.data?.message);
         } else {
           toast.error(
@@ -121,15 +120,15 @@ export const enquirySlice = createSlice({
         state.isLoading.createAEnquiry = false;
         state.isError.createAEnquiry = false;
         state.isSuccess.createAEnquiry = true;
-        state.createdEnquiry = action.payload;
-        toast.success("Enquiry created successfully.")
+        state.createdEnquiry = action?.payload;
+        toast.success("Enquiry created successfully.");
       })
       .addCase(createAEnquiry.rejected, (state, action) => {
         state.isLoading.createAEnquiry = false;
         state.isError.createAEnquiry = true;
         state.isSuccess.createAEnquiry = false;
         state.message = action?.payload?.response?.data?.message;
-          if (action?.payload?.response?.data?.message) {
+        if (action?.payload?.response?.data?.message) {
           toast.error(action?.payload?.response?.data?.message);
         } else {
           toast.error(
@@ -144,15 +143,15 @@ export const enquirySlice = createSlice({
         state.isLoading.updateAEnquiry = false;
         state.isError.updateAEnquiry = false;
         state.isSuccess.updateAEnquiry = true;
-        state.updatedEnquiry = action.payload;
-        toast.success("Enquiry updated successfully.")
+        state.updatedEnquiry = action?.payload;
+        toast.success("Enquiry updated successfully.");
       })
       .addCase(updateAEnquiry.rejected, (state, action) => {
         state.isLoading.updateAEnquiry = false;
         state.isError.updateAEnquiry = true;
         state.isSuccess.updateAEnquiry = false;
         state.message = action?.payload?.response?.data?.message;
-          if (action?.payload?.response?.data?.message) {
+        if (action?.payload?.response?.data?.message) {
           toast.error(action?.payload?.response?.data?.message);
         } else {
           toast.error(
@@ -167,18 +166,18 @@ export const enquirySlice = createSlice({
         state.isLoading.getAEnquiry = false;
         state.isError.getAEnquiry = false;
         state.isSuccess.getAEnquiry = true;
-        state.enquiryName = action.payload.name;
-        state.enquiryEmail = action.payload.email;
-        state.enquiryPhone = action.payload.phone;
-        state.enquiryComment = action.payload.comment;
-        state.enquiryStatus = action.payload.status;
+        state.enquiryName = action?.payload.name;
+        state.enquiryEmail = action?.payload.email;
+        state.enquiryPhone = action?.payload.phone;
+        state.enquiryComment = action?.payload.comment;
+        state.enquiryStatus = action?.payload.status;
       })
       .addCase(getAEnquiry.rejected, (state, action) => {
         state.isLoading.getAEnquiry = false;
         state.isError.getAEnquiry = true;
         state.isSuccess.getAEnquiry = false;
         state.message = action?.payload?.response?.data?.message;
-          if (action?.payload?.response?.data?.message) {
+        if (action?.payload?.response?.data?.message) {
           toast.error(action?.payload?.response?.data?.message);
         } else {
           toast.error(
@@ -193,15 +192,15 @@ export const enquirySlice = createSlice({
         state.isLoading.deleteAEnquiry = false;
         state.isError.deleteAEnquiry = false;
         state.isSuccess.deleteAEnquiry = true;
-        state.deletedEnquiry = action.payload;
-        toast.success("Enquiry deleted successfully.")
+        state.deletedEnquiry = action?.payload;
+        toast.success("Enquiry deleted successfully.");
       })
       .addCase(deleteAEnquiry.rejected, (state, action) => {
         state.isLoading.deleteAEnquiry = false;
         state.isError.deleteAEnquiry = true;
         state.isSuccess.deleteAEnquiry = false;
         state.message = action?.payload?.response?.data?.message;
-          if (action?.payload?.response?.data?.message) {
+        if (action?.payload?.response?.data?.message) {
           toast.error(action?.payload?.response?.data?.message);
         } else {
           toast.error(

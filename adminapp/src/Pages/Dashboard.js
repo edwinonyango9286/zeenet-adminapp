@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { BsArrowDownRight } from "react-icons/bs";
 import { Column } from "@ant-design/plots";
 import { Spin, Table } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
+import { Loading3QuartersOutlined } from "@ant-design/icons";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
   getMonthWiseOrders,
-  getOrders,
+  getAllOrders,
   getYearlyStatistics,
 } from "../features/user/userSlice";
 
@@ -53,10 +53,10 @@ const Dashboard = () => {
   const dispatch = useDispatch();
   const monthlyDataState = useSelector((state) => state?.user?.monthlyData);
   const yearlyDataState = useSelector((state) => state?.user?.yearlyData);
-  const { isError, isLoading, isSuccess, message } = useSelector(
-    (state) => state?.user
-  );
-  const { orders } = useSelector((state) => state?.user?.orders);
+
+  const isLoading = useSelector((state) => state?.user?.getAllOrders);
+  const orders = useSelector((state) => state?.user?.orders);
+
   const [dataMonthly, setDataMonthly] = useState([]);
   const [dataMonthlySales, setDataMonthlySales] = useState([]);
   const [orderData, setOrderData] = useState([]);
@@ -72,7 +72,7 @@ const Dashboard = () => {
   useEffect(() => {
     dispatch(getMonthWiseOrders());
     dispatch(getYearlyStatistics());
-    dispatch(getOrders());
+    dispatch(getAllOrders());
   }, [dispatch]);
 
   useEffect(() => {
@@ -109,7 +109,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     const data =
-      orders &&
+      Array.isArray(orders) &&
       orders.map(
         (order, index) =>
           ({
@@ -186,7 +186,7 @@ const Dashboard = () => {
   };
   return (
     <>
-      <div className="container">
+      <div>
         <h5 className="mb-2 title">Dashboard</h5>
         <div className="d-flex justify-content-between align-items-center gap-4 flex-wrap">
           <div className="d-flex justify-content-between align-items-end flex-grow-1 bg-white p-4 rounded-2">
@@ -268,10 +268,14 @@ const Dashboard = () => {
             {isLoading ? (
               <div className="text-center">
                 <Spin
-                  size="large"
                   indicator={
-                    <LoadingOutlined
-                      style={{ fontSize: 40, fontWeight: 800 }}
+                    <Loading3QuartersOutlined
+                      style={{
+                        fontSize: 40,
+                        fontWeight: "bold",
+                        color: "#000",
+                      }}
+                      spin
                     />
                   }
                 />

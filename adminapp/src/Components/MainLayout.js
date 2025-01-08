@@ -72,7 +72,7 @@ const MainLayout = () => {
           }}
           items={[
             {
-              key: "dashboard",
+              key: "",
               icon: <MdDashboardCustomize className="fs-5" />,
               label: (
                 <p className="fs-5 text-start fw-medium m-0 p-0">Dashboard</p>
@@ -149,38 +149,6 @@ const MainLayout = () => {
             },
 
             {
-              key: "orders",
-              icon: <FaClipboardList className="fs-5" />,
-              label: (
-                <p className="fs-5 text-start fw-medium m-0 p-0">Orders</p>
-              ),
-            },
-            {
-              key: "marketing",
-              icon: <SiMarketo className="fs-5" />,
-              label: (
-                <p className="fs-5 text-start fw-medium m-0 p-0">Marketing</p>
-              ),
-              children: [
-                {
-                  key: "coupon-list",
-                  icon: <RiCoupon5Fill className="fs-5" />,
-                  label: (
-                    <p className="fs-5 text-start fw-medium m-0 p-0">Coupons</p>
-                  ),
-                },
-                {
-                  key: "coupon",
-                  icon: <RiCoupon5Fill className="fs-5" />,
-                  label: (
-                    <p className="fs-5 text-start fw-medium m-0 p-0">
-                      Add coupon
-                    </p>
-                  ),
-                },
-              ],
-            },
-            {
               key: "blogs",
               icon: <ImBlogger2 className="fs-5" />,
               label: <p className="fs-5 text-start fw-medium m-0 p-0">Blogs</p>,
@@ -222,6 +190,32 @@ const MainLayout = () => {
                 },
               ],
             },
+
+            {
+              key: "marketing",
+              icon: <SiMarketo className="fs-5" />,
+              label: (
+                <p className="fs-5 text-start fw-medium m-0 p-0">Marketing</p>
+              ),
+              children: [
+                {
+                  key: "coupon-list",
+                  icon: <RiCoupon5Fill className="fs-5" />,
+                  label: (
+                    <p className="fs-5 text-start fw-medium m-0 p-0">Coupons</p>
+                  ),
+                },
+                {
+                  key: "coupon",
+                  icon: <RiCoupon5Fill className="fs-5" />,
+                  label: (
+                    <p className="fs-5 text-start fw-medium m-0 p-0">
+                      Add coupon
+                    </p>
+                  ),
+                },
+              ],
+            },
             {
               key: "enquiries",
               icon: <BiSolidMessageEdit className="fs-5" />,
@@ -229,6 +223,15 @@ const MainLayout = () => {
                 <p className="fs-5 text-start fw-medium m-0 p-0">Enquiries</p>
               ),
             },
+
+            {
+              key: "orders",
+              icon: <FaClipboardList className="fs-5" />,
+              label: (
+                <p className="fs-5 text-start fw-medium m-0 p-0">Orders</p>
+              ),
+            },
+
             {
               key: "signout",
               icon: <IoLogOutOutline className="fs-5" />,

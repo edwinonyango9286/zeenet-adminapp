@@ -36,11 +36,11 @@ export const resetPassword = createAsyncThunk(
   }
 );
 
-export const getOrders = createAsyncThunk(
-  "order/get-orders",
+export const getAllOrders = createAsyncThunk(
+  "order/get-all-orders",
   async (thunkAPI) => {
     try {
-      return await userService.getAllOrders();
+      return await userService.getOrders();
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -105,7 +105,7 @@ const initialState = {
     resetPassword: false,
     resetPasswordToken: false,
     UpdateAnOrder: false,
-    getOrders: false,
+    getAllOrders: false,
     getAsingleOrder: false,
     getMonthWiseOrders: false,
     getYearlyStatistics: false,
@@ -115,7 +115,7 @@ const initialState = {
     resetPassword: false,
     resetPasswordToken: false,
     UpdateAnOrder: false,
-    getOrders: false,
+    getAllOrders: false,
     getAsingleOrder: false,
     getMonthWiseOrders: false,
     getYearlyStatistics: false,
@@ -125,7 +125,7 @@ const initialState = {
     resetPassword: false,
     resetPasswordToken: false,
     UpdateAnOrder: false,
-    getOrders: false,
+    getAllOrders: false,
     getAsingleOrder: false,
     getMonthWiseOrders: false,
     getYearlyStatistics: false,
@@ -173,7 +173,7 @@ export const userSlice = createSlice({
         state.isError.signInUser = true;
         state.isSuccess.signInUser = false;
         state.isLoading.signInUser = false;
-        state.message = action.payload?.response?.data?.message;
+        state.message = action?.payload?.response?.data?.message;
         if (action?.payload?.response?.data?.message) {
           toast.error(action?.payload?.response?.data?.message);
         } else {
@@ -232,19 +232,19 @@ export const userSlice = createSlice({
           );
         }
       })
-      .addCase(getOrders.pending, (state) => {
-        state.isLoading.getOrders = true;
+      .addCase(getAllOrders.pending, (state) => {
+        state.isLoading.getAllOrders = true;
       })
-      .addCase(getOrders.fulfilled, (state, action) => {
-        state.isLoading.getOrders = false;
-        state.isError.getOrders = false;
-        state.isSuccess.getOrders = true;
-        state.orders = action.payload;
+      .addCase(getAllOrders.fulfilled, (state, action) => {
+        state.isLoading.getAllOrders = false;
+        state.isError.getAllOrders = false;
+        state.isSuccess.getAllOrders = true;
+        state.orders = action?.payload;
       })
-      .addCase(getOrders.rejected, (state, action) => {
-        state.isError.getOrders = true;
-        state.isLoading.getOrders = false;
-        state.isSuccess.getOrders = false;
+      .addCase(getAllOrders.rejected, (state, action) => {
+        state.isError.getAllOrders = true;
+        state.isLoading.getAllOrders = false;
+        state.isSuccess.getAllOrders = false;
         state.message = action?.payload?.response?.data?.message;
         if (action?.payload?.response?.data?.message) {
           toast.error(action?.payload?.response?.data?.message);

@@ -13,6 +13,19 @@ const columns = [
     dataIndex: "key",
   },
   {
+    title: "Avatar",
+    dataIndex: "avatar",
+    render: (text, record) => (
+      <img
+        src={record.image}
+        alt={record.title}
+        width={60}
+        height={60}
+        className="rounded-3 border border-1"
+      />
+    ),
+  },
+  {
     title: "Name",
     dataIndex: "name",
     render: (text, record) => {
@@ -39,11 +52,12 @@ const columns = [
 
 const Customers = () => {
   const dispatch = useDispatch();
-  const customers = useSelector((state) => state.customer.customers);
+  const customers = useSelector((state) => state?.customer?.customers);
   const isLoading = useSelector(
-    (state) => state.customer.isLoading.getAllCustomers
+    (state) => state?.customer?.isLoading?.getAllCustomers
   );
   useEffect(() => {
+    dispatch(resetState());
     dispatch(getAllCustomers());
   }, [dispatch]);
 
@@ -51,15 +65,15 @@ const Customers = () => {
     .filter((customer) => customer?.role !== "admin")
     .map((customer, index) => ({
       key: index + 1,
-      name: `${customer?.firstname} ${customer?.lastname}`,
+      avatar: customer?.avatar,
+      name: `${customer?.firstName} ${customer?.lastName}`,
       email: customer?.email,
-      phone: customer?.phone,
+      phone: customer?.phoneNumber,
     }));
 
   return (
-    <div className="container">
+    <div>
       <h5 className="mb-2 title">Customers</h5>
-
       {isLoading ? (
         <div className="text-center">
           <Spin

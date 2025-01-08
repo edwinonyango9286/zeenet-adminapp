@@ -4,7 +4,7 @@ import { Table, Spin } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteAEnquiry,
-  getEnquiries,
+  getAllEnquiries,
   resetState,
   updateAEnquiry,
 } from "../features/enquiry/enquirySlice";
@@ -54,10 +54,13 @@ const Enquiries = () => {
 
   useEffect(() => {
     dispatch(resetState());
-    dispatch(getEnquiries());
+    dispatch(getAllEnquiries());
   }, [dispatch]);
 
-  const { enquiries, isLoading } = useSelector((state) => state.enquiry ?? {});
+  const enquiries = useSelector((state) => state?.enquiry?.enquiries);
+  const isLoading = useSelector(
+    (state) => state?.enquiry?.isLoading?.getAllEnquiries
+  );
 
   const data1 =
     enquiries &&
@@ -112,12 +115,12 @@ const Enquiries = () => {
   const deleteEnquiry = async (e) => {
     await dispatch(deleteAEnquiry(e));
     setOpen(false);
-    dispatch(getEnquiries());
+    dispatch(getAllEnquiries());
   };
 
   return (
     <>
-      <div className="container">
+      <div>
         <h5 className="mb-2 title">Enquiries</h5>
         {isLoading ? (
           <div className="text-center">
