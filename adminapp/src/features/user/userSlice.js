@@ -93,12 +93,8 @@ export const getYearlyStatistics = createAsyncThunk(
 
 export const resetUserState = createAction("Reset_all");
 
-const adminUser = localStorage.getItem("adminUser")
-  ? JSON.parse(localStorage.getItem("adminUser"))
-  : null;
-
 const initialState = {
-  adminUser: adminUser,
+  adminUser: null,
   orders: [],
   isError: {
     signInUser: false,
