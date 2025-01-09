@@ -51,7 +51,7 @@ const CategoryList = () => {
 
   const data = Array.isArray(categories)
     ? categories?.map((category, index) => ({
-        key: index + 1,
+      key: index + 1,
         name: category?.title,
         action: (
           <>

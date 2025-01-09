@@ -26,6 +26,21 @@ const resetAdminPassword = async (data) => {
     return response.data;
   }
 };
+// Block a user =>blocked users should not be able to make purchases.
+const blockUser = async (userId) => {
+  const response = await newRequest.put(`user/block-user/${userId}`);
+  if (response.data) {
+    return response.data;
+  }
+};
+
+// unblock a user => when a user is unblocked he/she should be able to make purchases.const
+const unblockUser = async (userId) => {
+  const response = await newRequest.put(`user/unblock-user/${userId}`);
+  if (response.data) {
+    return response.data;
+  }
+};
 
 const getOrders = async () => {
   const response = await newRequest.get(`user/getallorders`, config);
@@ -74,6 +89,8 @@ const userService = {
   updateOrderStatus,
   forgotPasswordToken,
   resetAdminPassword,
+  blockUser,
+  unblockUser,
 };
 
 export default userService;

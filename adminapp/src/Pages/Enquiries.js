@@ -27,8 +27,8 @@ const columns = [
     dataIndex: "email",
   },
   {
-    title: "Phone",
-    dataIndex: "phone",
+    title: "Phone Number",
+    dataIndex: "phoneNumber",
   },
   {
     title: "Status",
@@ -75,7 +75,7 @@ const Enquiries = () => {
           key: index + 1,
           name: enquiry?.name,
           email: enquiry?.email,
-          phone: enquiry?.phone,
+          phoneNumber: enquiry?.phoneNumber,
           status: (
             <>
               <select

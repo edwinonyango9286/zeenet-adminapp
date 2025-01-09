@@ -27,7 +27,7 @@ const updateEnquiry = async (enq) => {
 };
 
 const getEnquiry = async (id) => {
-  const response = await newRequest.get(`enquiry/get/${id}`);
+  const response = await newRequest.get(`enquiry/get/${id}`, config);
   if (response.data) {
     return response.data;
   }

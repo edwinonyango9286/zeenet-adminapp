@@ -14,6 +14,19 @@ const columns = [
     dataIndex: "key",
   },
   {
+    title: "Product Image",
+    dataIndex: "image",
+    render: (text, record) => (
+      <img
+        src={record.image}
+        alt={record.title}
+        width={60}
+        height={60}
+        className="rounded-3 border border-1"
+      />
+    ),
+  },
+  {
     title: "Tittle",
     dataIndex: "name",
   },
@@ -45,13 +58,14 @@ const BlogList = () => {
   }, [dispatch]);
 
   const blogs = useSelector((state) => state?.blog?.blogs);
-  const isLoading = useSelector((state) => state?.blog?.getBlogs);
+  const isLoading = useSelector((state) => state?.blog?.isLoading?.getBlogs);
 
   const data = Array.isArray(blogs)
     ? blogs.map((blog, index) => ({
         key: index + 1,
+        image: blog?.images[0]?.url,
         name: blog?.title,
-        category: blog?.category,
+        category: blog?.category?.title,
         action: (
           <>
             <Link to={`/admin/blog/${blog?._id}`} className="fs-5">

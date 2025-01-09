@@ -166,11 +166,11 @@ export const enquirySlice = createSlice({
         state.isLoading.getAEnquiry = false;
         state.isError.getAEnquiry = false;
         state.isSuccess.getAEnquiry = true;
-        state.enquiryName = action?.payload.name;
-        state.enquiryEmail = action?.payload.email;
-        state.enquiryPhone = action?.payload.phone;
-        state.enquiryComment = action?.payload.comment;
-        state.enquiryStatus = action?.payload.status;
+        state.enquiryName = action?.payload?.name;
+        state.enquiryEmail = action?.payload?.email;
+        state.enquiryPhone = action?.payload?.phoneNumber;
+        state.enquiry = action?.payload?.enquiry;
+        state.enquiryStatus = action?.payload?.status;
       })
       .addCase(getAEnquiry.rejected, (state, action) => {
         state.isLoading.getAEnquiry = false;

@@ -51,7 +51,7 @@ const MainLayout = () => {
       >
         <div className="logo">
           <h2 className="text-center items-center text-white mb-0 fs-4 py-3">
-            <span className="sm-logo">ZN</span>
+            <span className="sm-logo fw-bold fs-2">ZN</span>
             <span className="lg-logo fw-bold fs-2 m-0 p-0 ">ZeeNet</span>
           </h2>
         </div>

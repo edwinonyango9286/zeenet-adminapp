@@ -20,6 +20,9 @@ const schema = Yup.object().shape({
   title: Yup.string().required("Blog Name is required"),
   description: Yup.string().required("Description is required"),
   category: Yup.string().required("Category is required"),
+  images: Yup.array()
+    .min(1, "Please provide at least one image.")
+    .required("Please upload at least one image."),
 });
 
 const AddBlog = () => {
@@ -43,6 +46,7 @@ const AddBlog = () => {
   const isLoading = useSelector(
     (state) => state?.blogCategory?.isLoading?.getAllBlogCategories
   );
+  const uploading = useSelector((state) => state?.upload?.isLoading?.uploadImg);
   const {
     createdBlog,
     blogName,
@@ -70,7 +74,7 @@ const AddBlog = () => {
       title: blogName || "",
       description: blogDescription || "",
       category: blogCategory || "",
-      images: "",
+      images: [],
     },
     validationSchema: schema,
     onSubmit: (values) => {
@@ -171,7 +175,7 @@ const AddBlog = () => {
               {Array.isArray(blogCategories)
                 ? blogCategories?.map((i, j) => {
                     return (
-                      <option key={j} value={i.title}>
+                      <option key={j} value={i._id}>
                         {i.title}
                       </option>
                     );
@@ -205,13 +209,21 @@ const AddBlog = () => {
                   <section>
                     <div {...getRootProps()}>
                       <input {...getInputProps()} />
-                      <p>
-                        Drag and Drop some files here, or Click to select files
-                      </p>
+                      {uploading ? (
+                        "Please wait.."
+                      ) : (
+                        <p>
+                          Drag and Drop some files here, or Click to select
+                          files.
+                        </p>
+                      )}
                     </div>
                   </section>
                 )}
               </Dropzone>
+            </div>
+            <div className="error">
+              {formik.touched.images && formik.errors.images}
             </div>
 
             <div className="showImages d-flex flex-wrap gap-3">

@@ -87,7 +87,6 @@ const ProductList = () => {
   const isLoading = useSelector(
     (state) => state?.product?.isLoading?.getProducts
   );
-
   useEffect(() => {
     dispatch(resetState());
     dispatch(getProducts());

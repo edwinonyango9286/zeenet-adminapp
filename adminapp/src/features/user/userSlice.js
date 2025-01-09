@@ -13,6 +13,29 @@ export const signInUser = createAsyncThunk(
     }
   }
 );
+// Block a user =>blocked users should not be able to make purchases.
+export const blockAUser = createAsyncThunk(
+  "auth/block-user",
+  async (userId, thunkAPI) => {
+    try {
+      return await userService.blockUser(userId);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+// unblock a user => when a user is unblocked he/she should be able to make purchases.const
+export const unblockAUser = createAsyncThunk(
+  "auth/unblock-user",
+  async (userId, thunkAPI) => {
+    try {
+      return await userService.unblockUser(userId);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 export const resetPasswordToken = createAsyncThunk(
   "user/reset-password-token",
@@ -228,6 +251,57 @@ export const userSlice = createSlice({
           );
         }
       })
+
+      .addCase(blockAUser.pending, (state) => {
+        state.isLoading.blockAUser = true;
+      })
+      .addCase(blockAUser.fulfilled, (state, action) => {
+        state.isLoading.blockAUser = false;
+        state.isSuccess.blockAUser = true;
+        state.isError.blockAUser = false;
+        state.blockedUser = action?.payload;
+        toast.success(action.payload.response.data.message);
+      })
+
+      .addCase(blockAUser.rejected, (state, action) => {
+        state.isLoading.blockAUser = false;
+        state.isSuccess.blockAUser = false;
+        state.isError.blockAUser = true;
+        state.message = action?.payload?.response?.data?.message;
+        if (action?.payload?.response?.data?.message) {
+          toast.error(action?.payload?.response?.data?.message);
+        } else {
+          toast.error(
+            "We are having a problem blocking the user. Please check your internet connection or try again in a moment."
+          );
+        }
+      })
+
+      .addCase(unblockAUser.pending, (state) => {
+        state.isLoading.unblockAUser = true;
+      })
+      .addCase(unblockAUser.fulfilled, (state, action) => {
+        state.isLoading.unblockAUser = false;
+        state.isSuccess.unblockAUser = true;
+        state.isError.unblockAUser = false;
+        state.unblockedUser = action?.payload;
+        toast.success(action.payload.response.data.message);
+      })
+
+      .addCase(unblockAUser.rejected, (state, action) => {
+        state.isLoading.unblockAUser = false;
+        state.isSuccess.unblockAUser = false;
+        state.isError.unblockAUser = true;
+        state.message = action?.payload?.response?.data?.message;
+        if (action?.payload?.response?.data?.message) {
+          toast.error(action?.payload?.response?.data?.message);
+        } else {
+          toast.error(
+            "We are having a problem blocking the user. Please check your internet connection or try again in a moment."
+          );
+        }
+      })
+
       .addCase(getAllOrders.pending, (state) => {
         state.isLoading.getAllOrders = true;
       })

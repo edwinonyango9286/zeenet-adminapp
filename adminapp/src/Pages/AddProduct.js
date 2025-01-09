@@ -57,7 +57,7 @@ const AddProduct = () => {
   );
   const imgState = useSelector((state) => state?.upload?.images);
   const newProduct = useSelector((state) => state?.product);
-  const isLoadingUpload = useSelector(
+  const uploading = useSelector(
     (state) => state?.upload?.isLoading?.uploadImg
   );
 
@@ -317,8 +317,8 @@ const AddProduct = () => {
                 <section>
                   <div {...getRootProps()}>
                     <input {...getInputProps()} />
-                    {isLoadingUpload ? (
-                      "Uploading.."
+                    {uploading ? (
+                      "Please wait.."
                     ) : (
                       <p>
                         Drag and Drop some files here, or Click to select files.
