@@ -10,7 +10,7 @@ const signIn = async (userData) => {
 
 const forgotPasswordToken = async (data) => {
   const response = await newRequest.post(
-    `user/forgot-password-admin-token`,
+    `user/reset-password-admin-token`,
     data
   );
   if (response.data) {

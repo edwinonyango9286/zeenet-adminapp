@@ -181,7 +181,7 @@ export const userSlice = createSlice({
           secure: true,
           sameSite: "Strict",
         });
-        Cookies.set("token", action?.payload?.token, {
+        Cookies.set("accessToken", action?.payload?.accessToken, {
           expires: 1,
           secure: true,
           sameSite: "Strict",
@@ -208,10 +208,8 @@ export const userSlice = createSlice({
         state.isError.resetPasswordToken = false;
         state.isLoading.resetPasswordToken = false;
         state.isSuccess.resetPasswordToken = true;
-        state.token = action?.payload;
-        toast.success(
-          "A password reset link has been sent to your email. Please check your email to proceed with reseting your password."
-        );
+        state.message = action?.payload?.message;
+        toast.success(action?.payload?.message);
       })
       .addCase(resetPasswordToken.rejected, (state, action) => {
         state.isError.resetPasswordToken = true;

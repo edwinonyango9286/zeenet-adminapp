@@ -25,21 +25,18 @@ const ForgotPassword = () => {
   });
 
   const isSuccess = useSelector(
-    (state) => state.user.isSuccess.resetPasswordToken
+    (state) => state?.user?.isSuccess?.resetPasswordToken
   );
-  const token = useSelector((state) => state.user.token);
-
   const isLoading = useSelector(
-    (state) => state.user.isLoading.resetPasswordToken
+    (state) => state?.user?.isLoading?.resetPasswordToken
   );
-
   useEffect(() => {
-    if (isSuccess && token) {
+    if (isSuccess) {
       formik.resetForm();
-      dispatch(resetUserState())
+      dispatch(resetUserState());
       navigate("/");
     }
-  }, [isSuccess, token, formik, navigate,dispatch]);
+  }, [isSuccess, , dispatch]);
 
   return (
     <>

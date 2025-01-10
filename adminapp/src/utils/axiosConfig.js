@@ -1,10 +1,10 @@
 import Cookies from "js-cookie";
 
-const token = Cookies.get("token");
+const accessToken = Cookies.get("accessToken");
 
 export const config = {
   headers: {
-    Authorization: `Bearer ${token ? token : ""}`,
+    Authorization: `Bearer ${accessToken ? accessToken : ""}`,
     Accept: "application/json",
   },
 };
