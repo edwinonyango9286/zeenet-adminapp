@@ -71,6 +71,7 @@ const Customers = () => {
       phone: customer?.phoneNumber,
     }));
 
+  
   return (
     <div>
       <h5 className="mb-2 title">Customers</h5>
