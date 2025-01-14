@@ -16,6 +16,7 @@ import {
 } from "../features/product/productSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 import CustomTextarea from "../Components/CustomTextarea";
+import { MdCloudUpload } from "react-icons/md";
 
 const schema = Yup.object().shape({
   title: Yup.string().trim().required("Please add the product name."),
@@ -309,7 +310,7 @@ const AddProduct = () => {
 
           <div className="bg-white text-center border-1 p-4 border rounded cusor-pointer">
             <Dropzone
-              onDrop={(acceptedFiles) => dispatch(uploadImg(acceptedFiles))} 
+              onDrop={(acceptedFiles) => dispatch(uploadImg(acceptedFiles))}
             >
               {({ getRootProps, getInputProps }) => (
                 <section>
@@ -318,9 +319,13 @@ const AddProduct = () => {
                     {uploading ? (
                       "Please wait.."
                     ) : (
-                      <p>
-                        Drag and Drop some files here, or Click to select files.
-                      </p>
+                      <div className="d-flex flex-column align-items-center justify-content-between gap-1">
+                        <MdCloudUpload style={{ fontSize: "44px" }} />
+                        <p>
+                          Drag and Drop some files here,or Click to select
+                          files.
+                        </p>
+                      </div>
                     )}
                   </div>
                 </section>
@@ -350,6 +355,7 @@ const AddProduct = () => {
                   <img
                     src={i.url}
                     alt="productImage"
+                    className="image-fluid rounded-3"
                     width={200}
                     height={200}
                   />

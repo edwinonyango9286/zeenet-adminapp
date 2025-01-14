@@ -15,6 +15,7 @@ import {
 import { delImg, uploadImg } from "../features/upload/uploadSlice";
 import { getAllBlogCategories } from "../features/blogcategory/blogCategorySlice";
 import CustomTextarea from "../Components/CustomTextarea";
+import { MdCloudUpload } from "react-icons/md";
 
 const schema = Yup.object().shape({
   title: Yup.string().required("Blog Name is required"),
@@ -212,16 +213,18 @@ const AddBlog = () => {
                       {uploading ? (
                         "Please wait.."
                       ) : (
-                        <p>
-                          Drag and Drop some files here, or Click to select
-                          files.
-                        </p>
+                        <div className="d-flex flex-column align-items-center justify-content-between gap-1">
+                          <MdCloudUpload style={{ fontSize: "44px" }} />
+                          <p>
+                            Drag and Drop some files here,or Click to select
+                            files.
+                          </p>
+                        </div>
                       )}
                     </div>
                   </section>
                 )}
               </Dropzone>
-              secondary
             </div>
             <div className="error">
               {formik.touched.images && formik.errors.images}
@@ -244,8 +247,9 @@ const AddBlog = () => {
                       }}
                     ></button>
                     <img
-                      src={i.url}
+                      src={i?.url}
                       alt="productImage"
+                      className="image fluid rounded-3"
                       width={200}
                       height={200}
                     />

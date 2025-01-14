@@ -25,9 +25,9 @@ const columns = [
       <img
         src={record.image}
         alt={record.title}
-        width={60}
-        height={60}
-        className="rounded-3 border border-1"
+        width={70}
+        height={70}
+        className="rounded-3 border border-1 p-1"
       />
     ),
   },
