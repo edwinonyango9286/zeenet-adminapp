@@ -17,11 +17,11 @@ const columns = [
     dataIndex: "avatar",
     render: (text, record) => (
       <img
-        src={record.image}
+        src={record.avatar}
         alt={record.title}
-        width={60}
-        height={60}
-        className="rounded-3 border border-1"
+        width={40}
+        height={40}
+        className="rounded-circle border border-1"
       />
     ),
   },
@@ -71,7 +71,7 @@ const Customers = () => {
       phone: customer?.phoneNumber,
     }));
 
-  
+  console.log(data);
   return (
     <div>
       <h5 className="mb-2 title">Customers</h5>
@@ -91,7 +91,13 @@ const Customers = () => {
           />
         </div>
       ) : (
-        <Table columns={columns} dataSource={data} />
+        <div style={{ overflowX: "auto", width: "100%" }}>
+          <Table
+            columns={columns}
+            dataSource={data}
+            scroll={{ x: "max-content" }}
+          />
+        </div>
       )}
     </div>
   );

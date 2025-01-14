@@ -118,8 +118,13 @@ const BrandList = () => {
             />
           </div>
         ) : (
-          <Table columns={columns} dataSource={data} />
-        )}
+ <div style={{ overflowX: "auto", width: "100%" }}>
+          <Table
+            columns={columns}
+            dataSource={data}
+            scroll={{ x: "max-content" }}
+          />
+        </div>        )}
 
         <CustomModal
           open={open}

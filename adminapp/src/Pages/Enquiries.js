@@ -138,7 +138,13 @@ const Enquiries = () => {
             />
           </div>
         ) : (
-          <Table columns={columns} dataSource={dataSource} />
+          <div style={{ overflowX: "auto", width: "100%" }}>
+            <Table
+              columns={columns}
+              dataSource={dataSource}
+              scroll={{ x: "max-content" }}
+            />
+          </div>
         )}
         <CustomModal
           open={open}

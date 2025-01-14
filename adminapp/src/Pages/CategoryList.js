@@ -51,7 +51,7 @@ const CategoryList = () => {
 
   const data = Array.isArray(categories)
     ? categories?.map((category, index) => ({
-      key: index + 1,
+        key: index + 1,
         name: category?.title,
         action: (
           <>
@@ -113,7 +113,13 @@ const CategoryList = () => {
             />
           </div>
         ) : (
-          <Table columns={columns} dataSource={data} />
+          <div style={{ overflowX: "auto", width: "100%" }}>
+            <Table
+              columns={columns}
+              dataSource={data}
+              scroll={{ x: "max-content" }}
+            />
+          </div>
         )}
         <CustomModal
           open={open}

@@ -57,9 +57,7 @@ const AddProduct = () => {
   );
   const imgState = useSelector((state) => state?.upload?.images);
   const newProduct = useSelector((state) => state?.product);
-  const uploading = useSelector(
-    (state) => state?.upload?.isLoading?.uploadImg
-  );
+  const uploading = useSelector((state) => state?.upload?.isLoading?.uploadImg);
 
   const isSuccess = useSelector(
     (state) => state?.product?.isSuccess?.createProduct
@@ -309,9 +307,9 @@ const AddProduct = () => {
             {formik.touched.quantity && formik.errors.quantity}
           </div>
 
-          <div className="bg-white text-center border-1 p-4">
+          <div className="bg-white text-center border-1 p-4 border rounded cusor-pointer">
             <Dropzone
-              onDrop={(acceptedFiles) => dispatch(uploadImg(acceptedFiles))}
+              onDrop={(acceptedFiles) => dispatch(uploadImg(acceptedFiles))} 
             >
               {({ getRootProps, getInputProps }) => (
                 <section>

@@ -201,7 +201,7 @@ const AddBlog = () => {
               {formik.touched.description && formik.errors.description}
             </div>
 
-            <div className="bg-white text-center boder-1 p-4  ">
+            <div className="bg-white text-center boder-1 p-4 cusor-pointer rounded  border">
               <Dropzone
                 onDrop={(acceptedFiles) => dispatch(uploadImg(acceptedFiles))}
               >
@@ -221,6 +221,7 @@ const AddBlog = () => {
                   </section>
                 )}
               </Dropzone>
+              secondary
             </div>
             <div className="error">
               {formik.touched.images && formik.errors.images}

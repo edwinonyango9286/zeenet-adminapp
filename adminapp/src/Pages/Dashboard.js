@@ -252,9 +252,14 @@ const Dashboard = () => {
             <div>
               <p className="desc">Product Statistics</p>
               <h6 className="mb-0 sub-title">
-                <span>Sold{"  "} {products.length || 0}</span>
+                <span>
+                  Sold{"  "} {products.length || 0}
+                </span>
                 <span> vs </span>
-                <span>In stock  { "  "}{products.length || 0}</span>
+                <span>
+                  In stock {"  "}
+                  {products.length || 0}
+                </span>
               </h6>
             </div>
             <div className="d-flex flex-column align-items-end">
@@ -301,8 +306,14 @@ const Dashboard = () => {
                 />
               </div>
             ) : (
-              <Table columns={columns} dataSource={orderData} />
-            )}{" "}
+              <div style={{ overflowX: "auto", width: "100%" }}>
+                <Table
+                  columns={columns}
+                  dataSource={orderData}
+                  scroll={{ x: "max-content" }}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
