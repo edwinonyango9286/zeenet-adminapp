@@ -25,12 +25,16 @@ const AddCategory = () => {
   const isSuccess = useSelector(
     (state) => state?.productCategory?.isSuccess?.createCategory
   );
-  const isLoading = useSelector(
+  const isSuccessUpdateACategory = useSelector(
+    (state) => state?.productCategory?.isSuccess?.updateACategory
+  );
+  const isLoadingCreateACategory = useSelector(
     (state) => state?.productCategory?.isLoading?.createCategory
   );
+  const isLoadingUpdateACategory = useSelector(
+    (state) => state?.productCategory?.isLoading?.updateACategory
+  );
   const { createdCategory, categoryName, updatedCategory } = newCategory;
-
-
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -50,31 +54,24 @@ const AddCategory = () => {
     },
   });
 
+  useEffect(() => {
+    if (categoryId) {
+      dispatch(getACategory(categoryId));
+    } else {
+      dispatch(resetState());
+    }
+  }, [categoryId, dispatch]);
 
-    useEffect(() => {
-      if (categoryId) {
-        dispatch(getACategory(categoryId));
-      } else {
-        dispatch(resetState());
-      }
-    }, [categoryId, dispatch]);
-
-    useEffect(() => {
-      if (isSuccess && createdCategory) {
-        formik.resetForm();
-        navigate("/admin/category-list");
-      }
-      if (isSuccess && updatedCategory) {
-        formik.resetForm();
-        navigate("/admin/category-list");
-      }
-    }, [
-      isSuccess,
-      createdCategory,
-      updatedCategory,
-      formik.resetForm,
-      navigate,
-    ]);
+  useEffect(() => {
+    if (isSuccess && createdCategory) {
+      formik.resetForm();
+      navigate("/admin/category-list");
+    }
+    if (isSuccessUpdateACategory && updatedCategory) {
+      formik.resetForm();
+      navigate("/admin/category-list");
+    }
+  }, [isSuccess, createdCategory, isSuccessUpdateACategory, updatedCategory]);
 
   return (
     <>
@@ -121,7 +118,7 @@ const AddCategory = () => {
               className="btn btn-primary border-0 rounded-3 mt-3 "
               style={{ border: "none", outline: "none", boxShadow: "none" }}
             >
-              {isLoading
+              {isLoadingCreateACategory || isLoadingUpdateACategory
                 ? "Please wait..."
                 : categoryId
                 ? "Edit Category"

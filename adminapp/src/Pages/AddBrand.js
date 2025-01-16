@@ -77,8 +77,6 @@ const AddBrand = () => {
     isSuccessUpdateABrand,
     createdBrand,
     updatedBrand,
-    navigate,
-    formik.resetForm,
   ]);
 
   return (

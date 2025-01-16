@@ -50,6 +50,7 @@ const CouponList = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
+    dispatch(resetState());
     dispatch(getCoupons());
   }, [dispatch]);
 

@@ -24,19 +24,19 @@ const AddCoupon = () => {
   const couponId = location.pathname.split("/")[3];
   const coupon = useSelector((state) => state?.coupon);
   const isLoadingCreateCoupon = useSelector(
-    (state) => state.coupon.isLoading.createCoupon
+    (state) => state?.coupon?.isLoading?.createCoupon
   );
 
   const isSuccessCreateCoupon = useSelector(
-    (state) => state.coupon.isLoading.createCoupon
+    (state) => state?.coupon?.isSuccess?.createCoupon
   );
 
   const isSuccessUpdateACoupon = useSelector(
-    (state) => state.coupon.isSuccess.updateACoupon
+    (state) => state?.coupon?.isSuccess?.updateACoupon
   );
 
   const isErrorCreateCoupon = useSelector(
-    (state) => state.coupon.isError.createCoupon
+    (state) => state?.coupon?.isError?.createCoupon
   );
 
   const {

@@ -7,6 +7,7 @@ import { AiFillDelete } from "react-icons/ai";
 import {
   deleteACategory,
   getProductCategories,
+  resetState,
 } from "../features/category/categorySlice";
 import CustomModal from "../Components/CustomModal";
 import { FiEdit } from "react-icons/fi";
@@ -46,6 +47,7 @@ const CategoryList = () => {
   );
 
   useEffect(() => {
+    dispatch(resetState());
     dispatch(getProductCategories());
   }, [dispatch]);
 

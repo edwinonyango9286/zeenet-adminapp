@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Layout, Menu, Button, theme } from "antd";
 import { MdDashboardCustomize } from "react-icons/md";
 import { BsPeople } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
+import { UNSAFE_useScrollRestoration, useNavigate } from "react-router-dom";
 import { BsCart3 } from "react-icons/bs";
 import { SiBrandfolder } from "react-icons/si";
 import { TbCategory } from "react-icons/tb";
@@ -19,11 +19,14 @@ import { GrCatalog } from "react-icons/gr";
 import { IoLogOutOutline } from "react-icons/io5";
 import { TfiMenu } from "react-icons/tfi";
 import Cookies from "js-cookie";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllEnquiries } from "../features/enquiry/enquirySlice";
 
 const { Header, Sider, Content } = Layout;
 
 const MainLayout = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
@@ -40,6 +43,15 @@ const MainLayout = () => {
     if (adminEmail) setEmail(adminEmail);
     if (adminAvatar) SetAvatar(adminAvatar);
   }, []);
+
+  useEffect(() => {
+    dispatch(getAllEnquiries());
+  }, [dispatch]);
+
+  const enquiries = useSelector((state) => state?.enquiry?.enquiries);
+  const submittedEnquiriesCount = enquiries?.filter(
+    (enquiry) => enquiry.status === "Submitted"
+  ).length;
 
   return (
     <Layout>
@@ -73,55 +85,63 @@ const MainLayout = () => {
           items={[
             {
               key: "",
-              icon: <MdDashboardCustomize className="fs-5" />,
+              icon: <MdDashboardCustomize className="fs-6 fw-bold" />,
               label: (
-                <p className="fs-5 text-start fw-medium m-0 p-0">Dashboard</p>
+                <p className="fs-6 fw-bold text-start  m-0 p-0">
+                  Dashboard
+                </p>
               ),
             },
             {
               key: "customers",
-              icon: <BsPeople className="fs-5" />,
+              icon: <BsPeople className="fs-6 fw-bold" />,
               label: (
-                <p className="fs-5 text-start fw-medium m-0 p-0">Customers</p>
+                <p className="fs-6 fw-bold text-start m-0 p-0">
+                  Customers
+                </p>
               ),
             },
             {
               key: "catalog",
-              icon: <GrCatalog className="fs-5 " />,
+              icon: <GrCatalog className="fs-6 fw-bold" />,
               label: (
-                <p className="fs-5 text-start fw-medium m-0 p-0">Catalog</p>
+                <p className="fs-6 fw-bold text-start m-0 p-0">
+                  Catalog
+                </p>
               ),
               children: [
                 {
                   key: "product-list",
-                  icon: <BsCart3 className="fs-5" />,
+                  icon: <BsCart3 className="fs-6 fw-bold" />,
                   label: (
-                    <p className="fs-5 text-start fw-medium m-0 p-0">
+                    <p className="fs-6 fw-bold text-start m-0 p-0">
                       Products
                     </p>
                   ),
                 },
                 {
                   key: "product",
-                  icon: <BsCart3 className="fs-5" />,
+                  icon: <BsCart3 className="fs-6 fw-bold" />,
                   label: (
-                    <p className="fs-5 text-start fw-medium m-0 p-0">
+                    <p className="fs-6 fw-bold text-start  m-0 p-0">
                       Add product
                     </p>
                   ),
                 },
                 {
                   key: "brand-list",
-                  icon: <SiBrandfolder className="fs-5" />,
+                  icon: <SiBrandfolder className="fs-6 fw-bold" />,
                   label: (
-                    <p className="fs-5 text-start fw-medium m-0 p-0">Brands</p>
+                    <p className="fs-6 fw-bold text-start m-0 p-0">
+                      Brands
+                    </p>
                   ),
                 },
                 {
                   key: "brand",
-                  icon: <SiBrandfolder className="fs-5" />,
+                  icon: <SiBrandfolder className="fs-6 fw-bold" />,
                   label: (
-                    <p className="fs-5 text-start fw-medium m-0 p-0">
+                    <p className="fs-6 fw-bold text-start  m-0 p-0">
                       Add Brand
                     </p>
                   ),
@@ -130,16 +150,16 @@ const MainLayout = () => {
                   key: "category-list",
                   icon: <TbCategory className="fs-5" />,
                   label: (
-                    <p className="fs-5 text-start fw-medium m-0 p-0">
+                    <p className="fs-6 fw-bold text-start  m-0 p-0">
                       Product Categories
                     </p>
                   ),
                 },
                 {
                   key: "category",
-                  icon: <TbCategory className="fs-5" />,
+                  icon: <TbCategory className="fs-6 fw-bold" />,
                   label: (
-                    <p className="fs-5 text-start fw-medium m-0 p-0">
+                    <p className="fs-6 fw-bold text-start  m-0 p-0">
                       {" "}
                       Add Product category
                     </p>
@@ -150,14 +170,14 @@ const MainLayout = () => {
 
             {
               key: "blogs",
-              icon: <ImBlogger2 className="fs-5" />,
-              label: <p className="fs-5 text-start fw-medium m-0 p-0">Blogs</p>,
+              icon: <ImBlogger2 className="fs-6 fw-bold" />,
+              label: <p className="fs-6 fw-bold text-start  m-0 p-0">Blogs</p>,
               children: [
                 {
                   key: "blog-category-list",
-                  icon: <ImBlogger2 className="fs-5" />,
+                  icon: <ImBlogger2 className="fs-6 fw-bold" />,
                   label: (
-                    <p className="fs-5 text-start fw-medium m-0 p-0">
+                    <p className="fs-6 fw-bold text-start  m-0 p-0">
                       Blog categories
                     </p>
                   ),
@@ -165,25 +185,27 @@ const MainLayout = () => {
 
                 {
                   key: "blog-category",
-                  icon: <LiaBlogSolid className="fs-5" />,
+                  icon: <LiaBlogSolid className="fs-6 fw-bold" />,
                   label: (
-                    <p className="fs-5 text-start fw-medium m-0 p-0">
+                    <p className="fs-6 fw-bold text-start  m-0 p-0">
                       Add blog category
                     </p>
                   ),
                 },
                 {
                   key: "blog-list",
-                  icon: <ImBlogger2 className="fs-5" />,
+                  icon: <ImBlogger2 className="fs-6 fw-bold " />,
                   label: (
-                    <p className="fs-5 text-start fw-medium m-0 p-0">Blogs</p>
+                    <p className="fs-6 fw-bold  text-start  m-0 p-0">
+                      Blogs
+                    </p>
                   ),
                 },
                 {
                   key: "blog",
-                  icon: <LiaBlogSolid className="fs-5" />,
+                  icon: <LiaBlogSolid className="fs-6 fw-bold" />,
                   label: (
-                    <p className="fs-5 text-start fw-medium m-0 p-0">
+                    <p className="fs-6 fw-bold text-start  m-0 p-0">
                       Add blog
                     </p>
                   ),
@@ -193,23 +215,27 @@ const MainLayout = () => {
 
             {
               key: "marketing",
-              icon: <SiMarketo className="fs-5" />,
+              icon: <SiMarketo className="fs-6 fw-bold" />,
               label: (
-                <p className="fs-5 text-start fw-medium m-0 p-0">Marketing</p>
+                <p className="fs-6 fw-bold text-start  m-0 p-0">
+                  Marketing
+                </p>
               ),
               children: [
                 {
                   key: "coupon-list",
-                  icon: <RiCoupon5Fill className="fs-5" />,
+                  icon: <RiCoupon5Fill className="fs-6 fw-bold" />,
                   label: (
-                    <p className="fs-5 text-start fw-medium m-0 p-0">Coupons</p>
+                    <p className="fs-6 fw-bold text-start m-0 p-0">
+                      Coupons
+                    </p>
                   ),
                 },
                 {
                   key: "coupon",
-                  icon: <RiCoupon5Fill className="fs-5" />,
+                  icon: <RiCoupon5Fill className="fs-6 fw-bold" />,
                   label: (
-                    <p className="fs-5 text-start fw-medium m-0 p-0">
+                    <p className="fs-6 fw-bold text-start  m-0 p-0">
                       Add coupon
                     </p>
                   ),
@@ -218,25 +244,31 @@ const MainLayout = () => {
             },
             {
               key: "enquiries",
-              icon: <BiSolidMessageEdit className="fs-5" />,
+              icon: <BiSolidMessageEdit className="fs-6 fw-bold " />,
               label: (
-                <p className="fs-5 text-start fw-medium m-0 p-0">Enquiries</p>
+                <p className="fs-6 fw-bold text-start m-0 p-0">
+                  Enquiries
+                </p>
               ),
             },
 
             {
               key: "orders",
-              icon: <FaClipboardList className="fs-5" />,
+              icon: <FaClipboardList className="fs-6 fw-bold" />,
               label: (
-                <p className="fs-5 text-start fw-medium m-0 p-0">Orders</p>
+                <p className="fs-6 fw-bold text-start  m-0 p-0">
+                  Orders
+                </p>
               ),
             },
 
             {
               key: "signout",
-              icon: <IoLogOutOutline className="fs-5" />,
+              icon: <IoLogOutOutline className="fs-6 fw-bold" />,
               label: (
-                <p className="fs-5 text-start fw-medium m-0 p-0">Sign out</p>
+                <p className="fs-6 fw-bold text-start  m-0 p-0">
+                  Sign out
+                </p>
               ),
             },
           ]}
@@ -259,31 +291,38 @@ const MainLayout = () => {
               height: 64,
             }}
           />
-          <div className="d-flex gap-4 align-items-center">
+          <div className="d-flex gap-3 align-items-center">
             <div className="position-relative">
-              <MdNotificationsNone className="fs-4" />
-              <span className="badge bg-primary rounded-circle p-1 position-absolute">
-                2
+              <MdNotificationsNone className="fs-3 fw-bold" />
+              <span className="badge bg-primary rounded-circle py-1 position-absolute">
+                {submittedEnquiriesCount}
               </span>
             </div>
 
-            <div className="d-flex gap-10 align-items-center justify-content-between ">
-              <img
-                width={34}
-                height={34}
-                src={avatar}
-                alt="userimage"
-                className="rounded-circle"
-              ></img>
-            </div>
             <div
               role="button"
               id="dropdownMenuLink"
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              <p className=" mb-0 text-capitalize"> Welcome, {firstName}</p>
-              <p className="mb-0">{email}</p>
+              <div className="d-flex flex-row align-items-center gap-2">
+                <div className="d-flex gap-2 align-items-center justify-content-center">
+                  <img
+                    width={34}
+                    height={34}
+                    src={avatar}
+                    alt="userimage"
+                    className="rounded-circle"
+                  />
+                </div>
+                <div>
+                  <p className="mb-0 text-capitalize  fw-bold">
+                    {" "}
+                    Welcome, {firstName}
+                  </p>
+                  <p className="mb-0 fw-bold">{email}</p>
+                </div>
+              </div>
             </div>
             <div
               className="dropdown-menu"

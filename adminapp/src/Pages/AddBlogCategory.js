@@ -27,6 +27,9 @@ const AddBlogCategory = () => {
   const isLoading = useSelector(
     (state) => state.blogCategory.isLoading.createBlogCategory
   );
+  const isSuccessUpdateABLogCat = useSelector(
+    (state) => state?.blogCategory?.isSuccess?.updateABLogCat
+  );
 
   const { createdBlogCategory, updatedBlogCat, blogCatName } = newBlogCategory;
 
@@ -60,11 +63,11 @@ const AddBlogCategory = () => {
       formik.resetForm();
       navigate("/admin/blog-category-list");
     }
-    if (isSuccess && updatedBlogCat) {
+    if (isSuccessUpdateABLogCat && updatedBlogCat) {
       formik.resetForm();
       navigate("/admin/blog-category-list");
     }
-  }, [isSuccess, createdBlogCategory, updatedBlogCat, formik, navigate]);
+  }, [isSuccess, isSuccessUpdateABLogCat, createdBlogCategory, updatedBlogCat]);
 
   return (
     <>
