@@ -2,7 +2,7 @@ import { Navigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 export const OpenRoutes = ({ children }) => {
-  const accessToken = Cookies.get("accessToken");
+  const accessToken = Cookies.get("adminAccessToken");
   return accessToken === undefined ? (
     children
   ) : (

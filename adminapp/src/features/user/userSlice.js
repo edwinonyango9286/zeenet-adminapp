@@ -166,22 +166,22 @@ export const userSlice = createSlice({
         state.isLoading.signInUser = false;
         state.isSuccess.signInUser = true;
         state.adminUser = action?.payload;
-        Cookies.set("firstName", action?.payload?.firstName, {
+        Cookies.set("adminFirstName", action?.payload?.firstName, {
           expires: 1,
           secure: true,
           sameSite: "Strict",
         });
-        Cookies.set("email", action?.payload?.email, {
+        Cookies.set("adminEmail", action?.payload?.email, {
           expires: 1,
           secure: true,
           sameSite: "Strict",
         });
-        Cookies.set("avatar", action?.payload?.avatar, {
+        Cookies.set("adminAvatar", action?.payload?.avatar, {
           expires: 1,
           secure: true,
           sameSite: "Strict",
         });
-        Cookies.set("accessToken", action?.payload?.accessToken, {
+        Cookies.set("adminAccessToken", action?.payload?.accessToken, {
           expires: 1,
           secure: true,
           sameSite: "Strict",

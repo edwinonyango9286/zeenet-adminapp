@@ -36,9 +36,9 @@ const MainLayout = () => {
   const [avatar, SetAvatar] = useState("");
 
   useEffect(() => {
-    const adminFirstName = Cookies.get("firstName");
-    const adminEmail = Cookies.get("email");
-    const adminAvatar = Cookies.get("avatar");
+    const adminFirstName = Cookies.get("adminFirstName");
+    const adminEmail = Cookies.get("adminEmail");
+    const adminAvatar = Cookies.get("adminAvatar");
     if (adminFirstName) setFirstName(adminFirstName);
     if (adminEmail) setEmail(adminEmail);
     if (adminAvatar) SetAvatar(adminAvatar);

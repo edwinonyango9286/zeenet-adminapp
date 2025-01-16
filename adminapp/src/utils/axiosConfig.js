@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 
-const accessToken = Cookies.get("accessToken");
+const accessToken = Cookies.get("adminAccessToken");
 
 export const config = {
   headers: {
