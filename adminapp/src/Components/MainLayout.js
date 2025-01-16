@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Layout, Menu, Button, theme } from "antd";
 import { MdDashboardCustomize } from "react-icons/md";
 import { BsPeople } from "react-icons/bs";
-import { UNSAFE_useScrollRestoration, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { BsCart3 } from "react-icons/bs";
 import { SiBrandfolder } from "react-icons/si";
 import { TbCategory } from "react-icons/tb";
@@ -16,11 +16,11 @@ import { Link } from "react-router-dom";
 import { RiCoupon5Fill } from "react-icons/ri";
 import { SiMarketo } from "react-icons/si";
 import { GrCatalog } from "react-icons/gr";
-import { IoLogOutOutline } from "react-icons/io5";
 import { TfiMenu } from "react-icons/tfi";
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllEnquiries } from "../features/enquiry/enquirySlice";
+import { RiLogoutBoxRLine } from "react-icons/ri";
 
 const { Header, Sider, Content } = Layout;
 
@@ -87,36 +87,26 @@ const MainLayout = () => {
               key: "",
               icon: <MdDashboardCustomize className="fs-6 fw-bold" />,
               label: (
-                <p className="fs-6 fw-bold text-start  m-0 p-0">
-                  Dashboard
-                </p>
+                <p className="fs-6 fw-bold text-start  m-0 p-0">Dashboard</p>
               ),
             },
             {
               key: "customers",
               icon: <BsPeople className="fs-6 fw-bold" />,
               label: (
-                <p className="fs-6 fw-bold text-start m-0 p-0">
-                  Customers
-                </p>
+                <p className="fs-6 fw-bold text-start m-0 p-0">Customers</p>
               ),
             },
             {
               key: "catalog",
               icon: <GrCatalog className="fs-6 fw-bold" />,
-              label: (
-                <p className="fs-6 fw-bold text-start m-0 p-0">
-                  Catalog
-                </p>
-              ),
+              label: <p className="fs-6 fw-bold text-start m-0 p-0">Catalog</p>,
               children: [
                 {
                   key: "product-list",
                   icon: <BsCart3 className="fs-6 fw-bold" />,
                   label: (
-                    <p className="fs-6 fw-bold text-start m-0 p-0">
-                      Products
-                    </p>
+                    <p className="fs-6 fw-bold text-start m-0 p-0">Products</p>
                   ),
                 },
                 {
@@ -132,9 +122,7 @@ const MainLayout = () => {
                   key: "brand-list",
                   icon: <SiBrandfolder className="fs-6 fw-bold" />,
                   label: (
-                    <p className="fs-6 fw-bold text-start m-0 p-0">
-                      Brands
-                    </p>
+                    <p className="fs-6 fw-bold text-start m-0 p-0">Brands</p>
                   ),
                 },
                 {
@@ -196,18 +184,14 @@ const MainLayout = () => {
                   key: "blog-list",
                   icon: <ImBlogger2 className="fs-6 fw-bold " />,
                   label: (
-                    <p className="fs-6 fw-bold  text-start  m-0 p-0">
-                      Blogs
-                    </p>
+                    <p className="fs-6 fw-bold  text-start  m-0 p-0">Blogs</p>
                   ),
                 },
                 {
                   key: "blog",
                   icon: <LiaBlogSolid className="fs-6 fw-bold" />,
                   label: (
-                    <p className="fs-6 fw-bold text-start  m-0 p-0">
-                      Add blog
-                    </p>
+                    <p className="fs-6 fw-bold text-start  m-0 p-0">Add blog</p>
                   ),
                 },
               ],
@@ -217,18 +201,14 @@ const MainLayout = () => {
               key: "marketing",
               icon: <SiMarketo className="fs-6 fw-bold" />,
               label: (
-                <p className="fs-6 fw-bold text-start  m-0 p-0">
-                  Marketing
-                </p>
+                <p className="fs-6 fw-bold text-start  m-0 p-0">Marketing</p>
               ),
               children: [
                 {
                   key: "coupon-list",
                   icon: <RiCoupon5Fill className="fs-6 fw-bold" />,
                   label: (
-                    <p className="fs-6 fw-bold text-start m-0 p-0">
-                      Coupons
-                    </p>
+                    <p className="fs-6 fw-bold text-start m-0 p-0">Coupons</p>
                   ),
                 },
                 {
@@ -246,29 +226,21 @@ const MainLayout = () => {
               key: "enquiries",
               icon: <BiSolidMessageEdit className="fs-6 fw-bold " />,
               label: (
-                <p className="fs-6 fw-bold text-start m-0 p-0">
-                  Enquiries
-                </p>
+                <p className="fs-6 fw-bold text-start m-0 p-0">Enquiries</p>
               ),
             },
 
             {
               key: "orders",
               icon: <FaClipboardList className="fs-6 fw-bold" />,
-              label: (
-                <p className="fs-6 fw-bold text-start  m-0 p-0">
-                  Orders
-                </p>
-              ),
+              label: <p className="fs-6 fw-bold text-start  m-0 p-0">Orders</p>,
             },
 
             {
               key: "signout",
-              icon: <IoLogOutOutline className="fs-6 fw-bold" />,
+              icon: <RiLogoutBoxRLine className="fs-6 fw-bold" />,
               label: (
-                <p className="fs-6 fw-bold text-start  m-0 p-0">
-                  Sign out
-                </p>
+                <p className="fs-6 fw-bold text-start  m-0 p-0">Sign out</p>
               ),
             },
           ]}
