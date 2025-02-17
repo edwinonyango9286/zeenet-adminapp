@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Loading3QuartersOutlined } from "@ant-design/icons";
 import { Table, Spin } from "antd";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,6 +6,11 @@ import {
   getAllCustomers,
   resetState,
 } from "../features/customers/customerSlice";
+import { Link } from "react-router-dom";
+import { FiEdit } from "react-icons/fi";
+import { AiFillDelete } from "react-icons/ai";
+import CustomModal from "../Components/CustomModal";
+import { deleteAUser } from "../features/user/userSlice";
 
 const columns = [
   {
@@ -48,9 +53,25 @@ const columns = [
     title: "Phone",
     dataIndex: "phone",
   },
+  {
+    title: "Action",
+    dataIndex: "action",
+  },
 ];
 
 const Customers = () => {
+  const [open, setOpen] = useState(false);
+  const [customerId, setCustomerId] = useState("");
+
+  const showModal = (e) => {
+    setOpen(true);
+    setCustomerId(e);
+  };
+
+  const hideModal = () => {
+    setOpen(false);
+  };
+
   const dispatch = useDispatch();
   const customers = useSelector((state) => state?.customer?.customers);
   const isLoading = useSelector(
@@ -69,9 +90,28 @@ const Customers = () => {
       name: `${customer?.firstName} ${customer?.lastName}`,
       email: customer?.email,
       phone: customer?.phoneNumber,
+      action: (
+        <>
+          <Link to={`/admin/coupon/${customer._id}`} className="fs-5">
+            <FiEdit />
+          </Link>
+          <button
+            onClick={() => showModal(customer._id)}
+            className="ms-2 text-danger bg-transparent border-0 fs-5"
+          >
+            <AiFillDelete />
+          </button>
+        </>
+      ),
     }));
 
-  console.log(data);
+  const deleteCustomerHandler = async () => {
+    await dispatch(deleteAUser(customerId));
+    setOpen(false);
+    dispatch(getAllCustomers());
+  };
+
+  
   return (
     <div>
       <h5 className="mb-2 title">Customers</h5>
@@ -99,6 +139,15 @@ const Customers = () => {
           />
         </div>
       )}
+
+      <CustomModal
+        open={open}
+        hideModal={hideModal}
+        perfomAction={() => {
+          deleteCustomerHandler(customerId);
+        }}
+        title="Are You sure you want to delete this Coupon"
+      />
     </div>
   );
 };

@@ -39,6 +39,7 @@ const columns = [
 const CouponList = () => {
   const [open, setOpen] = useState(false);
   const [couponId, setCouponId] = useState("");
+
   const showModal = (e) => {
     setOpen(true);
     setCouponId(e);
@@ -135,6 +136,8 @@ const CouponList = () => {
             />
           </div>
         )}
+
+
         <CustomModal
           open={open}
           hideModal={hideModal}
@@ -143,6 +146,8 @@ const CouponList = () => {
           }}
           title="Are You sure you want to delete this Coupon"
         />
+
+        
       </div>
     </>
   );

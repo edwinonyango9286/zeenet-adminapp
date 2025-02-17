@@ -47,6 +47,22 @@ const AddBlog = () => {
   const isLoading = useSelector(
     (state) => state?.blogCategory?.isLoading?.getAllBlogCategories
   );
+
+  const isErrorCreatingBlog = useSelector(
+    (state) => state?.blog?.isError?.createBlog
+  );
+  const isErrorUpdatingABlog = useSelector(
+    (state) => state?.blog?.isError?.updateABlog
+  );
+
+  useEffect(() => {
+    if (isErrorCreatingBlog || isErrorUpdatingABlog) {
+      dispatch(getAllBlogCategories());
+    }
+  }, [isErrorCreatingBlog, isErrorUpdatingABlog, dispatch]);
+
+  
+
   const uploading = useSelector((state) => state?.upload?.isLoading?.uploadImg);
   const {
     createdBlog,

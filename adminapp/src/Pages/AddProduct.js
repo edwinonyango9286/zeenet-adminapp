@@ -67,6 +67,21 @@ const AddProduct = () => {
     (state) => state?.product?.isLoading?.createProduct
   );
 
+  const isErrorCreatingProduct = useSelector(
+    (state) => state?.product?.isError?.createProduct
+  );
+
+  const isErrorUpdatingAProduct = useSelector(
+    (state) => state?.product?.isError?.updateAProduct
+  );
+
+  useEffect(() => {
+    if (isErrorCreatingProduct || isErrorUpdatingAProduct) {
+      dispatch(getBrands());
+      dispatch(getProductCategories());
+    }
+  }, [isErrorCreatingProduct, isErrorUpdatingAProduct, dispatch]);
+
   const {
     createdProduct,
     productName,

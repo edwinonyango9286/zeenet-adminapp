@@ -42,6 +42,15 @@ const unblockUser = async (userId) => {
   }
 };
 
+
+const deleteUser = async (userId) => {
+  const response = await newRequest.delete(`user/delete/${userId}`);
+  if (response.data) {
+    return response.data;
+  }
+};
+
+
 const getOrders = async () => {
   const response = await newRequest.get(`user/getallorders`, config);
   if (response.data) {
@@ -91,6 +100,7 @@ const userService = {
   resetAdminPassword,
   blockUser,
   unblockUser,
+  deleteUser,
 };
 
 export default userService;

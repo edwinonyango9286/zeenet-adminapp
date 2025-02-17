@@ -37,6 +37,17 @@ export const unblockAUser = createAsyncThunk(
   }
 );
 
+export const deleteAUser = createAsyncThunk(
+  "auth/delete-user",
+  async (userId, thunkAPI) => {
+    try {
+      return await userService.deleteUser(userId);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const resetPasswordToken = createAsyncThunk(
   "user/reset-password-token",
   async (data, thunkAPI) => {
@@ -119,11 +130,13 @@ export const resetUserState = createAction("Reset_all");
 const initialState = {
   adminUser: null,
   orders: [],
+  deletedUser: null,
   isError: {
     signInUser: false,
     resetPassword: false,
     resetPasswordToken: false,
     UpdateAnOrder: false,
+    deleteAUser: false,
     getAllOrders: false,
     getAsingleOrder: false,
     getMonthWiseOrders: false,
@@ -135,6 +148,7 @@ const initialState = {
     resetPasswordToken: false,
     UpdateAnOrder: false,
     getAllOrders: false,
+    deleteAUser: false,
     getAsingleOrder: false,
     getMonthWiseOrders: false,
     getYearlyStatistics: false,
@@ -144,6 +158,7 @@ const initialState = {
     resetPassword: false,
     resetPasswordToken: false,
     UpdateAnOrder: false,
+    deleteAUser: false,
     getAllOrders: false,
     getAsingleOrder: false,
     getMonthWiseOrders: false,
@@ -296,6 +311,31 @@ export const userSlice = createSlice({
         } else {
           toast.error(
             "We are having a problem blocking the user. Please check your internet connection or try again in a moment."
+          );
+        }
+      })
+
+      .addCase(deleteAUser.pending, (state) => {
+        state.isLoading.deleteAUser = true;
+      })
+      .addCase(deleteAUser.fulfilled, (state, action) => {
+        state.isLoading.deleteAUser = false;
+        state.isSuccess.deleteAUser = true;
+        state.isError.deleteAUser = false;
+        state.deletedUser = action?.payload;
+        toast.success(action.payload.response.data.message);
+      })
+
+      .addCase(deleteAUser.rejected, (state, action) => {
+        state.isLoading.deleteAUser = false;
+        state.isSuccess.deleteAUser = false;
+        state.isError.deleteAUser = true;
+        state.message = action?.payload?.response?.data?.message;
+        if (action?.payload?.response?.data?.message) {
+          toast.error(action?.payload?.response?.data?.message);
+        } else {
+          toast.error(
+            "We are having a problem deleting the user. Please check your internet connection or try again in a moment."
           );
         }
       })
