@@ -21,11 +21,13 @@ import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllEnquiries } from "../features/enquiry/enquirySlice";
 import { RiLogoutBoxRLine } from "react-icons/ri";
+import { Footer } from "antd/es/layout/layout";
+import { logoutAUser } from "../features/user/userSlice";
 
 const { Header, Sider, Content } = Layout;
 
 const MainLayout = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const dispatch = useDispatch();
   const [collapsed, setCollapsed] = useState(false);
   const {
@@ -53,6 +55,21 @@ const MainLayout = () => {
     (enquiry) => enquiry.status === "Submitted"
   ).length;
 
+  const handleLogout = () => {
+    dispatch(logoutAUser());
+  };
+
+  const logoutIsSuccess = useSelector(
+    (state) => state.user.isSuccess.logoutAUser
+  );
+
+  // navigate to the sign in page when logout is success
+  useEffect(() => {
+    if (logoutIsSuccess) {
+      navigate("/");
+    }
+  }, [logoutIsSuccess]);
+
   return (
     <Layout>
       <Sider
@@ -73,11 +90,7 @@ const MainLayout = () => {
           defaultSelectedKeys={["1"]}
           onClick={({ key }) => {
             if (key === "signout") {
-              Cookies.remove("firstName");
-              Cookies.remove("email");
-              Cookies.remove("avatar");
-              Cookies.remove("token");
-              navigate("/");
+              dispatch(logoutAUser());
             } else {
               navigate(key);
             }
@@ -235,7 +248,6 @@ const MainLayout = () => {
               icon: <FaClipboardList className="fs-6 fw-bold" />,
               label: <p className="fs-6 fw-bold text-start  m-0 p-0">Orders</p>,
             },
-
             {
               key: "signout",
               icon: <RiLogoutBoxRLine className="fs-6 fw-bold" />,
@@ -302,13 +314,16 @@ const MainLayout = () => {
               style={{ height: "auto", lineHeight: "20px" }}
             >
               <li>
-                <Link to="/" className="dropdown-item py-1 mb-1">
+                <Link to="" className="dropdown-item py-1 mb-1">
                   View Profile
                 </Link>
               </li>
 
               <li>
-                <Link to="/" className="dropdown-item py-1 mb-1">
+                <Link
+                  onClick={handleLogout}
+                  className="dropdown-item py-1 mb-1"
+                >
                   Signout
                 </Link>
               </li>
@@ -325,6 +340,14 @@ const MainLayout = () => {
         >
           <Outlet />
         </Content>
+        <Footer>
+          <div className="d-flex justify-content-center align-items-center">
+            <p>
+              {String.fromCharCode(169)} {new Date().getFullYear()} Zeenet
+              limited. All rights reserved.
+            </p>
+          </div>
+        </Footer>
       </Layout>
     </Layout>
   );

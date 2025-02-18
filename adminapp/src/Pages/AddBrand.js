@@ -12,7 +12,7 @@ import {
 } from "../features/brands/brandSlice";
 
 const BRAND_SCHEMA = Yup.object().shape({
-  title: Yup.string().trim().required("Brand Name is required"),
+  title: Yup.string().required("Brand Name is required"),
 });
 
 const AddBrand = () => {

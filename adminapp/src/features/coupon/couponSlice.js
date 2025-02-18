@@ -98,7 +98,7 @@ export const couponSlice = createSlice({
         state.isLoading.getCoupons = false;
         state.isError.getCoupons = false;
         state.isSuccess.getCoupons = true;
-        state.coupons = action.payload;
+        state.coupons = action?.payload;
       })
       .addCase(getCoupons.rejected, (state, action) => {
         state.isLoading.getCoupons = false;
@@ -120,7 +120,7 @@ export const couponSlice = createSlice({
         state.isLoading.createCoupon = false;
         state.isError.createCoupon = false;
         state.isSuccess.createCoupon = true;
-        state.createdCoupon = action.payload;
+        state.createdCoupon = action?.payload;
         toast.success("Coupon created successfully.")
 
       })
@@ -144,9 +144,9 @@ export const couponSlice = createSlice({
         state.isLoading.getACoupon = false;
         state.isError.getACoupon = false;
         state.isSuccess.getACoupon = true;
-        state.coupon = action.payload;
-        state.couponName = action.payload.name;
-        state.couponExpiry = action.payload.expiry;
+        state.coupon = action?.payload;
+        state.couponName = action?.payload.name;
+        state.couponExpiry = action?.payload.expiry;
         state.couponDiscount = action?.payload?.discount;
 
       })

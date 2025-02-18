@@ -13,6 +13,7 @@ const CustomTextarea = (props) => {
     maxLength,
     minLength,
     step,
+    style
   } = props;
   return (
     <>
@@ -29,7 +30,7 @@ const CustomTextarea = (props) => {
           value={value}
           onChange={onChange}
           onBlur={onBlur}
-          style={{ height: "80px" }}
+          style={style}
         />
         <label htmlFor={label}>{label}</label>
       </div>

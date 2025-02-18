@@ -125,6 +125,14 @@ export const getYearlyStatistics = createAsyncThunk(
   }
 );
 
+export const logoutAUser = createAsyncThunk("user/logout", async (thunkAPI) => {
+  try {
+    return await userService.logout();
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
 export const resetUserState = createAction("Reset_all");
 
 const initialState = {
@@ -141,6 +149,7 @@ const initialState = {
     getAsingleOrder: false,
     getMonthWiseOrders: false,
     getYearlyStatistics: false,
+    logoutAUser: false,
   },
   isLoading: {
     signInUser: false,
@@ -152,6 +161,7 @@ const initialState = {
     getAsingleOrder: false,
     getMonthWiseOrders: false,
     getYearlyStatistics: false,
+    logoutAUser: false,
   },
   isSuccess: {
     signInUser: false,
@@ -163,6 +173,7 @@ const initialState = {
     getAsingleOrder: false,
     getMonthWiseOrders: false,
     getYearlyStatistics: false,
+    logoutAUser: false,
   },
   message: "",
 };
@@ -202,7 +213,6 @@ export const userSlice = createSlice({
           sameSite: "Strict",
         });
       })
-
       .addCase(signInUser.rejected, (state, action) => {
         state.isError.signInUser = true;
         state.isSuccess.signInUser = false;
@@ -264,7 +274,6 @@ export const userSlice = createSlice({
           );
         }
       })
-
       .addCase(blockAUser.pending, (state) => {
         state.isLoading.blockAUser = true;
       })
@@ -273,9 +282,8 @@ export const userSlice = createSlice({
         state.isSuccess.blockAUser = true;
         state.isError.blockAUser = false;
         state.blockedUser = action?.payload;
-        toast.success(action.payload.response.data.message);
+        toast.success(action?.payload?.response?.data?.message);
       })
-
       .addCase(blockAUser.rejected, (state, action) => {
         state.isLoading.blockAUser = false;
         state.isSuccess.blockAUser = false;
@@ -298,7 +306,7 @@ export const userSlice = createSlice({
         state.isSuccess.unblockAUser = true;
         state.isError.unblockAUser = false;
         state.unblockedUser = action?.payload;
-        toast.success(action.payload.response.data.message);
+        toast.success(action?.payload?.response?.data?.message);
       })
 
       .addCase(unblockAUser.rejected, (state, action) => {
@@ -323,7 +331,7 @@ export const userSlice = createSlice({
         state.isSuccess.deleteAUser = true;
         state.isError.deleteAUser = false;
         state.deletedUser = action?.payload;
-        toast.success(action.payload.response.data.message);
+        toast.success(action?.payload?.response?.data?.message);
       })
 
       .addCase(deleteAUser.rejected, (state, action) => {
@@ -447,6 +455,32 @@ export const userSlice = createSlice({
         } else {
           toast.error(
             "We are having a problem fetching updating the orders. Please check your internet connection or try again in a moment."
+          );
+        }
+      })
+      .addCase(logoutAUser.pending, (state) => {
+        state.isLoading.logoutAUser = true;
+      })
+      .addCase(logoutAUser.fulfilled, (state, action) => {
+        state.isLoading.logoutAUser = false;
+        state.isError.logoutAUser = false;
+        state.isSuccess.logoutAUser = true;
+        Cookies.remove("adminFirstName");
+        Cookies.remove("adminEmail");
+        Cookies.remove("adminAvatar");
+        Cookies.remove("adminAccessToken");
+        state.message = action?.payload?.response?.data?.message;
+      })
+      .addCase(logoutAUser.rejected, (state, action) => {
+        state.isError.logoutAUser = true;
+        state.isLoading.logoutAUser = false;
+        state.isSuccess.logoutAUser = false;
+        state.message = action?.payload?.response?.data?.message;
+        if (action?.payload?.response?.data?.message) {
+          toast.error(action?.payload?.response?.data?.message);
+        } else {
+          toast.error(
+            "We are having a problem logging you out. Please check your internet connection or try again in a moment."
           );
         }
       })

@@ -12,7 +12,7 @@ import {
 } from "../features/category/categorySlice";
 
 const schema = Yup.object().shape({
-  title: Yup.string().trim().required("Product Category Name is Required"),
+  title: Yup.string().required("Product Category Name is Required"),
 });
 
 const AddCategory = () => {

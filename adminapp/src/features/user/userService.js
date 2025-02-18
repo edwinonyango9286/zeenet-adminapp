@@ -2,7 +2,7 @@ import { config } from "../../utils/axiosConfig";
 import { newRequest } from "../../utils/newRequest";
 
 const signIn = async (userData) => {
-  const response = await newRequest.post(`user/admin-signin`, userData);
+  const response = await newRequest.post(`auth/admin_signin`, userData);
   if (response.data) {
   }
   return response.data;
@@ -28,7 +28,7 @@ const resetAdminPassword = async (data) => {
 };
 // Block a user =>blocked users should not be able to make purchases.
 const blockUser = async (userId) => {
-  const response = await newRequest.put(`user/block-user/${userId}`);
+  const response = await newRequest.put(`user/block-user/${userId}`, config);
   if (response.data) {
     return response.data;
   }
@@ -36,20 +36,18 @@ const blockUser = async (userId) => {
 
 // unblock a user => when a user is unblocked he/she should be able to make purchases.const
 const unblockUser = async (userId) => {
-  const response = await newRequest.put(`user/unblock-user/${userId}`);
+  const response = await newRequest.put(`user/unblock-user/${userId}`, config);
   if (response.data) {
     return response.data;
   }
 };
-
 
 const deleteUser = async (userId) => {
-  const response = await newRequest.delete(`user/delete/${userId}`);
+  const response = await newRequest.delete(`user/delete/${userId}`, config);
   if (response.data) {
     return response.data;
   }
 };
-
 
 const getOrders = async () => {
   const response = await newRequest.get(`user/getallorders`, config);
@@ -89,6 +87,13 @@ const getYearlyData = async () => {
   }
 };
 
+const logout = async () => {
+  const response = await newRequest.put(`auth/logout`);
+  if (response.data) {
+    return response.data;
+  }
+};
+
 const userService = {
   signIn,
   getOrders,
@@ -101,6 +106,7 @@ const userService = {
   blockUser,
   unblockUser,
   deleteUser,
+  logout,
 };
 
 export default userService;

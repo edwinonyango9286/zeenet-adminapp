@@ -6,11 +6,11 @@ import {
   getAllCustomers,
   resetState,
 } from "../features/customers/customerSlice";
-import { Link } from "react-router-dom";
-import { FiEdit } from "react-icons/fi";
 import { AiFillDelete } from "react-icons/ai";
 import CustomModal from "../Components/CustomModal";
-import { deleteAUser } from "../features/user/userSlice";
+import { blockAUser, deleteAUser } from "../features/user/userSlice";
+import { ImBlocked } from "react-icons/im";
+import { IoEllipsisVertical } from "react-icons/io5";
 
 const columns = [
   {
@@ -24,8 +24,8 @@ const columns = [
       <img
         src={record.avatar}
         alt={record.title}
-        width={40}
-        height={40}
+        width={32}
+        height={32}
         className="rounded-circle border border-1"
       />
     ),
@@ -61,6 +61,7 @@ const columns = [
 
 const Customers = () => {
   const [open, setOpen] = useState(false);
+  const [openBlockModal, setOpenBlockModal] = useState(false);
   const [customerId, setCustomerId] = useState("");
 
   const showModal = (e) => {
@@ -72,6 +73,15 @@ const Customers = () => {
     setOpen(false);
   };
 
+  const showBlockModal = (e) => {
+    setOpenBlockModal(true);
+    setCustomerId(e);
+  };
+
+  const hideBlockModal = () => {
+    setOpenBlockModal(false);
+  };
+
   const dispatch = useDispatch();
   const customers = useSelector((state) => state?.customer?.customers);
   const isLoading = useSelector(
@@ -80,7 +90,7 @@ const Customers = () => {
   useEffect(() => {
     dispatch(resetState());
     dispatch(getAllCustomers());
-  }, [dispatch]);
+  }, []);
 
   const data = (Array.isArray(customers) ? customers : [])
     .filter((customer) => customer?.role !== "admin")
@@ -92,26 +102,39 @@ const Customers = () => {
       phone: customer?.phoneNumber,
       action: (
         <>
-          <Link to={`/admin/coupon/${customer._id}`} className="fs-5">
-            <FiEdit />
-          </Link>
-          <button
-            onClick={() => showModal(customer._id)}
-            className="ms-2 text-danger bg-transparent border-0 fs-5"
-          >
-            <AiFillDelete />
-          </button>
+          <div className="d-flex flex-row gap-2">
+            <button
+              onClick={() => showModal(customer?._id)}
+              className="ms-2 text-danger bg-transparent border-0 fs-5"
+            >
+              <AiFillDelete />
+            </button>
+            <button
+              onClick={() => showBlockModal(customer?._id)}
+              className="ms-2 text-danger bg-transparent border-0 fs-6"
+            >
+              <ImBlocked />
+            </button>
+            <button className="ms-2  bg-transparent border-0 fs-5">
+              <IoEllipsisVertical />
+            </button>
+          </div>
         </>
       ),
     }));
 
-  const deleteCustomerHandler = async () => {
+  const deleteCustomerHandler = async (customerId) => {
     await dispatch(deleteAUser(customerId));
     setOpen(false);
     dispatch(getAllCustomers());
   };
 
-  
+  const handleBlockCustomer = async (customerId) => {
+    await dispatch(blockAUser(customerId));
+    setOpenBlockModal(false);
+    dispatch(getAllCustomers());
+  };
+
   return (
     <div>
       <h5 className="mb-2 title">Customers</h5>
@@ -146,7 +169,15 @@ const Customers = () => {
         perfomAction={() => {
           deleteCustomerHandler(customerId);
         }}
-        title="Are You sure you want to delete this Coupon"
+        title="Are You sure you want to delete this user?"
+      />
+      <CustomModal
+        open={openBlockModal}
+        hideModal={hideBlockModal}
+        perfomAction={() => {
+          handleBlockCustomer(customerId);
+        }}
+        title="Are You sure you want to block this user?"
       />
     </div>
   );
