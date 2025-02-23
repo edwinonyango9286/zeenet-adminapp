@@ -106,13 +106,7 @@ export const blogCategorySlice = createSlice({
         state.isError.getAllBlogCategories = true;
         state.isSuccess.getAllBlogCategories = false;
         state.message = action?.payload?.response?.data?.message;
-        if (action?.payload?.response?.data?.message) {
-          toast.error(action?.payload?.response?.data?.message);
-        } else {
-          toast.error(
-            "An unexpected error occurred. Please try again in a moment."
-          );
-        }
+        toast.error(action?.payload?.response?.data?.message);
       })
       .addCase(createBlogCategory.pending, (state) => {
         state.isLoading.createBlogCategory = true;
@@ -129,13 +123,7 @@ export const blogCategorySlice = createSlice({
         state.isError.createBlogCategory = true;
         state.isSuccess.createBlogCategory = false;
         state.message = action?.payload?.response?.data?.message;
-        if (action?.payload?.response?.data?.message) {
-          toast.error(action?.payload?.response?.data?.message);
-        } else {
-          toast.error(
-            "An unexpected error occurred. Please try again in a moment."
-          );
-        }
+        toast.error(action?.payload?.response?.data?.message);
       })
       .addCase(getABlogCat.pending, (state) => {
         state.isLoading.getABlogCat = true;
@@ -151,13 +139,7 @@ export const blogCategorySlice = createSlice({
         state.isError.getABlogCat = true;
         state.isSuccess.getABlogCat = false;
         state.message = action?.payload?.response?.data?.message;
-        if (action?.payload?.response?.data?.message) {
-          toast.error(action?.payload?.response?.data?.message);
-        } else {
-          toast.error(
-            "An unexpected error occurred. Please try again in a moment."
-          );
-        }
+        toast.error(action?.payload?.response?.data?.message);
       })
       .addCase(updateABLogCat.pending, (state) => {
         state.isLoading.updateABLogCat = true;
@@ -174,13 +156,7 @@ export const blogCategorySlice = createSlice({
         state.isError.updateABLogCat = true;
         state.isSuccess.updateABLogCat = false;
         state.message = action?.payload?.response?.data?.message;
-        if (action?.payload?.response?.data?.message) {
-          toast.error(action?.payload?.response?.data?.message);
-        } else {
-          toast.error(
-            "An unexpected error occurred. Please try again in a moment."
-          );
-        }
+        toast.error(action?.payload?.response?.data?.message);
       })
       .addCase(deleteABlogCategory.pending, (state) => {
         state.isLoading.deleteABlogCategory = true;
@@ -197,13 +173,7 @@ export const blogCategorySlice = createSlice({
         state.isError.deleteABlogCategory = true;
         state.isSuccess.deleteABlogCategory = false;
         state.message = action?.payload?.response?.data?.message;
-        if (action?.payload?.response?.data?.message) {
-          toast.error(action?.payload?.response?.data?.message);
-        } else {
-          toast.error(
-            "An unexpected error occurred. Please try again in a moment."
-          );
-        }
+        toast.error(action?.payload?.response?.data?.message);
       })
       .addCase(resetState, () => initialState);
   },

@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import CustomInput from "../Components/CustomInput";
-import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,6 +16,7 @@ import {
 import { useLocation, useNavigate } from "react-router-dom";
 import CustomTextarea from "../Components/CustomTextarea";
 import { MdCloudUpload } from "react-icons/md";
+import BreadCrumb from "../Components/BreadCrumb";
 
 const schema = Yup.object().shape({
   title: Yup.string().required("Please add the product name."),
@@ -34,6 +34,7 @@ const schema = Yup.object().shape({
   screenSize: Yup.number()
     .positive("The screen size must be a positive number.")
     .required("Please add the product screen size."),
+  color: Yup.string().required("Please select product color"),
   images: Yup.array()
     .min(1, "Please upload at least one image.")
     .required("Please upload at least one image."),
@@ -91,6 +92,7 @@ const AddProduct = () => {
     productImages,
     productTag,
     productScreenSize,
+    productColor,
     updatedProduct,
   } = newProduct;
 
@@ -141,6 +143,7 @@ const AddProduct = () => {
       images: [],
       tags: productTag || "",
       screenSize: productScreenSize || "",
+      color: productColor || "",
     },
     enableReinitialize: true,
     validationSchema: schema,
@@ -160,36 +163,35 @@ const AddProduct = () => {
     },
   });
 
+  const breadcrumbItems = [
+    { path: "", label: "Dashboard" },
+    { path: "product-list", label: "Products" },
+    { path: "product", label: "Add product" },
+  ];
+
   return (
     <>
       <div>
         <div style={{ width: "100%", height: "auto" }}>
-          <div className="d-flex justify-content-between align-items-center ">
-            <h5 className="mb-2 title">
-              {productId ? "Update" : "Add"} Product
-            </h5>
-            <button
-              className=" btn btn-primary border-0 rounded-2 my-3 text-white"
-              type="button"
-              style={{
-                border: "none",
-                outline: "none",
-                boxShadow: "none",
-              }}
-            >
-              <Link
-                to={"/admin/product-list"}
-                className="text-white fw-bold fs-6"
-                style={{
-                  textDecoration: "none",
-                  border: "none",
-                  outline: "none",
-                  boxShadow: "none",
-                }}
+          <div className="d-flex justify-content-between align-items-center">
+            <div className="d-flex flex-column">
+              <BreadCrumb items={breadcrumbItems} />
+              <h4 className="title">{productId ? "Update" : "Add"} Product</h4>
+            </div>
+
+            <div className="d-flex align-items-center gap-2">
+              <button type="button" className="custom-button3">
+                Duplicate
+              </button>
+
+              <button
+                onClick={() => navigate("/admin/product-list")}
+                className="custom-button2"
+                type="button"
               >
-                View Products.
-              </Link>
-            </button>
+                view products
+              </button>
+            </div>
           </div>
 
           <form
@@ -203,7 +205,7 @@ const AddProduct = () => {
               <div className="d-flex flex-column" style={{ width: "50%" }}>
                 <CustomInput
                   type="text"
-                  label="Enter product title."
+                  label="Title."
                   name="title"
                   onChng={formik.handleChange("title")}
                   onBlr={formik.handleBlur("title")}
@@ -217,7 +219,7 @@ const AddProduct = () => {
               <div className="d-flex flex-column" style={{ width: "50%" }}>
                 <CustomInput
                   type="number"
-                  label="Enter product quantity."
+                  label="Quantity."
                   name="quantity"
                   min={1}
                   onChng={formik.handleChange("quantity")}
@@ -237,7 +239,7 @@ const AddProduct = () => {
               <div className="d-flex flex-column" style={{ width: "50%" }}>
                 <CustomInput
                   type="number"
-                  label="Enter product price."
+                  label="Price."
                   name="price"
                   min={1}
                   onChng={formik.handleChange("price")}
@@ -251,7 +253,7 @@ const AddProduct = () => {
               <div className="d-flex flex-column" style={{ width: "50%" }}>
                 <CustomInput
                   type="number"
-                  label="Add a product Screen size. eg. 14.6"
+                  label="Screen size. eg. 14.6"
                   name="screenSize"
                   id="screenSize"
                   min={2}
@@ -276,14 +278,15 @@ const AddProduct = () => {
                   onBlur={formik.handleBlur("category")}
                   value={formik.values.category}
                 >
-                  <option>Select Category</option>
-                  {categoryState.map((i, j) => {
-                    return (
-                      <option key={j} value={i?._id}>
-                        {i?.title}
-                      </option>
-                    );
-                  })}
+                  <option>Category</option>
+                  {Array.isArray(categoryState) &&
+                    categoryState?.map((i, j) => {
+                      return (
+                        <option key={j} value={i?._id}>
+                          {i?.title}
+                        </option>
+                      );
+                    })}
                 </select>
                 <div className="error">
                   {formik.touched.category && formik.errors.category}
@@ -299,14 +302,15 @@ const AddProduct = () => {
                   onBlur={formik.handleBlur("brand")}
                   value={formik.values.brand}
                 >
-                  <option>Select Brand</option>
-                  {brandState?.map((i, j) => {
-                    return (
-                      <option key={j} value={i?._id}>
-                        {i?.title}
-                      </option>
-                    );
-                  })}
+                  <option>Brand</option>
+                  {Array.isArray(brandState) &&
+                    brandState?.map((i, j) => {
+                      return (
+                        <option key={j} value={i?._id}>
+                          {i?.title}
+                        </option>
+                      );
+                    })}
                 </select>
                 <div className="error">
                   {formik.touched.brand && formik.errors.brand}
@@ -324,7 +328,7 @@ const AddProduct = () => {
                   value={formik.values.tags}
                 >
                   <option value="" disabled>
-                    Select Tag
+                    Tags
                   </option>
                   <option value="Featured">Featured</option>
                   <option value="Popular">Popular</option>
@@ -336,10 +340,28 @@ const AddProduct = () => {
                 </div>
               </div>
 
-              <div
-                className="d-flex flex-column"
-                style={{ width: "50%" }}
-              ></div>
+              <div className="d-flex flex-column" style={{ width: "50%" }}>
+                <select
+                  name="color"
+                  className="form-control py-3 mb-2 shadow-none outline-none"
+                  onChange={formik.handleChange("color")}
+                  onBlur={formik.handleBlur("color")}
+                  value={formik.values.color}
+                >
+                  <option value="" disabled>
+                    Color
+                  </option>
+                  <option value="Featured">Varies</option>
+                  <option value="Featured">Black</option>
+                  <option value="Popular">Red</option>
+                  <option value="Special">Green</option>
+                  <option value="Special">Grey</option>
+                </select>
+
+                <div className="error">
+                  {formik.touched.color && formik.errors.color}
+                </div>
+              </div>
             </div>
 
             <div className="d-flex flex-row justify-content-between gap-4 align-items-center">
@@ -382,7 +404,7 @@ const AddProduct = () => {
                   <CustomTextarea
                     type="text"
                     name="description"
-                    label="Enter product description."
+                    label="Description."
                     id="description"
                     onChange={formik.handleChange("description")}
                     onBlur={formik.handleBlur("description")}
@@ -390,7 +412,6 @@ const AddProduct = () => {
                     style={{ height: "130px" }}
                   />
                 </div>
-
                 <div className="error">
                   {formik.touched.description && formik.errors.description}
                 </div>
@@ -427,19 +448,14 @@ const AddProduct = () => {
 
             <button
               type="submit"
-              className="btn btn-primary border-0 rounded-3 mt-3 border-0 focus:outline-none focus:ring-0"
-              style={{
-                width: 140,
-                border: "none",
-                outline: "none",
-                boxShadow: "none",
-              }}
+              className="custom-button2"
+              style={{ width: "100px" }}
             >
               {isLoading
                 ? "Please wait..."
                 : productId
                 ? "Update Product"
-                : "Add Product"}
+                : "save"}
             </button>
           </form>
         </div>

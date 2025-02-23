@@ -3,7 +3,6 @@ import { BsArrowDownRight } from "react-icons/bs";
 import { Column } from "@ant-design/plots";
 import { Spin, Table } from "antd";
 import { Loading3QuartersOutlined } from "@ant-design/icons";
-
 import { useDispatch, useSelector } from "react-redux";
 import {
   getMonthWiseOrders,
@@ -113,18 +112,15 @@ const Dashboard = () => {
   useEffect(() => {
     const data =
       Array.isArray(orders) &&
-      orders.map(
-        (order, index) =>
-          ({
-            key: index + 1,
-            name: order?.user?.firstname + " " + order?.user?.lastname,
-            product: order?.orderedItems?.length,
+      orders.map((order, index) => ({
+        key: index + 1,
+        name: order?.user?.firstname + " " + order?.user?.lastname,
+        product: order?.orderedItems?.length,
 
-            price: formatKES(order?.totalPrice),
-            discountedPrice: formatKES(order?.totalPriceAfterDiscount),
-            status: order?.orderStatus,
-          } || [])
-      );
+        price: formatKES(order?.totalPrice),
+        discountedPrice: formatKES(order?.totalPriceAfterDiscount),
+        status: order?.orderStatus,
+      }));
     setOrderData(data);
   }, [orders]);
 
@@ -187,14 +183,38 @@ const Dashboard = () => {
       },
     },
   };
+
+  //
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth() + 1;
+  const day = currentDate.getDate();
+
   return (
     <>
       <div>
-        <h5 className="mb-2 title">Dashboard</h5>
+        <div className="d-flex justify-content-between align-items-center mb-3">
+          <div>
+            <h5 className="mb-2 title">Dashboard</h5>
+          </div>
+          <div className="d-flex flex-row gap-2 align-items-center">
+            <div>
+              <button type="button" className="custom-button3">
+                {day} {month} {year}
+              </button>
+            </div>
+            <div>
+              <button type="button" className="custom-button2">
+                Export
+              </button>
+            </div>
+          </div>
+        </div>
+
         <div className="d-flex justify-content-between align-items-center gap-4 flex-wrap">
           <div className="d-flex justify-content-between align-items-end flex-grow-1 bg-white p-4 rounded-2">
             <div>
-              <p className="desc">Total Income</p>
+              <p className="cardTitle">Total Sales</p>
               <h6 className="mb-0 sub-title">
                 {formatKES(
                   yearlyDataState && yearlyDataState[0]?.amount
@@ -208,12 +228,12 @@ const Dashboard = () => {
                 <BsArrowDownRight />
                 32%
               </h6>
-              <p className="mb-0 desc">Income from the last year.</p>
+              <p className="mb-0 cardDescription">Comapred to january 2025.</p>
             </div>
           </div>
           <div className="d-flex justify-content-between align-items-end  flex-grow-1 bg-white p-4 rounded-2">
             <div>
-              <p className="desc">Total Sales</p>
+              <p className="cardTitle">Average order value</p>
               <h6 className="mb-0 sub-title">
                 ksh{" "}
                 {yearlyDataState && yearlyDataState[0]?.count
@@ -226,40 +246,27 @@ const Dashboard = () => {
                 <BsArrowDownRight />
                 32%
               </h6>
-              <p className="mb-0 desc">Sales in the last year from today.</p>
+              <p className="mb-0 cardDescription">Compared to January 2025</p>
             </div>
           </div>
           <div className="d-flex justify-content-between align-items-end  flex-grow-1 bg-white p-4 rounded-2">
             <div>
-              <p className="desc">Total Expesence</p>
-              <h6 className="mb-0 sub-title">
-                {formatKES(
-                  yearlyDataState && yearlyDataState[0]?.amount
-                    ? yearlyDataState && yearlyDataState[0]?.amount
-                    : 0
-                )}
-              </h6>
+              <p className="cardTitle">Total Orders</p>
+              <h6 className="mb-0 sub-title">{0}</h6>
             </div>
             <div className="d-flex flex-column align-items-end">
               <h6 className="green">
                 <BsArrowDownRight />
                 32%
               </h6>
-              <p className="mb-0 desc">Expesence from in last year. </p>
+              <p className="mb-0 cardDescription">Compared to January 2025</p>
             </div>
           </div>
           <div className="d-flex justify-content-between align-items-end  flex-grow-1 bg-white p-4 rounded-2">
             <div>
-              <p className="desc">Product Statistics</p>
+              <p className="cardTitle">Product Statistics</p>
               <h6 className="mb-0 sub-title">
-                <span>
-                  Sold{"  "} {products.length || 0}
-                </span>
-                <span> vs </span>
-                <span>
-                  In stock {"  "}
-                  {products.length || 0}
-                </span>
+                <span>{products.length || 0}</span>
               </h6>
             </div>
             <div className="d-flex flex-column align-items-end">
@@ -267,7 +274,7 @@ const Dashboard = () => {
                 <BsArrowDownRight />
                 32%
               </h6>
-              <p className="mb-0 desc">Products Sold vs In stock.</p>
+              <p className="mb-0 cardDescription">Compared to January 2025.</p>
             </div>
           </div>
         </div>

@@ -105,13 +105,7 @@ export const enquirySlice = createSlice({
         state.isError.getAllEnquiries = true;
         state.isSuccess.getAllEnquiries = false;
         state.message = action?.payload?.response?.data?.message;
-        if (action?.payload?.response?.data?.message) {
-          toast.error(action?.payload?.response?.data?.message);
-        } else {
-          toast.error(
-            "An unexpected error occurred. Please try again in a moment."
-          );
-        }
+        toast.error(action?.payload?.response?.data?.message);
       })
       .addCase(createAEnquiry.pending, (state) => {
         state.isLoading.createAEnquiry = true;
@@ -128,13 +122,7 @@ export const enquirySlice = createSlice({
         state.isError.createAEnquiry = true;
         state.isSuccess.createAEnquiry = false;
         state.message = action?.payload?.response?.data?.message;
-        if (action?.payload?.response?.data?.message) {
-          toast.error(action?.payload?.response?.data?.message);
-        } else {
-          toast.error(
-            "An unexpected error occurred. Please try again in a moment."
-          );
-        }
+        toast.error(action?.payload?.response?.data?.message);
       })
       .addCase(updateAEnquiry.pending, (state) => {
         state.isLoading.updateAEnquiry = true;
@@ -151,13 +139,7 @@ export const enquirySlice = createSlice({
         state.isError.updateAEnquiry = true;
         state.isSuccess.updateAEnquiry = false;
         state.message = action?.payload?.response?.data?.message;
-        if (action?.payload?.response?.data?.message) {
-          toast.error(action?.payload?.response?.data?.message);
-        } else {
-          toast.error(
-            "An unexpected error occurred. Please try again in a moment."
-          );
-        }
+        toast.error(action?.payload?.response?.data?.message);
       })
       .addCase(getAEnquiry.pending, (state) => {
         state.isLoading.getAEnquiry = true;
@@ -177,13 +159,7 @@ export const enquirySlice = createSlice({
         state.isError.getAEnquiry = true;
         state.isSuccess.getAEnquiry = false;
         state.message = action?.payload?.response?.data?.message;
-        if (action?.payload?.response?.data?.message) {
-          toast.error(action?.payload?.response?.data?.message);
-        } else {
-          toast.error(
-            "An unexpected error occurred. Please try again in a moment."
-          );
-        }
+        toast.error(action?.payload?.response?.data?.message);
       })
       .addCase(deleteAEnquiry.pending, (state) => {
         state.isLoading.deleteAEnquiry = true;
@@ -200,13 +176,7 @@ export const enquirySlice = createSlice({
         state.isError.deleteAEnquiry = true;
         state.isSuccess.deleteAEnquiry = false;
         state.message = action?.payload?.response?.data?.message;
-        if (action?.payload?.response?.data?.message) {
-          toast.error(action?.payload?.response?.data?.message);
-        } else {
-          toast.error(
-            "An unexpected error occurred. Please try again in a moment."
-          );
-        }
+        toast.error(action?.payload?.response?.data?.message);
       })
       .addCase(resetState, () => initialState);
   },

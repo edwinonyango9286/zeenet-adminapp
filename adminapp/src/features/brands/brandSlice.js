@@ -104,13 +104,7 @@ export const brandSlice = createSlice({
         state.isError.getBrands = true;
         state.isSuccess.getBrands = false;
         state.message = action?.payload?.response?.data?.message;
-        if (action?.payload?.response?.data?.message) {
-          toast.error(action?.payload?.response?.data?.message);
-        } else {
-          toast.error(
-            "An unexpected error occurred. Please try again in a moment."
-          );
-        }
+        toast.error(action?.payload?.response?.data?.message);
       })
       .addCase(createABrand.pending, (state) => {
         state.isLoading.createABrand = true;
@@ -120,20 +114,14 @@ export const brandSlice = createSlice({
         state.isError.createABrand = false;
         state.isSuccess.createABrand = true;
         state.createdBrand = action?.payload;
-        toast.success("Brand created successfully.")
+        toast.success("Brand created successfully.");
       })
       .addCase(createABrand.rejected, (state, action) => {
         state.isLoading.createABrand = false;
         state.isError.createABrand = true;
         state.isSuccess.createABrand = false;
         state.message = action?.payload?.response?.data?.message;
-        if (action?.payload?.response?.data?.message) {
-          toast.error(action?.payload?.response?.data?.message);
-        } else {
-          toast.error(
-            "An unexpected error occurred. Please try again in a moment."
-          );
-        }
+        toast.error(action?.payload?.response?.data?.message);
       })
       .addCase(getABrand.pending, (state) => {
         state.isLoading.getABrand = true;
@@ -149,13 +137,7 @@ export const brandSlice = createSlice({
         state.isError.getABrand = true;
         state.isSuccess.getABrand = false;
         state.message = action?.payload?.response?.data?.message;
-        if (action?.payload?.response?.data?.message) {
-          toast.error(action?.payload?.response?.data?.message);
-        } else {
-          toast.error(
-            "An unexpected error occurred. Please try again in a moment."
-          );
-        }
+        toast.error(action?.payload?.response?.data?.message);
       })
       .addCase(updateABrand.pending, (state) => {
         state.isLoading.updateABrand = true;
@@ -165,20 +147,14 @@ export const brandSlice = createSlice({
         state.isError.updateABrand = false;
         state.isSuccess.updateABrand = true;
         state.updatedBrand = action?.payload;
-        toast.success("Brand updated successfully.")
+        toast.success("Brand updated successfully.");
       })
       .addCase(updateABrand.rejected, (state, action) => {
         state.isLoading.updateABrand = false;
         state.isError.updateABrand = true;
         state.isSuccess.updateABrand = false;
         state.message = action?.payload?.response?.data?.message;
-        if (action?.payload?.response?.data?.message) {
-          toast.error(action?.payload?.response?.data?.message);
-        } else {
-          toast.error(
-            "An unexpected error occurred. Please try again in a moment."
-          );
-        }
+        toast.error(action?.payload?.response?.data?.message);
       })
       .addCase(deleteABrand.pending, (state) => {
         state.isLoading.deleteABrand = true;
@@ -188,21 +164,14 @@ export const brandSlice = createSlice({
         state.isError.deleteABrand = false;
         state.isSuccess.deleteABrand = true;
         state.deletedBrand = action?.payload;
-        toast.success("Brand deleted successfully.")
-
+        toast.success("Brand deleted successfully.");
       })
       .addCase(deleteABrand.rejected, (state, action) => {
         state.isLoading.deleteABrand = false;
         state.isError.deleteABrand = true;
         state.isSuccess.deleteABrand = false;
         state.message = action?.payload?.response?.data?.message;
-        if (action?.payload?.response?.data?.message) {
-          toast.error(action.payload.response.data.message);
-        } else {
-          toast.error(
-            "An unexpected error occurred. Please try again in a moment."
-          );
-        }
+        toast.error(action.payload.response.data.message);
       })
       .addCase(resetState, () => initialState);
   },

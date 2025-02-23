@@ -11,17 +11,16 @@
   --color-e52e2e: #e52e2e;
   --color-828599: #828599;
   --color-3d464d: #ed464d;
-  --color-c3d4da: #ced4da;
+  --color-ced4da: #ced4da;
+  --color-6c757d: #6c757d;
 }
 .green {
   color: var(--color-47ad24);
   font-size: 14px;
-  font-family: Roboto !important;
 }
 .red {
   color: var(--color-e52e2e);
   font-size: 14px;
-  font-family: Roboto !important;
 }
 
 .form-control {
@@ -29,18 +28,32 @@
   border-radius: var(--color-212529);
 }
 .title {
-  font-size: 16px;
-  font-family: Roboto !important;
+  font-size: 24px;
   color: var(--color-212529);
+  font-weight: 500;
 }
 .sub-title {
-  font-size: 14px;
-  font-family: Roboto !important;
+  font-size: 24px;
   columns: var(--color-212529);
 }
-.desc {
+.cardTitle {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-828599);
+}
+
+.cardDescription {
   font-size: 12px;
-  font-family: Roboto !important;
+  font-weight: 300;
+  color: var(--color-828599);
+}
+
+.breadCrumbItems {
+  color: var(--color-828599);
+  text-decoration: none;
+}
+.breadCrumbItems:hover {
+  text-decoration: underline;
   color: var(--color-828599);
 }
 
@@ -104,6 +117,37 @@
   gap: 5rem;
 }
 
+.menuItemsText {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-ced4da);
+  text-align: start;
+}
 
+.ant-menu-item-selected {
+  background-color: var(--color-212529) !important;
+  color: white !important;
+}
 
+.ant-menu-item-selected .menuItemsText {
+  font-weight: bold;
+}
 
+.ant-menu-item:hover {
+  background-color: rgba(24, 144, 255, 0.1);
+}
+
+.firstName {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-212529);
+  cursor: pointer;
+}
+.firstName:hover {
+  text-decoration: underline;
+}
+.email {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--color-6c757d);
+}

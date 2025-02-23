@@ -31,9 +31,9 @@ export const resetState = createAction("Reset_all");
 
 const initialState = {
   images: [],
-  isError: {uploadImg:false, delImg:false},
-  isLoading: {uploadImg:false, delImg:false},
-  isSuccess: {uploadImg:false, delImg:false},
+  isError: { uploadImg: false, delImg: false },
+  isLoading: { uploadImg: false, delImg: false },
+  isSuccess: { uploadImg: false, delImg: false },
   message: "",
 };
 
@@ -58,13 +58,7 @@ export const uploadSlice = createSlice({
         state.isError.uploadImg = true;
         state.isSuccess.uploadImg = false;
         state.message = action?.payload?.response?.data?.message;
-         if (action?.payload?.response?.data?.message) {
-          toast.error(action?.payload?.response?.data?.message);
-        } else {
-          toast.error(
-            "An unexpected error occurred. Please try again in a moment."
-          );
-        }
+        toast.error(action?.payload?.response?.data?.message);
       })
       .addCase(delImg.pending, (state) => {
         state.isLoading.delImg = true;
@@ -81,13 +75,7 @@ export const uploadSlice = createSlice({
         state.isError.delImg = true;
         state.isSuccess.delImg = false;
         state.message = action?.payload?.response?.data?.message;
-         if (action?.payload?.response?.data?.message) {
-          toast.error(action?.payload?.response?.data?.message);
-        } else {
-          toast.error(
-            "An unexpected error occurred. Please try again in a moment."
-          );
-        }
+        toast.error(action?.payload?.response?.data?.message);
       })
       .addCase(resetState, () => initialState);
   },

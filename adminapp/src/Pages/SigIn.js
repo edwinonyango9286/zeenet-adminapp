@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { signInUser, resetUserState } from "../features/user/userSlice";
 
-const LOGIN_SCHEMA = Yup.object().shape({
+const SIGNIN_SCHEMA = Yup.object().shape({
   email: Yup.string()
     .email("Please provide a valid email address.")
     .required("Please provide your email."),
@@ -28,7 +28,7 @@ const SigIn = () => {
       email: "",
       password: "",
     },
-    validationSchema: LOGIN_SCHEMA,
+    validationSchema: SIGNIN_SCHEMA,
     onSubmit: (values) => {
       dispatch(resetUserState());
       dispatch(signInUser(values));
@@ -92,7 +92,7 @@ const SigIn = () => {
               <div className="d-flex align-item-center mt-4">
                 <button
                   type="submit"
-                  className="button signup text-white w-100 "
+                  className="custom-button1 w-100 "
                   disabled={isLoading}
                 >
                   {isLoading ? (
@@ -105,7 +105,7 @@ const SigIn = () => {
                       <span>Please wait...</span>
                     </div>
                   ) : (
-                    "Login"
+                    "Sign In"
                   )}
                 </button>
               </div>

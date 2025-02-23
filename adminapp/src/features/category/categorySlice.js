@@ -24,8 +24,6 @@ export const getProductCategories = createAsyncThunk(
   }
 );
 
-
-
 export const getACategory = createAsyncThunk(
   "pCategory/get-category",
   async (id, thunkAPI) => {
@@ -63,24 +61,26 @@ export const resetState = createAction("Reset_all");
 const initialState = {
   categories: [],
   isError: {
-    getProductCategories:false,
-    createCategory:false,
-    getACategory:false,
-    updateACategory:false,
-    deleteACategory:false
-
+    getProductCategories: false,
+    createCategory: false,
+    getACategory: false,
+    updateACategory: false,
+    deleteACategory: false,
   },
-  isLoading: { 
-    getProductCategories:false,
-    createCategory:false,
-    getACategory:false,
-    updateACategory:false,
-    deleteACategory:false},
-  isSuccess: { getProductCategories:false,
-    createCategory:false,
-    getACategory:false,
-    updateACategory:false,
-    deleteACategory:false},
+  isLoading: {
+    getProductCategories: false,
+    createCategory: false,
+    getACategory: false,
+    updateACategory: false,
+    deleteACategory: false,
+  },
+  isSuccess: {
+    getProductCategories: false,
+    createCategory: false,
+    getACategory: false,
+    updateACategory: false,
+    deleteACategory: false,
+  },
   message: "",
 };
 
@@ -105,13 +105,7 @@ export const categorySlice = createSlice({
         state.isError.getProductCategories = true;
         state.isSuccess.getProductCategories = false;
         state.message = action?.payload?.response?.data?.message;
-           if (action?.payload?.response?.data?.message) {
-          toast.error(action?.payload?.response?.data?.message);
-        } else {
-          toast.error(
-            "An unexpected error occurred. Please try again in a moment."
-          );
-        }
+        toast.error(action?.payload?.response?.data?.message);
       })
       .addCase(createCategory.pending, (state) => {
         state.isLoading.createCategory = true;
@@ -127,13 +121,7 @@ export const categorySlice = createSlice({
         state.isError.createCategory = true;
         state.isSuccess.createCategory = false;
         state.message = action?.payload?.response?.data?.message;
-           if (action?.payload?.response?.data?.message) {
-          toast.error(action?.payload?.response?.data?.message);
-        } else {
-          toast.error(
-            "An unexpected error occurred. Please try again in a moment."
-          );
-        }
+        toast.error(action?.payload?.response?.data?.message);
       })
       .addCase(getACategory.pending, (state) => {
         state.isLoading.getACategory = true;
@@ -149,13 +137,7 @@ export const categorySlice = createSlice({
         state.isError.getACategory = true;
         state.isSuccess.getACategory = false;
         state.message = action?.payload?.response?.data?.message;
-           if (action?.payload?.response?.data?.message) {
-          toast.error(action?.payload?.response?.data?.message);
-        } else {
-          toast.error(
-            "An unexpected error occurred. Please try again in a moment."
-          );
-        }
+        toast.error(action?.payload?.response?.data?.message);
       })
       .addCase(updateACategory.pending, (state) => {
         state.isLoading.updateACategory = true;
@@ -171,13 +153,7 @@ export const categorySlice = createSlice({
         state.isError.updateACategory = true;
         state.isSuccess.updateACategory = false;
         state.message = action?.payload?.response?.data?.message;
-           if (action?.payload?.response?.data?.message) {
-          toast.error(action?.payload?.response?.data?.message);
-        } else {
-          toast.error(
-            "An unexpected error occurred. Please try again in a moment."
-          );
-        }
+        toast.error(action?.payload?.response?.data?.message);
       })
       .addCase(deleteACategory.pending, (state) => {
         state.isLoading.deleteACategory = true;
@@ -192,14 +168,9 @@ export const categorySlice = createSlice({
         state.isLoading.deleteACategory = false;
         state.isError.deleteACategory = true;
         state.isSuccess.deleteACategory = false;
-        state.message.deleteACategory = action?.payload?.response?.data?.message;
-           if (action?.payload?.response?.data?.message) {
-          toast.error(action?.payload?.response?.data?.message);
-        } else {
-          toast.error(
-            "An unexpected error occurred. Please try again in a moment."
-          );
-        }
+        state.message.deleteACategory =
+          action?.payload?.response?.data?.message;
+        toast.error(action?.payload?.response?.data?.message);
       })
       .addCase(resetState, () => initialState);
   },

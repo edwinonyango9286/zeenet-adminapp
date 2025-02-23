@@ -197,6 +197,7 @@ export const userSlice = createSlice({
           secure: true,
           sameSite: "Strict",
         });
+        Cookies.set("adminLastName", action?.payload?.lastName);
         Cookies.set("adminEmail", action?.payload?.email, {
           expires: 1,
           secure: true,
@@ -218,13 +219,7 @@ export const userSlice = createSlice({
         state.isSuccess.signInUser = false;
         state.isLoading.signInUser = false;
         state.message = action?.payload?.response?.data?.message;
-        if (action?.payload?.response?.data?.message) {
-          toast.error(action?.payload?.response?.data?.message);
-        } else {
-          toast.error(
-            "We are having a problem signing you in. Please check your internet connection or try again in a moment."
-          );
-        }
+        toast.error(action?.payload?.response?.data?.message);
       })
       .addCase(resetPasswordToken.pending, (state) => {
         state.isLoading.resetPasswordToken = true;
@@ -241,13 +236,7 @@ export const userSlice = createSlice({
         state.isSuccess.resetPasswordToken = false;
         state.isLoading.resetPasswordToken = false;
         state.message = action?.payload?.response?.data?.message;
-        if (action?.payload?.response?.data?.message) {
-          toast.error(action?.payload?.response?.data?.message);
-        } else {
-          toast.error(
-            "We are having a problem sending you a password reset email. Please check your internet connection or try again in a moment."
-          );
-        }
+        toast.error(action?.payload?.response?.data?.message);
       })
       .addCase(resetPassword.pending, (state) => {
         state.isLoading.resetPassword = true;
@@ -266,13 +255,7 @@ export const userSlice = createSlice({
         state.isSuccess.resetPassword = false;
         state.isLoading.resetPassword = false;
         state.message = action?.payload?.response?.data?.message;
-        if (action?.payload?.response?.data?.message) {
-          toast.error(action?.payload?.response?.data?.message);
-        } else {
-          toast.error(
-            "We are having a problem updating your password. Please check your internet connection or try again in a moment."
-          );
-        }
+        toast.error(action?.payload?.response?.data?.message);
       })
       .addCase(blockAUser.pending, (state) => {
         state.isLoading.blockAUser = true;
@@ -289,13 +272,7 @@ export const userSlice = createSlice({
         state.isSuccess.blockAUser = false;
         state.isError.blockAUser = true;
         state.message = action?.payload?.response?.data?.message;
-        if (action?.payload?.response?.data?.message) {
-          toast.error(action?.payload?.response?.data?.message);
-        } else {
-          toast.error(
-            "We are having a problem blocking the user. Please check your internet connection or try again in a moment."
-          );
-        }
+        toast.error(action?.payload?.response?.data?.message);
       })
 
       .addCase(unblockAUser.pending, (state) => {
@@ -314,13 +291,7 @@ export const userSlice = createSlice({
         state.isSuccess.unblockAUser = false;
         state.isError.unblockAUser = true;
         state.message = action?.payload?.response?.data?.message;
-        if (action?.payload?.response?.data?.message) {
-          toast.error(action?.payload?.response?.data?.message);
-        } else {
-          toast.error(
-            "We are having a problem blocking the user. Please check your internet connection or try again in a moment."
-          );
-        }
+        toast.error(action?.payload?.response?.data?.message);
       })
 
       .addCase(deleteAUser.pending, (state) => {
@@ -339,13 +310,7 @@ export const userSlice = createSlice({
         state.isSuccess.deleteAUser = false;
         state.isError.deleteAUser = true;
         state.message = action?.payload?.response?.data?.message;
-        if (action?.payload?.response?.data?.message) {
-          toast.error(action?.payload?.response?.data?.message);
-        } else {
-          toast.error(
-            "We are having a problem deleting the user. Please check your internet connection or try again in a moment."
-          );
-        }
+        toast.error(action?.payload?.response?.data?.message);
       })
 
       .addCase(getAllOrders.pending, (state) => {
@@ -362,13 +327,7 @@ export const userSlice = createSlice({
         state.isLoading.getAllOrders = false;
         state.isSuccess.getAllOrders = false;
         state.message = action?.payload?.response?.data?.message;
-        if (action?.payload?.response?.data?.message) {
-          toast.error(action?.payload?.response?.data?.message);
-        } else {
-          toast.error(
-            "We are having a problem fetching orders. Please check your internet connection or try again in a moment."
-          );
-        }
+        toast.error(action?.payload?.response?.data?.message);
       })
       .addCase(getAsingleOrder.pending, (state) => {
         state.isLoading.getAsingleOrder = true;
@@ -384,13 +343,7 @@ export const userSlice = createSlice({
         state.isLoading.getAsingleOrder = false;
         state.isSuccess.getAsingleOrder = false;
         state.message = action?.payload?.response?.data?.message;
-        if (action?.payload?.response?.data?.message) {
-          toast.error(action?.payload?.response?.data?.message);
-        } else {
-          toast.error(
-            "We are having a problem fetching the order. Please check your internet connection or try again in a moment."
-          );
-        }
+        toast.error(action?.payload?.response?.data?.message);
       })
       .addCase(getMonthWiseOrders.pending, (state) => {
         state.isLoading.getMonthWiseOrders = true;
@@ -406,13 +359,7 @@ export const userSlice = createSlice({
         state.isLoading.getMonthWiseOrders = false;
         state.isSuccess.getMonthWiseOrders = false;
         state.message = action?.payload?.response?.data?.message;
-        if (action?.payload?.response?.data?.message) {
-          toast.error(action?.payload?.response?.data?.message);
-        } else {
-          toast.error(
-            "We are having a problem fetching monthly orders. Please check your internet connection or try again in a moment."
-          );
-        }
+        toast.error(action?.payload?.response?.data?.message);
       })
       .addCase(getYearlyStatistics.pending, (state) => {
         state.isLoading.getYearlyStatistics = true;
@@ -428,13 +375,7 @@ export const userSlice = createSlice({
         state.isLoading.getYearlyStatistics = false;
         state.isSuccess.getYearlyStatistics = false;
         state.message = action?.payload?.response?.data?.message;
-        if (action?.payload?.response?.data?.message) {
-          toast.error(action?.payload?.response?.data?.message);
-        } else {
-          toast.error(
-            "We are having a problem fetching yearly orders. Please check your internet connection or try again in a moment."
-          );
-        }
+        toast.error(action?.payload?.response?.data?.message);
       })
       .addCase(UpdateAnOrder.pending, (state) => {
         state.isLoading.UpdateAnOrder = true;
@@ -450,13 +391,7 @@ export const userSlice = createSlice({
         state.isLoading.UpdateAnOrder = false;
         state.isSuccess.UpdateAnOrder = false;
         state.message = action?.payload?.response?.data?.message;
-        if (action?.payload?.response?.data?.message) {
-          toast.error(action?.payload?.response?.data?.message);
-        } else {
-          toast.error(
-            "We are having a problem fetching updating the orders. Please check your internet connection or try again in a moment."
-          );
-        }
+        toast.error(action?.payload?.response?.data?.message);
       })
       .addCase(logoutAUser.pending, (state) => {
         state.isLoading.logoutAUser = true;
@@ -466,6 +401,7 @@ export const userSlice = createSlice({
         state.isError.logoutAUser = false;
         state.isSuccess.logoutAUser = true;
         Cookies.remove("adminFirstName");
+        Cookies.remove("adminLastName");
         Cookies.remove("adminEmail");
         Cookies.remove("adminAvatar");
         Cookies.remove("adminAccessToken");
@@ -476,13 +412,7 @@ export const userSlice = createSlice({
         state.isLoading.logoutAUser = false;
         state.isSuccess.logoutAUser = false;
         state.message = action?.payload?.response?.data?.message;
-        if (action?.payload?.response?.data?.message) {
-          toast.error(action?.payload?.response?.data?.message);
-        } else {
-          toast.error(
-            "We are having a problem logging you out. Please check your internet connection or try again in a moment."
-          );
-        }
+        toast.error(action?.payload?.response?.data?.message);
       })
       .addCase(resetUserState, () => initialState);
   },

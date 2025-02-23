@@ -71,7 +71,7 @@ const ForgotPassword = () => {
 
               <div className="d-flex  align-item-center mt-4">
                 <button
-                  className="button signup text-white w-100"
+                  className="custom-button1 w-100"
                   type="submit"
                   disabled={isLoading}
                 >

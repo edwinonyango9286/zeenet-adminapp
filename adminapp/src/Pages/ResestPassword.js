@@ -95,7 +95,7 @@ const ResestPassword = () => {
               <div className="d-flex align-item-center mt-4">
                 <button
                   type="submit"
-                  className="button signup text-white w-100 "
+                  className="custom-button1 w-100 "
                   disabled={isLoading}
                 >
                   {isLoading ? <div></div> : "Reset password"}

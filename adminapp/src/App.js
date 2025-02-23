@@ -8,7 +8,7 @@ import Enquiries from "./Pages/Enquiries";
 import BlogList from "./Pages/BlogList";
 import BlogCategoryList from "./Pages/BlogCategoryList";
 import Orders from "./Pages/Orders";
-import Customers from "./Pages/Customers";
+import Customers from "./Pages/CustomersList";
 import CategoryList from "./Pages/CategoryList";
 import BrandList from "./Pages/BrandList";
 import ProductList from "./Pages/ProductList";

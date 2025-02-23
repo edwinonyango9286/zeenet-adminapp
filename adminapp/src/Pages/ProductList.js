@@ -25,8 +25,8 @@ const columns = [
       <img
         src={record.image}
         alt={record.title}
-        width={70}
-        height={70}
+        width={40}
+        height={40}
         className="rounded-3 border border-1 p-1"
       />
     ),
@@ -82,7 +82,6 @@ const ProductList = () => {
   };
 
   const dispatch = useDispatch();
-
   const products = useSelector((state) => state?.product?.products);
   const isLoading = useSelector(
     (state) => state?.product?.isLoading?.getProducts
@@ -92,6 +91,7 @@ const ProductList = () => {
     dispatch(getProducts());
   }, []);
 
+  
   const data = Array.isArray(products)
     ? products.map((product, index) => ({
         key: index + 1,

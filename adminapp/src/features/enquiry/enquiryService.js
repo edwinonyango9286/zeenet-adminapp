@@ -2,7 +2,7 @@ import { config } from "../../utils/axiosConfig";
 import { newRequest } from "../../utils/newRequest";
 
 const getEnquiries = async () => {
-  const response = await newRequest.get(`enquiry/getall`, config);
+  const response = await newRequest.get(`enquiry/get_all_enquiries`, config);
   if (response.data) {
     return response.data;
   }

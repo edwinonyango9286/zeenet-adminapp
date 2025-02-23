@@ -118,13 +118,7 @@ export const blogSlice = createSlice({
         state.isError.createBlog = true;
         state.isSuccess.createBlog = false;
         state.message = action?.payload?.response?.data?.message;
-        if (action?.payload?.response?.data?.message) {
-          toast.error(action?.payload?.response?.data?.message);
-        } else {
-          toast.error(
-            "An unexpected error occurred. Please try again in a moment."
-          );
-        }
+        toast.error(action?.payload?.response?.data?.message);
       })
       .addCase(getABlog.pending, (state) => {
         state.isLoading.getABlog = true;
@@ -159,13 +153,7 @@ export const blogSlice = createSlice({
         state.isError = true;
         state.isSuccess = false;
         state.message = action?.payload?.response?.data?.message;
-        if (action?.payload?.response?.data?.message) {
-          toast.error(action.payload.response.data.message);
-        } else {
-          toast.error(
-            "An unexpected error occurred. Please try again in a moment."
-          );
-        }
+        toast.error(action.payload.response.data.message);
       })
       .addCase(deleteABlog.pending, (state) => {
         state.isLoading.deleteABlog = true;
@@ -181,13 +169,7 @@ export const blogSlice = createSlice({
         state.isError.deleteABlog = true;
         state.isSuccess.deleteABlog = false;
         state.message = action?.payload?.response?.data?.message;
-        if (action?.payload?.response?.data?.message) {
-          toast.error(action.payload.response.data.message);
-        } else {
-          toast.error(
-            "An unexpected error occurred. Please try again in a moment."
-          );
-        }
+        toast.error(action.payload.response.data.message);
       })
 
       .addCase(resetState, () => initialState);

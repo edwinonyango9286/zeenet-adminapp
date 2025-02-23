@@ -11,6 +11,7 @@ import CustomModal from "../Components/CustomModal";
 import { blockAUser, deleteAUser } from "../features/user/userSlice";
 import { ImBlocked } from "react-icons/im";
 import { IoEllipsisVertical } from "react-icons/io5";
+import { dateFormatter } from "../utils/dateFormatter";
 
 const columns = [
   {
@@ -18,40 +19,55 @@ const columns = [
     dataIndex: "key",
   },
   {
-    title: "Avatar",
-    dataIndex: "avatar",
-    render: (text, record) => (
-      <img
-        src={record.avatar}
-        alt={record.title}
-        width={32}
-        height={32}
-        className="rounded-circle border border-1"
-      />
-    ),
-  },
-  {
     title: "Name",
     dataIndex: "name",
     render: (text, record) => {
       const [firstName, lastName] = text?.split("  ");
       return (
-        <span>
-          <span className="text-capitalize">{firstName}</span>
-          <span className="text-capitalize">{lastName}</span>
-        </span>
+        <>
+          <div className="d-flex flex-row gap-2">
+            <div>
+              <img
+                src={record.avatar}
+                alt={record.title}
+                width={40}
+                height={40}
+                className="rounded-circle border border-1"
+              />
+            </div>
+            <div className="d-flex flex-column ">
+              <div className="d-flex flex-row firstName">
+                <span className="text-capitalize">{firstName}</span>
+                <span className="text-capitalize">{lastName}</span>
+              </div>
+              <div className="email">{record?.email}</div>
+            </div>
+          </div>
+        </>
       );
     },
-
     sorter: (a, b) => a.name.length - b.name.length,
   },
   {
-    title: "Email",
-    dataIndex: "email",
+    title: "Registered",
+    dataIndex: "registered",
+    sorter: (a, b) => new Date(a.registered) - new Date(b.registered),
+  },
+  {
+    title: "Country",
+    dataIndex: "country",
   },
   {
     title: "Phone",
     dataIndex: "phone",
+  },
+  {
+    title: "Group",
+    dataIndex: "group",
+  },
+  {
+    title: "Spent",
+    dataIndex: "spent",
   },
   {
     title: "Action",
@@ -59,7 +75,7 @@ const columns = [
   },
 ];
 
-const Customers = () => {
+const CustomersList = () => {
   const [open, setOpen] = useState(false);
   const [openBlockModal, setOpenBlockModal] = useState(false);
   const [customerId, setCustomerId] = useState("");
@@ -99,6 +115,10 @@ const Customers = () => {
       avatar: customer?.avatar,
       name: `${customer?.firstName} ${customer?.lastName}`,
       email: customer?.email,
+      registered: dateFormatter(customer?.createdAt),
+      country: customer?.country,
+      group: customer?.customerGroup,
+      spent: customer?.spent,
       phone: customer?.phoneNumber,
       action: (
         <>
@@ -183,4 +203,4 @@ const Customers = () => {
   );
 };
 
-export default Customers;
+export default CustomersList;
