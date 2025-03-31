@@ -294,6 +294,7 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
+        
         <div className="mt-2">
           <h4 className="mb-2 title">Recent Orders</h4>
           <div>

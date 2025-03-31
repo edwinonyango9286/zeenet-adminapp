@@ -132,7 +132,13 @@
 .ant-menu-item-selected .menuItemsText {
   font-weight: bold;
 }
+.ant-menu-submenu-arrow::before{
+  color:#fff ;
+}
 
+.ant-menu-submenu-arrow::after{
+  color:#fff;
+}
 .ant-menu-item:hover {
   background-color: rgba(24, 144, 255, 0.1);
 }

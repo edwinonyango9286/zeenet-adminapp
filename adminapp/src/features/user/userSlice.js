@@ -192,27 +192,12 @@ export const userSlice = createSlice({
         state.isLoading.signInUser = false;
         state.isSuccess.signInUser = true;
         state.adminUser = action?.payload;
-        Cookies.set("adminFirstName", action?.payload?.firstName, {
-          expires: 1,
-          secure: true,
-          sameSite: "Strict",
-        });
-        Cookies.set("adminLastName", action?.payload?.lastName);
-        Cookies.set("adminEmail", action?.payload?.email, {
-          expires: 1,
-          secure: true,
-          sameSite: "Strict",
-        });
-        Cookies.set("adminAvatar", action?.payload?.avatar, {
-          expires: 1,
-          secure: true,
-          sameSite: "Strict",
-        });
-        Cookies.set("adminAccessToken", action?.payload?.accessToken, {
-          expires: 1,
-          secure: true,
-          sameSite: "Strict",
-        });
+        Cookies.set("firstName", action?.payload?.user?.firstName, {expires: 1,secure: true,sameSite: "Strict"});
+        Cookies.set("lastName", action?.payload?.user?.lastName,{expires:1, secure:true, sameSite:"strict"});
+        Cookies.set("email", action?.payload?.user?.email, {expires: 1,secure: true,sameSite: "Strict",});
+        Cookies.set("avatar", action?.payload?.user?.avatar, {expires: 1,secure: true,sameSite: "Strict"});
+        Cookies.set("role", action?.payload?.user?.role,{expires:1, secure:true, sameSite:"strict" })
+        Cookies.set("adminAccessToken", action?.payload?.accessToken, {expires: 1,secure: true,sameSite: "Strict"});
       })
       .addCase(signInUser.rejected, (state, action) => {
         state.isError.signInUser = true;
@@ -400,10 +385,10 @@ export const userSlice = createSlice({
         state.isLoading.logoutAUser = false;
         state.isError.logoutAUser = false;
         state.isSuccess.logoutAUser = true;
-        Cookies.remove("adminFirstName");
-        Cookies.remove("adminLastName");
-        Cookies.remove("adminEmail");
-        Cookies.remove("adminAvatar");
+        Cookies.remove("firstName");
+        Cookies.remove("lastName");
+        Cookies.remove("email");
+        Cookies.remove("avatar");
         Cookies.remove("adminAccessToken");
         state.message = action?.payload?.response?.data?.message;
       })

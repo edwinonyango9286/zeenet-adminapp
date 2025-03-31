@@ -2,7 +2,7 @@ import { config } from "../../utils/axiosConfig";
 import { newRequest } from "../../utils/newRequest";
 
 const signIn = async (userData) => {
-  const response = await newRequest.post(`auth/admin_signin`, userData);
+  const response = await newRequest.post(`auth/manager-signin`, userData);
   if (response.data) {
   }
   return response.data;

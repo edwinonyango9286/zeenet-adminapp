@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Layout, Menu, Button, theme } from "antd";
-import { RiDashboard2Fill } from "react-icons/ri";
+import { AiFillDashboard } from "react-icons/ai";
 import { FiUsers } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { BsCart3 } from "react-icons/bs";
@@ -26,7 +26,7 @@ import { logoutAUser } from "../features/user/userSlice";
 
 const { Header, Sider, Content } = Layout;
 const MainLayout = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate();     
   const dispatch = useDispatch();
   const [collapsed, setCollapsed] = useState(false);
   const [selectedKey, setSelectedKey] = useState(false);
@@ -37,16 +37,20 @@ const MainLayout = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [avatar, SetAvatar] = useState("");
+  const [role,setRole]= useState("")
 
   useEffect(() => {
-    const adminFirstName = Cookies.get("adminFirstName");
-    const adminLastName = Cookies.get("adminLastName");
-    const adminEmail = Cookies.get("adminEmail");
-    const adminAvatar = Cookies.get("adminAvatar");
-    if (adminFirstName) setFirstName(adminFirstName);
-    if (adminLastName) setLastName(adminLastName);
-    if (adminEmail) setEmail(adminEmail);
-    if (adminAvatar) SetAvatar(adminAvatar);
+    const firstName = Cookies.get("firstName");
+    const lastName = Cookies.get("lastName");
+    const email = Cookies.get("email");
+    const avatar = Cookies.get("avatar");
+    const role = Cookies.get("role");
+
+    if (firstName) setFirstName(firstName);
+    if (lastName) setLastName(lastName);
+    if (email) setEmail(email);
+    if (avatar) SetAvatar(avatar);
+    if(role) setRole(role)
   }, []);
 
   useEffect(() => {
@@ -96,7 +100,7 @@ const MainLayout = () => {
                   }}
                   className="custom-button3 mx-1 lg-logo"
                 >
-                  Admin
+                  {role}
                 </button>
               </span>
             </div>
@@ -119,7 +123,7 @@ const MainLayout = () => {
           items={[
             {
               key: "",
-              icon: <RiDashboard2Fill className="fs-6 fw-bold text-white " />,
+              icon: <AiFillDashboard className="fs-6 fw-bold text-white " />,
               label: <p className="menuItemsText m-0 p-0">Dashboard</p>,
             },
 
@@ -270,7 +274,7 @@ const MainLayout = () => {
           <div className="d-flex gap-3 align-items-center">
             <div className="position-relative">
               <MdNotificationsNone className="fs-3 fw-bold" />
-              <span className="badge bg-primary rounded-circle py-1 position-absolute">
+              <span className="badge rounded-circle py-1 position-absolute text-dark" style={{ backgroundColor:"#ffd333"} }>
                 {submittedEnquiriesCount}
               </span>
             </div>
