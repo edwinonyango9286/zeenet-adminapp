@@ -2,12 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Loading3QuartersOutlined } from "@ant-design/icons";
 import { Table, Spin } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  deleteAEnquiry,
-  getAllEnquiries,
-  resetState,
-  updateAEnquiry,
-} from "../features/enquiry/enquirySlice";
+import {deleteAEnquiry,getAllEnquiries,resetState,updateAEnquiry} from "../features/enquiry/enquirySlice";
 import { Link } from "react-router-dom";
 import { AiFillDelete } from "react-icons/ai";
 import { FaRegEye } from "react-icons/fa6";
@@ -57,9 +52,7 @@ const Enquiries = () => {
   }, [dispatch]);
 
   const enquiries = useSelector((state) => state?.enquiry?.enquiries);
-  const isLoading = useSelector(
-    (state) => state?.enquiry?.isLoading?.getAllEnquiries
-  );
+  const isLoading = useSelector((state) => state?.enquiry?.isLoading?.getAllEnquiries);
 
   const handleStatusUpdate = (status, enquiryId) => {
     const data = { id: enquiryId, enquiryData: status };
